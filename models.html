@@ -57,12 +57,11 @@
 <hr/> <hr/>
 Table of Contents
 <ol>
-    <li> <a href="#fsa"> Finite State Automata </a> </li>
-    <ul>
+    <li> <a href="#fsa"> Finite State Automata </a> <ul>
         <li> <a href="#fsa1"> Problems and Computers </a> </li>
         <li> <a href="#fsa2"> Regular Expression </a> </li>
         <li> <a href="#fsa3"> Finite State Automaton</a> </li>
-    </ul>
+    </ul> </li>
 </ol>
 
 <hr/>
@@ -100,16 +99,15 @@ A language is a set of words, which means that it is a subset of &Sigma;*. <br/>
     <li> We write <em> Empty </em> for the language consisting of no words, or the empty set. </li>
     <li> We write <em> a </em> for the language consisting of the single-character word <em> a </em> </li>
     <li> We write &epsilon; for the language consisting of just the empty word. </li>
-    <li> Suppose <em> L </em> and <em> L' </em> are languages. </li>
-    <ul>
+    <li> Suppose <em> L </em> and <em> L' </em> are languages. <ul>
         <li> We write <em> LL' </em> for the set of words that are a concatenation of a word in <em> L </em> and a word in <em> L' </em> </li>
         <li> We write <em> L | L'</em> for the set of words that are either in <em> L </em> or <em> L' </em>. This is basically the union of <em> L </em> and <em> L' </em>. </li>
         <li> We write <em> L* </em> for the set of words that are a concatenation of some number of words in <em> L </em>. Note that "some number" might be 0, so the empty word is in <em> L* </em>. </li>
-    </ul>
+    </ul> </li>
 </ul>
 <p> All expressions built up this way makes a regular expression. A regular expression <em> E </em> can be either Empty, &epsilon;, <em> a, b c, </em> or anything in the alphabet, <em> EE' </em>, <em> E | E' </em>, or <em> E* </em>. </p>
 
-<p> Just like arithmetic expressions, you can't make sense of regular expressions without knowing the precedence rules. <em> * </em> has the highest precedence, then juxtaposition (putting things next to each other, you juxtapose AB in aljebra means A * B, or <strong> concatenation</strong>) then |.</p>
+<p> Just like arithmetic expressions, you can't make sense of regular expressions without knowing the precedence rules. <em> * </em> has the highest precedence, then juxtaposition (putting things next to each other, you juxtapose AB in algebra means A * B, or <strong> concatenation</strong>) then |.</p>
 
 <p style="font-weight: bold"> Example exercises </p>
 <ol>
@@ -135,8 +133,11 @@ A language is a set of words, which means that it is a subset of &Sigma;*. <br/>
 
 
 <h3 id="fsa3"> Finite State Automaton </h3>
+<p> A finite state automaton over &Sigma; is </p>
+<ul>
+    <li> A finite set </li>
 
-
+</ul>
 <hr/>
 
 

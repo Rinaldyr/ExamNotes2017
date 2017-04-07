@@ -61,26 +61,24 @@
 <hr/> <hr/>
 Table of Contents
 <ol>
-    <li><a href="#introduction"> Introduction </a></li>
-    <ul>
+    <li><a href="#introduction"> Introduction </a> <ul>
         <li><a href="#aboutCLanguage"> About C Language </a></li>
         <li><a href="#aboutCPrograms"> About C Programs </a></li>
         <li><a href="#comparingC"> Comparing C and Java Programs </a></li>
-    </ul>
-    <li><a href="#pointer"> Pointers in C </a></li>
-    <ul>
+    </ul> </li>
+    <li><a href="#pointer"> Pointers in C </a> <ul>
         <li><a href="#introPointer"> Intro to Pointers </a></li>
         <li><a href="#defPointer"> Pointer Definitions and Examples </a></li>
         <li><a href="#equalityPointer"> Pointer equality in C </a></li>
         <li><a href="#mallocfree"> Memory Management with malloc and free </a></li>
         <li><a href="#memoryErrors"> Memory Errors </a></li>
         <li><a href="#valgrind"> Valgrind </a></li>
-        <li><a href="#structs"> Structures and Pointers -&gt; Recursive Data Structures </a></li>
+        <li><a href="#structs"> Structures and Pointers &DoubleRightArrow; Recursive Data Structures </a></li>
         <li><a href="#arithmeticPointer"> Pointer Arithmetic and Arrays </a></li>
         <li><a href="#buffOverflow"> Strings and Buffer Overflows </a></li>
         <li><a href="#voidPointer"> Void Pointers and Casting </a> </li>
         <li><a href="#functionPointer"> Function Pointers </a></li>
-    </ul>
+    </ul> </li>
 </ol>
 
 <hr/>
@@ -89,22 +87,19 @@ Table of Contents
 <p> Comparing C, C++ and Java. <br/> They all have core imperative langauge that includes assignment
 while, functions and recursion. </p>
 <ul>
-    <li> C </li>
-    <ul>
+    <li> C <ul>
         <li> Has malloc and free, but no garbage collector </li>
         <li> Pointers combined with other language features </li>
-    </ul>
-    <li> C++ </li>
-    <ul>
+     </ul> </li>
+    <li> C++ <ul>
         <li> Has new and delete, but no garbage collector </li>
         <li> Has object orientation </li>
         <li> Has templates </li>
-    </ul>
-    <li> Java </li>
-    <ul>
+    </ul> Java </li>
+    <li> <ul>
         <li> Simplified version of C++ object-orientation </li>
         <li> Has garbage collector, meaning that the programmer can be naive about memory </li>
-    </ul>
+    </ul> </li>
 </ul>
 <p> C and C++ are about efficiency and control over memory. Being aware of memory is important! </p>
 
@@ -121,12 +116,12 @@ while, functions and recursion. </p>
     #include "file.h"
 </div>
 
-<p> C does not have any exceptions. So need to check function return values to see whether an operation has succeeded. If not, then return values like -1, or NULL pointer. <br/> There are C library functions like <code>setjmp</code> and <code>longjmp</code> that are a very crude version of exceptions. C++ has exceptions much like Java. </p>
+<p> C does not have any exceptions. So need to check function return values to see whether an operation has succeeded. If not, then return values like -1, or NULL pointer. <br/> There are C library functions like <code> setjmp </code> and <code> longjmp </code> that are a very crude version of exceptions. C++ has exceptions much like Java. </p>
 
 <p> C does not have classes. So functions are defined directly inside the file. Splitting into files is up to the programmer. </p>
 
 <h3 id="comparingC"> Comparing C and Java programs </h3>
-<p>Java</p>
+<p> Java </p>
 <div>
     public class HelloWorld { <br/>
     &emsp; public static void main (String[] args) { <br/>
@@ -134,7 +129,7 @@ while, functions and recursion. </p>
     &emsp; } <br/>
     }
 </div>
-<p>C</p>
+<p> C </p>
 <div>
     #include &lt;stdio.h&gt; <br/>
     int main(int argc, char *argv[]) { <br/>
@@ -169,7 +164,7 @@ The x on the left of the = refers to the address of x, the L value. <br/>
 The x on the right of the = refers to the contents of x, the R value. </p>
 
 <h3 id="defPointer"></h3>
-<p> Pointers are an abstraction of machine addresses. Addresse are at a hardware level, but in C, we are not supposed to care about actual hardware addresses. It is easier to visualise C memory as a graph where nodes are the chunks of memory (often a struct) and edges are pointers. </p>
+<p> Pointers are an abstraction of machine addresses. Addresses are at a hardware level, but in C, we are not supposed to care about actual hardware addresses. It is easier to visualise C memory as a graph where nodes are the chunks of memory (often a struct) and edges are pointers. </p>
 
 <p> In C, * is also a unary operator which has nothing to do with the binary infix operator for multiplication. <br/>
     If P is an expression denoting a pointer, then *P is the result of dereferencing the pointer. <br/>
@@ -188,7 +183,7 @@ The x on the right of the = refers to the contents of x, the R value. </p>
     <span style="color: #696969"> <code> // So <span style="color: indianred; font-family: Candara, sans-serif;"> *&x </span> is essentially the same thing as <span style="color: indianred; font-family: Candara, sans-serif;"> x </span>. </code> </span>
 </div>
 
-<p> Example codes from the slides </p>
+<p> Example codes from the slides <em> (Click images to reveal answer) </em> </p>
 <div>
     <img src="images/ccpp/pointerEg1.JPG" title="Click to show answer" onclick="
     if(document.getElementById('spoiler1').style.display==='none') {
