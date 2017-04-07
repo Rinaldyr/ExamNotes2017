@@ -129,15 +129,32 @@ A language is a set of words, which means that it is a subset of &Sigma;*. <br/>
 </ol>
 
 <p> Regular expression in theoretical computer science means an expression built up from the above operations and nothing more. The term has come to be used in Linux etc. to include various other operations. Regexps are also used in a somewhat different sense to find occurrences of words within a larger word. </p>
+
+<p> <strong> Kleene's theorem </strong> says a language is regular (i.e. recognized by a regular expression) if and only if it is accepted by a finite state automaton. </p>
+
 <p> Here are a few common abbreviations, it is optional to use these. <br/> <img src="images/models/fsa3.JPG"/> </p>
 
 
 <h3 id="fsa3"> Finite State Automaton </h3>
 <p> A finite state automaton over &Sigma; is </p>
 <ul>
-    <li> A finite set </li>
-
+    <li> a finite set &Qopf; of states (<em> nodes </em>) </li>
+    <li> a transition function &Qopf; &times; &Sigma; &rightarrow; &Qopf; (<em> paths, edges </em>) </li>
+    <li> a set Acc &subseteq; &Qopf; of accepting states (<em> double nodes </em>) </li>
+    <li> an initial state <em> q </em> &epsi; &Qopf; (<em> diamond node </em>) </li>
 </ul>
+<p> Every finite state automaton has an associated language. </p>
+
+<p style="font-weight: bold;"> Removing &epsilon;-transitions </p>
+<p> There's a <em> slow a-transition </em> from state q to state q' when, starting from state q we can follow some number of &epsilon;-transition, and end in state q'. A state q is <em> slowly accepting </em> when, starting from state q we can follow some number of &epsilon;-transitions and reach an accepting state. </p>
+
+<p> But if we want to remove all &epsilon;-transitions, we keep the set of states, keep the initial state, replace the slow transitions by transitions, and replace slowly accepting states by accepting states. After removing all &epsilon;-transitions, we will obtain a Non-Deterministic Finite Automaton (NDFA). </p>
+
+<p style="font-weight: bold;"> Determinisation </p>
+<p> Given a NDFA, we can form a Deterministic Finite Automaton (DFA). </p>
+
+
+
 <hr/>
 
 
