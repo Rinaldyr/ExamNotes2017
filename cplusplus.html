@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> C/C++ </title>
+    <style type="text/css">
+        body {
+            background-color: #b8e6e4;
+            font-family: "Georgia", serif;
+        }
+
+        div {
+            border:1px hidden cadetblue;
+            margin:10px;
+            font-family: "Consolas", monospace;
+            font-size: 15px;
+            color: #4913d3;
+        }
+
+        #topBtn {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: red;
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        #topBtn:hover {
+            background-color: #555;
+        }
+
+        #homeBtn {
+            display: block;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: red;
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            border-radius:10px;
+        }
+
+        #homeBtn:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+<h1> LI C/C++ </h1>
+<hr/> <hr/>
+Table of Contents
+<ol>
+    <li><a href="#introduction"> Introduction </a></li>
+    <ul>
+        <li><a href="#aboutCLanguage"> About C Language </a></li>
+        <li><a href="#aboutCPrograms"> About C Programs </a></li>
+        <li><a href="#comparingC"> Comparing C and Java Programs </a></li>
+    </ul>
+    <li><a href="#pointer"> Pointers in C </a></li>
+    <ul>
+        <li><a href="#introPointer"> Intro to Pointers </a></li>
+        <li><a href="#defPointer"> Pointer Definitions and Examples </a></li>
+        <li><a href="#equalityPointer"> Pointer equality in C </a></li>
+        <li><a href="#mallocfree"> Memory Management with malloc and free </a></li>
+        <li><a href="#memoryErrors"> Memory Errors </a></li>
+        <li><a href="#valgrind"> Valgrind </a></li>
+        <li><a href="#structs"> Structures and Pointers -&gt; Recursive Data Structures </a></li>
+        <li><a href="#arithmeticPointer"> Pointer Arithmetic and Arrays </a></li>
+        <li><a href="#buffOverflow"> Strings and Buffer Overflows </a></li>
+        <li><a href="#voidPointer"> Void Pointers and Casting </a> </li>
+        <li><a href="#functionPointer"> Function Pointers </a></li>
+    </ul>
+</ol>
+
+<hr/>
+
+<h2 id="introduction"> Introduction </h2>
+<p> Comparing C, C++ and Java. <br/> They all have core imperative langauge that includes assignment
+while, functions and recursion. </p>
+<ul>
+    <li> C </li>
+    <ul>
+        <li> Has malloc and free, but no garbage collector </li>
+        <li> Pointers combined with other language features </li>
+    </ul>
+    <li> C++ </li>
+    <ul>
+        <li> Has new and delete, but no garbage collector </li>
+        <li> Has object orientation </li>
+        <li> Has templates </li>
+    </ul>
+    <li> Java </li>
+    <ul>
+        <li> Simplified version of C++ object-orientation </li>
+        <li> Has garbage collector, meaning that the programmer can be naive about memory </li>
+    </ul>
+</ul>
+<p> C and C++ are about efficiency and control over memory. Being aware of memory is important! </p>
+
+<h3 id="aboutCLanguage"> About C Language</h3>
+<p> C is <em>low</em>-level compared to other languages like Java, OCaml, Haskell, which are all type-safe and garbage collected. However, C is <em>high</em>-level compared to assembly language. C is just halfway between high level languages and machine code. Compiled code is a mess of pointers. </p>
+
+<h3 id="aboutCPrograms"> About C programs </h3>
+<p> A C program consists essentially of some #includes, function definitions and one of them is a main, type declarations (most importantly structs), and perhaps some global variables. <br/> Abstraction mechanisms are largely absent in C, but were added in C++.</p>
+
+<p> There are no classes or other ways to structure large programs. A program can be split into many files, compiled separately. <br/> A header file (extension .h) works as a kind of interface that has type information but no implementation. We need to include headers to use library functions. Header files can contain function declarations or sometimes called <b>prototypes</b> and structure definitions. </p>
+
+<div>
+    #include &lt;stdlib.h&gt; <br/>
+    #include "file.h"
+</div>
+
+<p> C does not have any exceptions. So need to check function return values to see whether an operation has succeeded. If not, then return values like -1, or NULL pointer. <br/> There are C library functions like <code>setjmp</code> and <code>longjmp</code> that are a very crude version of exceptions. C++ has exceptions much like Java. </p>
+
+<p> C does not have classes. So functions are defined directly inside the file. Splitting into files is up to the programmer. </p>
+
+<h3 id="comparingC"> Comparing C and Java programs </h3>
+<p>Java</p>
+<div>
+    public class HelloWorld { <br/>
+    &emsp; public static void main (String[] args) { <br/>
+    &emsp;&emsp; System.out.println("Hello world!"); <br/>
+    &emsp; } <br/>
+    }
+</div>
+<p>C</p>
+<div>
+    #include &lt;stdio.h&gt; <br/>
+    int main(int argc, char *argv[]) { <br/>
+    &emsp; printf("Hello world!"); <br/>
+    &emsp; return 0; <br/>
+    }
+</div>
+<p> A function in C is like a method in Java without any objects. Just like public static. </p>
+<p> A while loop in C is typically faster than using recursion and uses less stack space, particularly when the function is not tail recursive. </p>
+
+<hr/>
+
+<h2 id="pointer"> Pointers in C </h2>
+<h3 id="introPointer"> Pointers </h3>
+<p> Pointers are the fundamental feature of C compared to other languages. Pointers are everywhere in C: </p>
+<ol>
+    <li> Pointer types and operations &mdash; <code> * & . -&gt; </code> </li>
+    <li> Pointer equality &mdash; <code> == </code> </li>
+    <li> malloc and free &mdash; <code> malloc free </code> </li>
+    <li> Structures and pointers &mdash; <code> struct </code> </li>
+    <li> Pointer arithmetic &mdash; <code> = ++ -- </code> </li>
+    <li> Strings and pointers </li>
+    <li> Function pointers &mdash; <code> (*f) () </code></li>
+</ol>
+
+<p> Basic imperative programming is an abstraction of the memory as named boxes that contain values. </p>
+<div>
+    x = x + 1;
+</div>
+<p> We can imagine these equation is made up of two parts, the L and R values. <br/>
+The x on the left of the = refers to the address of x, the L value. <br/>
+The x on the right of the = refers to the contents of x, the R value. </p>
+
+<h3 id="defPointer"></h3>
+<p> Pointers are an abstraction of machine addresses. Addresse are at a hardware level, but in C, we are not supposed to care about actual hardware addresses. It is easier to visualise C memory as a graph where nodes are the chunks of memory (often a struct) and edges are pointers. </p>
+
+<p> In C, * is also a unary operator which has nothing to do with the binary infix operator for multiplication. <br/>
+    If P is an expression denoting a pointer, then *P is the result of dereferencing the pointer. <br/>
+    If T is a type, then T *p declares p to be of type "pointer to T". <br/>
+    If T is a type, then T* is the type of pointers to something of type T. This is used for example in casting. <br/> </p>
+
+<p> <strong> Pointer </strong> is a <em> programming abstraction of machine address </em> in main memory. <br/>
+    <strong> Dereferencing </strong> is to <em> load value </em> from memory. </p>
+
+<p> If a variable appears on the right side of an =, then its R-value is taken. <br/>
+    If we want the address of member x rather than its contents, we use the & operator, so &x.  </p>
+
+<div>
+    y = x; <span style="color: #696969"> // means y get the contents of x </span> <br/>
+    p = &x&semi; <span style="color: #696969"> // means p is made to point to x </span> <br/>
+    <span style="color: #696969"> <code> // So <span style="color: indianred; font-family: Candara, sans-serif;"> *&x </span> is essentially the same thing as <span style="color: indianred; font-family: Candara, sans-serif;"> x </span>. </code> </span>
+</div>
+
+<p> Example codes from the slides </p>
+<div>
+    <img src="images/ccpp/pointerEg1.JPG" title="Click to show answer" onclick="
+    if(document.getElementById('spoiler1').style.display==='none') {
+        document.getElementById('spoiler1').style.display='';
+    }">
+</div>
+
+<div id="spoiler1" style="display:none;">
+    <img src="images/ccpp/pointerEg1Ans.JPG">
+    <p> Keep in mind that when p2 is dereferenced and incremented, x will also be updated because p2 is a pointer that points to x. </p>
+</div>
+
+
+
+<h3 id="equalityPointer"> Pointer equality == in C </h3>
+<p> In C, two pointers are == if they refer to the same address in memory. Pointer equality is different from structural equality like that built into functional languages such as OCaml. </p>
+
+<div>
+    # [ 1 ] = [ 1 ] ;; <br/>
+    - : bool = true <br/>
+    <br/>
+    p = q <span style="color: #696969"> // makes p == q because p takes the address of q </span> <br/>
+    *p = *q <span style="color: #696969"> // <span style="color: darkred;"> does not </span> make p == q because *p will have a different address from *q. </span> <br/>
+</div>
+
+<p> <code>NULL</code> pointer is a special value that does not point to anything. Dereferencing NULL gives undefined behaviour (usually crash). A typical idiom to test whether a pointer <code>p</code> is equal to the <code>NULL</code> pointer: </p>
+<div>
+    if (p) ... <br/>
+    <span style="color: #696969">// Note that pointers are not always initialized to null. </span>
+</div>
+<p> Pointer Equality Example 1 </p>
+<div>
+    <img src="images/ccpp/pointerEg2.JPG" title="Click to show answer" onclick="
+    if(document.getElementById('spoiler2').style.display==='none') {
+        document.getElementById('spoiler2').style.display='';
+    }">
+</div>
+<div id="spoiler2" style="display: none;">
+    <img src="images/ccpp/pointerEg2Ans.JPG">
+</div>
+
+<p> Pointer Equality Example 2 </p>
+<div>
+    <img src="images/ccpp/pointerEg3.JPG" title="Click to show answer" onclick="
+    if(document.getElementById('spoiler3').style.display==='none') {
+        document.getElementById('spoiler3').style.display='';
+    }">
+</div>
+<div id="spoiler3" style="display: none;">
+    <img src="images/ccpp/pointerEg3Ans.JPG">
+</div>
+
+<p> Pointer Equality Example 3 </p>
+<div>
+    <img src="images/ccpp/pointerEg4.JPG" title="Click to show answer" onclick="
+    if(document.getElementById('spoiler4').style.display==='none') {
+        document.getElementById('spoiler4').style.display='';
+    }">
+</div>
+<div id="spoiler4" style="display: none;">
+    <img src="images/ccpp/pointerEg4Ans.JPG">
+</div>
+
+<p> Pointer Equality Example 4 </p>
+<div>
+    <img src="images/ccpp/pointerEg5.JPG" title="Click to show answer" onclick="
+    if(document.getElementById('spoiler5').style.display==='none') {
+        document.getElementById('spoiler5').style.display='';
+    }">
+</div>
+<div id="spoiler5" style="display: none;">
+    <img src="images/ccpp/pointerEg5Ans.JPG">
+</div>
+
+<p> It is important to note when declaring a pointer, the * sticks to the variable and not to the type. Array declarations behave the same, sticking only to one identifier </p>
+<div>
+    int *p, n; <br/>
+    <span style="color: #696969;"> // Is the same as </span> <br/>
+    int *p; <br/>
+    int n; <br/>
+    <span style="color: #696969;"> // and not </span> <br/>
+    int *p; <br/>
+    int *n; <br/>
+    <span style="color: #696969;"> // The * sticks only to the p and not the int. </span>
+</div>
+
+<p> Pointer Exercise </p>
+<div>
+    <img src="images/ccpp/pointerEg6.JPG" title="Click to show answer" onclick="
+    if(document.getElementById('spoiler6').style.display==='none') {
+        document.getElementById('spoiler6').style.display='';
+    }">
+</div>
+<div id="spoiler6" style="display: none;">
+    <img src="images/ccpp/pointerEg6Ans.JPG">
+</div>
+
+<h3 id="mallocfree"> Memory Management with malloc and free </h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Utils -->
+<button onclick="topFunction()" id="topBtn" title="Go to top"> Top </button>
+<script>
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function() {scrollFunction()};
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("topBtn").style.display = "block";
+        } else {
+            document.getElementById("topBtn").style.display = "none";
+        }
+    }
+
+    // When the user clicks on the button, scroll to the top of the document
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+</script>
+<button onclick="window.location.href='index.html'" id="homeBtn" title="Back to Home"> Home </button>
+
+</body>
+</html>

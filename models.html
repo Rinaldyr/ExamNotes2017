@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Models of Computation </title>
+    <style type="text/css">
+        body {
+            background-color: #fbffd8;
+            font-family: "Georgia", serif;
+        }
+
+        ol > li {
+            margin: 10px;
+        }
+
+        #topBtn {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: red;
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        #topBtn:hover {
+            background-color: #555;
+        }
+
+        #homeBtn {
+            display: block;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: red;
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            border-radius:10px;
+        }
+
+        #homeBtn:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+<h1> LI Models of Computation </h1>
+<hr/> <hr/>
+Table of Contents
+<ol>
+    <li> <a href="#fsa"> Finite State Automata </a> </li>
+    <ul>
+        <li> <a href="#fsa1"> Problems and Computers </a> </li>
+        <li> <a href="#fsa2"> Regular Expression </a> </li>
+        <li> <a href="#fsa3"> Finite State Automaton</a> </li>
+    </ul>
+</ol>
+
+<hr/>
+
+<h3 id="fsa"> Finite State Automata </h3>
+<h4 id="fsa1"> Problems and Computers </h4>
+<p> <em> This module is about problems and computers, except for the last part which is about &lambda;-calculus. </em> </p>
+
+<p> Some questions that we can ask ourselves: </p>
+<ul>
+    <li> What problems can be solved on a computer? </li>
+    <li> What problems can be solved on a computer with only finitely many states? </li>
+    <li> What problems can be solved <em> fast </em> on a computer? </li>
+    <li> What does "fast" mean anyway? </li>
+    <li> What does "computer" mean anyway? </li>
+    <li> etc.. </li>
+</ul>
+
+<h4> Language Membership Problems </h4>
+Suppose that we have a set of characters, the alphabet &Sigma;. <br/>
+A word (or string) is a finite sequence of characters. <br/> We write &Sigma;* for the set of all words. We can concatenate words. <br/>
+The empty word is written as &epsilon;. <br/>
+A language is a set of words, which means that it is a subset of &Sigma;*. <br/>
+
+<p> Example language 1 <br/>
+    Let's say the alphabet is {a,b,c}. The image below shows some example languages: <br/>
+    <img src="images/models/fsa1.JPG"/> <br/>
+    This can be applicable in real-life situations such as: <br/>
+    <img src="images/models/fsa2.JPG"/> <br/>
+    In all of these examples, somebody has provided a word and we want to know whether it is an acceptable word. Ideally, we want a computer program that will tell us. </p>
+
+<h4 id="fsa2"> Regular Expressions </h4>
+<p> Every regular expression gives rise to a language &ndash; a <em> regular language </em>. Some useful notations for describing languages: </p>
+<ul>
+    <li> We write <em> Empty </em> for the language consisting of no words, or the empty set. </li>
+    <li> We write <em> a </em> for the language consisting of the single-character word <em> a </em> </li>
+    <li> We write &epsilon; for the language consisting of just the empty word. </li>
+    <li> Suppose <em> L </em> and <em> L' </em> are languages. </li>
+    <ul>
+        <li> We write <em> LL' </em> for the set of words that are a concatenation of a word in <em> L </em> and a word in <em> L' </em> </li>
+        <li> We write <em> L | L'</em> for the set of words that are either in <em> L </em> or <em> L' </em>. This is basically the union of <em> L </em> and <em> L' </em>. </li>
+        <li> We write <em> L* </em> for the set of words that are a concatenation of some number of words in <em> L </em>. Note that "some number" might be 0, so the empty word is in <em> L* </em>. </li>
+    </ul>
+</ul>
+<p> All expressions built up this way makes a regular expression. A regular expression <em> E </em> can be either Empty, &epsilon;, <em> a, b c, </em> or anything in the alphabet, <em> EE' </em>, <em> E | E' </em>, or <em> E* </em>. </p>
+
+<p> Just like arithmetic expressions, you can't make sense of regular expressions without knowing the precedence rules. <em> * </em> has the highest precedence, then juxtaposition (putting things next to each other, you juxtapose AB in aljebra means A * B, or <strong> concatenation</strong>) then |.</p>
+
+<p style="font-weight: bold"> Example exercises </p>
+<ol>
+    <li> Is the word <em> abb </em> in the language <em> a(b|c)* </em> ? &emsp; <span style="border: 1px solid darkgoldenrod;" onmouseenter="this.innerHTML='Yes, because a matches then b then b since (b|c)*'"> Hover for answer </span> </li>
+
+    <li> Is the word <em> abc </em> in the language <em> a(b|c)* </em> ? &emsp; <span style="border: 1px solid darkgoldenrod;" onmouseenter="this.innerHTML='Yes, because a matches then b then c since (b|c)*'"> Hover for answer </span> </li>
+
+    <li> Is the word <em> aabbab </em> in the language <em> (a(b|c)*)* </em> ? &emsp; <span style="border: 1px solid darkgoldenrod;" onmouseenter="this.innerHTML='Yes, because a abb ab'"> Hover for answer </span> </li>
+
+    <li> Is the word <em> abbabca </em> in the language <em> (ab|ba)* </em> ? &emsp; <span style="border: 1px solid darkgoldenrod;" onmouseenter="this.innerHTML='No, because c is not in the language'"> Hover for answer </span> </li>
+
+    <li> is the language <em> ((a|b)(b|c))* </em> the same as the language <em> (ab|ac|bb|bc)* </em> ? &emsp; <span style="border: 1px solid darkgoldenrod;" onmouseenter="this.innerHTML='Yes, because they are can form either ab or ac or bb or bc, then * the whole thing'"> Hover for answer </span> </li>
+
+    <li> For each regexp <em> E </em>, could you write a program that takes a word <em> w </em> and says whether it's in the language represented by E? &emsp; <span style="border: 1px solid darkgoldenrod;" onmouseenter="this.innerHTML='Yes, a very efficient one'"> Hover for answer </span> </li>
+
+    <li> Could you write a single program that takes a word <em> w </em> and a regexp <em> E </em> and says whether <em> w </em> is in the language represented by <em> E </em> ? &emsp; <span style="border: 1px solid darkgoldenrod;" onmouseenter="this.innerHTML='Yes'"> Hover for answer </span> </li>
+
+    <li> Could you write a program that takes two regexps and says whether they represent the same language? &emsp; <span style="border: 1px solid darkgoldenrod;" onmouseenter="this.innerHTML='Yes, but it is not obvious'"> Hover for answer </span> </li>
+</ol>
+
+<p> Regular expression in theoretical computer science means an expression built up from the above operations and nothing more. The term has come to be used in Linux etc. to include various other operations. Regexps are also used in a somewhat different sense to find occurrences of words within a larger word. </p>
+<p> Here are a few common abbreviations, it is optional to use these. <br/> <img src="images/models/fsa3.JPG"/> </p>
+
+
+<h3 id="fsa3"> Finite State Automaton </h3>
+
+
+<hr/>
+
+
+
+<!-- Utils -->
+<button onclick="topFunction()" id="topBtn" title="Go to top">Top</button>
+<script>
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function() {scrollFunction()};
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("topBtn").style.display = "block";
+        } else {
+            document.getElementById("topBtn").style.display = "none";
+        }
+    }
+
+    // When the user clicks on the button, scroll to the top of the document
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+</script>
+<button onclick="window.location.href='index.html'" id="homeBtn" title="Back to Home"> Home </button>
+
+</body>
+</html>

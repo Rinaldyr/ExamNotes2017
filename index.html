@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Notes for exam! </title>
+    <style type="text/css">
+        body {
+            background-color: lavender;
+            font-family: Verdana, serif;
+        }
+
+        ul > li {
+            display: inline-block;
+            margin:5px;
+        }
+
+        th, td {
+            padding: 5px;
+        }
+
+        table tr:nth-child(even){
+            background-color: #c1fffd;
+        }
+
+        table tr:nth-child(odd) {
+            background-color: #dcfffd;
+        }
+
+        table th {
+            background-color: #2571ff;
+            color: ghostwhite;
+            font-weight: bold;
+        }
+
+        table, tr, th, td {
+            border: 1px solid #000000;
+            border-collapse: collapse;
+        }
+
+    </style>
+</head>
+<body>
+    <h1> Exam Notes May/June 2017 </h1>
+    <table>
+        <caption> Exam Schedule </caption>
+        <tr style="font-weight: bold;">
+            <th> Day </th>
+            <th> Date </th>
+            <th> Start Time </th>
+            <th> Exam Title </th>
+            <th> Room </th>
+            <th> Seat </th>
+            <th> Duration </th>
+            <th> Days left </th>
+        </tr>
+        <tr> <!-- Software Engineering 1 -->
+            <td> Tuesday </td>
+            <td> 02/05/2017 </td>
+            <td> 09:30 </td>
+            <td> <a href="softeng.html"> LI Software Engineering 1 </a> </td>
+            <td> Muirhead 121 </td>
+            <td> 37 </td>
+            <td> 1:30hrs </td>
+            <td> <p style="font-size: 18px; font-family: Consolas, serif" id="first"></p> </td>
+        </tr>
+        <tr> <!-- Models of Computation -->
+            <td> Friday </td>
+            <td> 05/05/2017 </td>
+            <td> 09:30 </td>
+            <td> <a href="models.html"> LI Models of Computation </a> </td>
+            <td> New Gym </td>
+            <td> 137 </td>
+            <td> 1:30hrs </td>
+            <td> <p style="font-size: 18px; font-family: Consolas, serif" id="second"></p> </td>
+        </tr>
+        <tr> <!-- Introductory Databases -->
+            <td> Thursday </td>
+            <td> 11/05/2017 </td>
+            <td> 09:30 </td>
+            <td> LI Introductory Databases </td>
+            <td> Avon Room </td>
+            <td> 210 </td>
+            <td> 1:30hrs </td>
+            <td> <p style="font-size: 18px; font-family: Consolas, serif" id="third"></p> </td>
+        </tr>
+        <tr> <!-- Professional Computing -->
+            <td> Friday </td>
+            <td> 12/05/2017 </td>
+            <td> 09:30 </td>
+            <td> LI Professional Computing </td>
+            <td> Great Hall </td>
+            <td> 141 </td>
+            <td> 1:30hrs </td>
+            <td> <p style="font-size: 18px; font-family: Consolas, serif" id="fourth"></p> </td>
+        </tr>
+        <tr> <!-- Computer Systems and Architecture -->
+            <td> Monday </td>
+            <td> 15/05/2017 </td>
+            <td> 09:30 </td>
+            <td> LI Computer Systems and Architecture </td>
+            <td> Sports Hall </td>
+            <td> 332 </td>
+            <td> 1:30hrs </td>
+            <td> <p style="font-size: 18px; font-family: Consolas, serif" id="fifth"></p> </td>
+        </tr>
+        <tr> <!-- C/C++ -->
+            <td> Thursday </td>
+            <td> 18/05/2017 </td>
+            <td> 14:00 </td>
+            <td> <a href="cplusplus.html"> LI C/C++ </a> </td>
+            <td> Arts Lecture Room 2 </td>
+            <td> 39 </td>
+            <td> 1:30hrs </td>
+            <td> <p style="font-size: 18px; font-family: Consolas, serif" id="sixth"></p> </td>
+        </tr>
+        <tr> <!-- Graphics -->
+            <td> Tuesday </td>
+            <td> 23/05/2017 </td>
+            <td> 09:30 </td>
+            <td> LI Graphics </td>
+            <td> Muirhead 121 </td>
+            <td> 42 </td>
+            <td> 1:30hrs </td>
+            <td> <p style="font-size: 18px; font-family: Consolas, serif" id="seventh"></p> </td>
+        </tr>
+        <tr> <!-- Matds -->
+            <td> Wednesday </td>
+            <td> 24/05/2017 </td>
+            <td> 09:30 </td>
+            <td> LI Math Techniques for Comp Sc </td>
+            <td> New Gym </td>
+            <td> 197 </td>
+            <td> 1:30hrs </td>
+            <td> <p style="font-size: 18px; font-family: Consolas, serif" id="eighth"></p> </td>
+        </tr>
+        <tr> <!-- Intro to Computer Security -->
+            <td> Friday </td>
+            <td> 26/05/2017 </td>
+            <td> 14:00 </td>
+            <td> LI Intro to Computer Security </td>
+            <td> Avon Room </td>
+            <td> 209 </td>
+            <td> 1:30hrs </td>
+            <td> <p style="font-size: 18px; font-family: Consolas, serif" id="ninth"></p> </td>
+        </tr>
+    </table>
+
+    <script>
+        // Get todays date and time
+        var now = new Date().getTime();
+
+        // First exam
+        var firstDate = new Date("May 2, 2017 09:30:00").getTime();
+        var firstDistance = firstDate - now;
+        var firstLeft = Math.floor(firstDistance / (1000 * 60 * 60 * 24));
+        document.getElementById("first").innerHTML = firstLeft + "d ";
+        if (firstLeft < 1 && firstLeft >= 0) {
+            document.getElementById("first").innerHTML = "<strong> TOMORROW! </strong> <br/> Pray and do your best!";
+        }
+        // If the count down is finished, write some text
+        else if (firstDistance < 0) {
+            document.getElementById("first").innerHTML = "<strong> DONE! </strong>";
+        }
+
+        // Second exam
+        var secondDate = new Date("May 5, 2017 09:30:00").getTime();
+        var secondDistance = secondDate - now;
+        var secondLeft = Math.floor(secondDistance / (1000 * 60 * 60 * 24));
+        document.getElementById("second").innerHTML = secondLeft + "d ";
+        if (secondLeft < 1 && secondLeft >= 0) {
+            document.getElementById("second").innerHTML = "<strong> Tomorrow!! </strong> <br/> Pray and do your best!";
+        }
+        // If the count down is finished, write some text
+        else if (firstDistance < 0) {
+            document.getElementById("second").innerHTML = "<strong> DONE! </strong>";
+        }
+
+        // Third exam
+        var thirdDate = new Date("May 11, 2017 09:30:00").getTime();
+        var thirdDistance = thirdDate - now;
+        var thirdLeft = Math.floor(thirdDistance / (1000 * 60 * 60 * 24));
+        document.getElementById("third").innerHTML = thirdLeft + "d ";
+        if (thirdLeft < 1 && thirdLeft >= 0) {
+            document.getElementById("third").innerHTML = "<strong> Tomorrow!! </strong> <br/> Pray and do your best!";
+        }
+        // If the count down is finished, write some text
+        else if (firstDistance < 0) {
+            document.getElementById("third").innerHTML = "<strong> DONE! </strong>";
+        }
+
+        // Fourth exam
+        var fourthDate = new Date("May 12, 2017 09:30:00").getTime();
+        var fourthDistance = fourthDate - now;
+        var fourthLeft = Math.floor(fourthDistance / (1000 * 60 * 60 * 24));
+        document.getElementById("fourth").innerHTML = fourthLeft + "d ";
+        if (fourthLeft < 1 && fourthLeft >= 0) {
+            document.getElementById("fourth").innerHTML = "<strong> Tomorrow!! </strong> <br/> Pray and do your best!";
+        }
+        // If the count down is finished, write some text
+        else if (firstDistance < 0) {
+            document.getElementById("fourth").innerHTML = "<strong> DONE! </strong>";
+        }
+
+        // Fifth exam
+        var fifthDate = new Date("May 15, 2017 09:30:00").getTime();
+        var fifthDistance = fifthDate - now;
+        var fifthLeft = Math.floor(fifthDistance / (1000 * 60 * 60 * 24));
+        document.getElementById("fifth").innerHTML = fifthLeft + "d ";
+        if (fifthLeft < 1 && fifthLeft >= 0) {
+            document.getElementById("fifth").innerHTML = "<strong> Tomorrow!! </strong> <br/> Pray and do your best!";
+        }
+        // If the count down is finished, write some text
+        else if (firstDistance < 0) {
+            document.getElementById("fifth").innerHTML = "<strong> DONE! </strong>";
+        }
+
+        // Sixth exam
+        var sixthDate = new Date("May 18, 2017 14:00:00").getTime();
+        var sixthDistance = sixthDate - now;
+        var sixthLeft = Math.floor(sixthDistance / (1000 * 60 * 60 * 24));
+        document.getElementById("sixth").innerHTML = sixthLeft + "d ";
+        if (sixthLeft < 1 && sixthLeft >= 0) {
+            document.getElementById("sixth").innerHTML = "<strong> Tomorrow!! </strong> <br/> Pray and do your best!";
+        }
+        // If the count down is finished, write some text
+        else if (firstDistance < 0) {
+            document.getElementById("sixth").innerHTML = "<strong> DONE! </strong>";
+        }
+
+        // Seventh exam
+        var seventhDate = new Date("May 23, 2017 09:30:00").getTime();
+        var seventhDistance = seventhDate - now;
+        var seventhLeft = Math.floor(seventhDistance / (1000 * 60 * 60 * 24));
+        document.getElementById("seventh").innerHTML = seventhLeft + "d ";
+        if (seventhLeft < 1 && seventhLeft >= 0) {
+            document.getElementById("seventh").innerHTML = "<strong> Tomorrow!! </strong> <br/> Pray and do your best!";
+        }
+        // If the count down is finished, write some text
+        else if (firstDistance < 0) {
+            document.getElementById("seventh").innerHTML = "<strong> DONE! </strong>";
+        }
+
+        // Eighth exam
+        var eighthDate = new Date("May 24, 2017 09:30:00").getTime();
+        var eighthDistance = eighthDate - now;
+        var eighthLeft = Math.floor(eighthDistance / (1000 * 60 * 60 * 24));
+        document.getElementById("eighth").innerHTML = eighthLeft + "d ";
+        if (eighthLeft < 1 && eighthLeft >= 0) {
+            document.getElementById("eighth").innerHTML = "<strong> Tomorrow!! </strong> <br/> Pray and do your best!";
+        }
+        // If the count down is finished, write some text
+        else if (firstDistance < 0) {
+            document.getElementById("eighth").innerHTML = "<strong> DONE! </strong>";
+        }
+
+        // Ninth exam
+        var ninthDate = new Date("May 26, 2017 14:00:00").getTime();
+        var ninthDistance = ninthDate - now;
+        var ninthLeft = Math.floor(ninthDistance / (1000 * 60 * 60 * 24));
+        document.getElementById("ninth").innerHTML = ninthLeft + "d ";
+        if (ninthLeft < 1 && ninthLeft >= 0) {
+            document.getElementById("ninth").innerHTML = "<strong> Tomorrow!! </strong> <br/> Pray and do your best!";
+        }
+        // If the count down is finished, write some text
+        else if (firstDistance < 0) {
+            document.getElementById("ninth").innerHTML = "<strong> DONE! </strong>";
+        }
+
+    </script>
+    <hr/>
+
+    Click on respective Exam Titles to view its notes.
+
+</body>
+</html>
