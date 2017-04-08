@@ -63,7 +63,7 @@
             <td align="center"> 37 </td>
             <td align="center"> - </td>
             <td align="center"> 1:30hrs </td>
-            <td> <p style="font-size: 18px; font-family: Consolas, serif" id="first"></p> </td>
+            <td> <p style="font-size: 18px; font-family: Consolas, serif" id="softEng"></p> </td>
         </tr>
         <tr> <!-- Computational Vision -->
             <td> Thursday </td>
@@ -85,7 +85,7 @@
             <td align="center"> 137 </td>
             <td align="center"> 21 </td>
             <td align="center"> 1:30hrs </td>
-            <td> <p style="font-size: 18px; font-family: Consolas, serif" id="second"></p> </td>
+            <td> <p style="font-size: 18px; font-family: Consolas, serif" id="models"></p> </td>
         </tr>
         <tr> <!-- Introductory Databases -->
             <td> Thursday </td>
@@ -96,7 +96,7 @@
             <td align="center"> 210 </td>
             <td align="center"> 90 </td>
             <td align="center"> 1:30hrs </td>
-            <td> <p style="font-size: 18px; font-family: Consolas, serif" id="third"></p> </td>
+            <td> <p style="font-size: 18px; font-family: Consolas, serif" id="databases"></p> </td>
         </tr>
         <tr> <!-- Professional Computing -->
             <td> Friday </td>
@@ -107,7 +107,7 @@
             <td align="center"> 141 </td>
             <td align="center"> 21 </td>
             <td align="center"> 1:30hrs </td>
-            <td> <p style="font-size: 18px; font-family: Consolas, serif" id="fourth"></p> </td>
+            <td> <p style="font-size: 18px; font-family: Consolas, serif" id="profComp"></p> </td>
         </tr>
         <tr> <!-- Computer Systems and Architecture -->
             <td> Monday </td>
@@ -118,7 +118,7 @@
             <td align="center"> 332 </td>
             <td align="center"> 216 </td>
             <td align="center"> 1:30hrs </td>
-            <td> <p style="font-size: 18px; font-family: Consolas, serif" id="fifth"></p> </td>
+            <td> <p style="font-size: 18px; font-family: Consolas, serif" id="csa"></p> </td>
         </tr>
         <tr> <!-- C/C++ -->
             <td> Thursday </td>
@@ -129,7 +129,7 @@
             <td align="center"> 39 </td>
             <td align="center"> 10 </td>
             <td align="center"> 1:30hrs </td>
-            <td> <p style="font-size: 18px; font-family: Consolas, serif" id="sixth"></p> </td>
+            <td> <p style="font-size: 18px; font-family: Consolas, serif" id="ccpp"></p> </td>
         </tr>
         <tr> <!-- Graphics -->
             <td> Tuesday </td>
@@ -140,7 +140,7 @@
             <td align="center"> 42 </td>
             <td align="center"> 11 </td>
             <td align="center"> 1:30hrs </td>
-            <td> <p style="font-size: 18px; font-family: Consolas, serif" id="seventh"></p> </td>
+            <td> <p style="font-size: 18px; font-family: Consolas, serif" id="graphics"></p> </td>
         </tr>
         <tr> <!-- Maths -->
             <td> Wednesday </td>
@@ -151,7 +151,7 @@
             <td align="center"> 197 </td>
             <td align="center"> 92 </td>
             <td align="center"> 1:30hrs </td>
-            <td> <p style="font-size: 18px; font-family: Consolas, serif" id="eighth"></p> </td>
+            <td> <p style="font-size: 18px; font-family: Consolas, serif" id="maths"></p> </td>
         </tr>
         <tr> <!-- Intro to Computer Security -->
             <td> Friday </td>
@@ -162,7 +162,7 @@
             <td align="center"> 209 </td>
             <td align="center"> 114 </td>
             <td align="center"> 1:30hrs </td>
-            <td> <p style="font-size: 18px; font-family: Consolas, serif" id="ninth"></p> </td>
+            <td> <p style="font-size: 18px; font-family: Consolas, serif" id="security"></p> </td>
         </tr>
     </table>
 
@@ -171,16 +171,16 @@
         var now = new Date().getTime();
 
         // First exam
-        var firstDate = new Date("May 2, 2017 09:30:00").getTime();
-        var firstDistance = firstDate - now;
-        var firstLeft = Math.floor(firstDistance / (1000 * 60 * 60 * 24));
-        document.getElementById("first").innerHTML = firstLeft + "d ";
-        if (firstLeft < 1 && firstLeft >= 0) {
-            document.getElementById("first").innerHTML = "<strong> TOMORROW! </strong> <br/> Pray and do your best!";
+        var softEngDate = new Date("May 2, 2017 09:30:00").getTime();
+        var softEngDistance = softEngDate - now;
+        var softEngLeft = Math.floor(softEngDistance / (1000 * 60 * 60 * 24));
+        document.getElementById("softEng").innerHTML = softEngLeft + "d ";
+        if (softEngLeft < 1 && softEngLeft >= 0) {
+            document.getElementById("softEng").innerHTML = "<strong> TOMORROW! </strong> <br/> Pray and do your best!";
         }
         // If the count down is finished, write some text
-        else if (firstDistance < 0) {
-            document.getElementById("first").innerHTML = "<strong> DONE! </strong>";
+        else if (softEngDistance < 0) {
+            document.getElementById("softEng").innerHTML = "<strong> DONE! </strong>";
         }
 
         // Vision exam
@@ -196,108 +196,108 @@
             document.getElementById("vision").innerHTML = "<strong> DONE! </strong>";
         }
 
-        // Second exam
-        var secondDate = new Date("May 5, 2017 09:30:00").getTime();
-        var secondDistance = secondDate - now;
-        var secondLeft = Math.floor(secondDistance / (1000 * 60 * 60 * 24));
-        document.getElementById("second").innerHTML = secondLeft + "d ";
-        if (secondLeft < 1 && secondLeft >= 0) {
-            document.getElementById("second").innerHTML = "<strong> Tomorrow!! </strong> <br/> Pray and do your best!";
+        // models exam
+        var modelsDate = new Date("May 5, 2017 09:30:00").getTime();
+        var modelsDistance = modelsDate - now;
+        var modelsLeft = Math.floor(modelsDistance / (1000 * 60 * 60 * 24));
+        document.getElementById("models").innerHTML = modelsLeft + "d ";
+        if (modelsLeft < 1 && modelsLeft >= 0) {
+            document.getElementById("models").innerHTML = "<strong> Tomorrow!! </strong> <br/> Pray and do your best!";
         }
         // If the count down is finished, write some text
-        else if (secondDistance < 0) {
-            document.getElementById("second").innerHTML = "<strong> DONE! </strong>";
+        else if (modelsDistance < 0) {
+            document.getElementById("models").innerHTML = "<strong> DONE! </strong>";
         }
 
-        // Third exam
-        var thirdDate = new Date("May 11, 2017 09:30:00").getTime();
-        var thirdDistance = thirdDate - now;
-        var thirdLeft = Math.floor(thirdDistance / (1000 * 60 * 60 * 24));
-        document.getElementById("third").innerHTML = thirdLeft + "d ";
-        if (thirdLeft < 1 && thirdLeft >= 0) {
-            document.getElementById("third").innerHTML = "<strong> Tomorrow!! </strong> <br/> Pray and do your best!";
+        // databases exam
+        var databasesDate = new Date("May 11, 2017 09:30:00").getTime();
+        var databasesDistance = databasesDate - now;
+        var databasesLeft = Math.floor(databasesDistance / (1000 * 60 * 60 * 24));
+        document.getElementById("databases").innerHTML = databasesLeft + "d ";
+        if (databasesLeft < 1 && databasesLeft >= 0) {
+            document.getElementById("databases").innerHTML = "<strong> Tomorrow!! </strong> <br/> Pray and do your best!";
         }
         // If the count down is finished, write some text
-        else if (thirdDistance < 0) {
-            document.getElementById("third").innerHTML = "<strong> DONE! </strong>";
+        else if (databasesDistance < 0) {
+            document.getElementById("databases").innerHTML = "<strong> DONE! </strong>";
         }
 
-        // Fourth exam
-        var fourthDate = new Date("May 12, 2017 09:30:00").getTime();
-        var fourthDistance = fourthDate - now;
-        var fourthLeft = Math.floor(fourthDistance / (1000 * 60 * 60 * 24));
-        document.getElementById("fourth").innerHTML = fourthLeft + "d ";
-        if (fourthLeft < 1 && fourthLeft >= 0) {
-            document.getElementById("fourth").innerHTML = "<strong> Tomorrow!! </strong> <br/> Pray and do your best!";
+        // profComp exam
+        var profCompDate = new Date("May 12, 2017 09:30:00").getTime();
+        var profCompDistance = profCompDate - now;
+        var profCompLeft = Math.floor(profCompDistance / (1000 * 60 * 60 * 24));
+        document.getElementById("profComp").innerHTML = profCompLeft + "d ";
+        if (profCompLeft < 1 && profCompLeft >= 0) {
+            document.getElementById("profComp").innerHTML = "<strong> Tomorrow!! </strong> <br/> Pray and do your best!";
         }
         // If the count down is finished, write some text
-        else if (fourthDistance < 0) {
-            document.getElementById("fourth").innerHTML = "<strong> DONE! </strong>";
+        else if (profCompDistance < 0) {
+            document.getElementById("profComp").innerHTML = "<strong> DONE! </strong>";
         }
 
-        // Fifth exam
-        var fifthDate = new Date("May 15, 2017 09:30:00").getTime();
-        var fifthDistance = fifthDate - now;
-        var fifthLeft = Math.floor(fifthDistance / (1000 * 60 * 60 * 24));
-        document.getElementById("fifth").innerHTML = fifthLeft + "d ";
-        if (fifthLeft < 1 && fifthLeft >= 0) {
-            document.getElementById("fifth").innerHTML = "<strong> Tomorrow!! </strong> <br/> Pray and do your best!";
+        // csa exam
+        var csaDate = new Date("May 15, 2017 09:30:00").getTime();
+        var csaDistance = csaDate - now;
+        var csaLeft = Math.floor(csaDistance / (1000 * 60 * 60 * 24));
+        document.getElementById("csa").innerHTML = csaLeft + "d ";
+        if (csaLeft < 1 && csaLeft >= 0) {
+            document.getElementById("csa").innerHTML = "<strong> Tomorrow!! </strong> <br/> Pray and do your best!";
         }
         // If the count down is finished, write some text
-        else if (fifthDistance < 0) {
-            document.getElementById("fifth").innerHTML = "<strong> DONE! </strong>";
+        else if (csaDistance < 0) {
+            document.getElementById("csa").innerHTML = "<strong> DONE! </strong>";
         }
 
-        // Sixth exam
-        var sixthDate = new Date("May 18, 2017 14:00:00").getTime();
-        var sixthDistance = sixthDate - now;
-        var sixthLeft = Math.floor(sixthDistance / (1000 * 60 * 60 * 24));
-        document.getElementById("sixth").innerHTML = sixthLeft + "d ";
-        if (sixthLeft < 1 && sixthLeft >= 0) {
-            document.getElementById("sixth").innerHTML = "<strong> Tomorrow!! </strong> <br/> Pray and do your best!";
+        // ccpp exam
+        var ccppDate = new Date("May 18, 2017 14:00:00").getTime();
+        var ccppDistance = ccppDate - now;
+        var ccppLeft = Math.floor(ccppDistance / (1000 * 60 * 60 * 24));
+        document.getElementById("ccpp").innerHTML = ccppLeft + "d ";
+        if (ccppLeft < 1 && ccppLeft >= 0) {
+            document.getElementById("ccpp").innerHTML = "<strong> Tomorrow!! </strong> <br/> Pray and do your best!";
         }
         // If the count down is finished, write some text
-        else if (sixthDistance < 0) {
-            document.getElementById("sixth").innerHTML = "<strong> DONE! </strong>";
+        else if (ccppDistance < 0) {
+            document.getElementById("ccpp").innerHTML = "<strong> DONE! </strong>";
         }
 
-        // Seventh exam
-        var seventhDate = new Date("May 23, 2017 09:30:00").getTime();
-        var seventhDistance = seventhDate - now;
-        var seventhLeft = Math.floor(seventhDistance / (1000 * 60 * 60 * 24));
-        document.getElementById("seventh").innerHTML = seventhLeft + "d ";
-        if (seventhLeft < 1 && seventhLeft >= 0) {
-            document.getElementById("seventh").innerHTML = "<strong> Tomorrow!! </strong> <br/> Pray and do your best!";
+        // graphics exam
+        var graphicsDate = new Date("May 23, 2017 09:30:00").getTime();
+        var graphicsDistance = graphicsDate - now;
+        var graphicsLeft = Math.floor(graphicsDistance / (1000 * 60 * 60 * 24));
+        document.getElementById("graphics").innerHTML = graphicsLeft + "d ";
+        if (graphicsLeft < 1 && graphicsLeft >= 0) {
+            document.getElementById("graphics").innerHTML = "<strong> Tomorrow!! </strong> <br/> Pray and do your best!";
         }
         // If the count down is finished, write some text
-        else if (sevethDistance < 0) {
-            document.getElementById("seventh").innerHTML = "<strong> DONE! </strong>";
+        else if (graphicsDistance < 0) {
+            document.getElementById("graphics").innerHTML = "<strong> DONE! </strong>";
         }
 
-        // Eighth exam
-        var eighthDate = new Date("May 24, 2017 09:30:00").getTime();
-        var eighthDistance = eighthDate - now;
-        var eighthLeft = Math.floor(eighthDistance / (1000 * 60 * 60 * 24));
-        document.getElementById("eighth").innerHTML = eighthLeft + "d ";
-        if (eighthLeft < 1 && eighthLeft >= 0) {
-            document.getElementById("eighth").innerHTML = "<strong> Tomorrow!! </strong> <br/> Pray and do your best!";
+        // maths exam
+        var mathsDate = new Date("May 24, 2017 09:30:00").getTime();
+        var mathsDistance = mathsDate - now;
+        var mathsLeft = Math.floor(mathsDistance / (1000 * 60 * 60 * 24));
+        document.getElementById("maths").innerHTML = mathsLeft + "d ";
+        if (mathsLeft < 1 && mathsLeft >= 0) {
+            document.getElementById("maths").innerHTML = "<strong> Tomorrow!! </strong> <br/> Pray and do your best!";
         }
         // If the count down is finished, write some text
-        else if (eighthDistance < 0) {
-            document.getElementById("eighth").innerHTML = "<strong> DONE! </strong>";
+        else if (mathsDistance < 0) {
+            document.getElementById("maths").innerHTML = "<strong> DONE! </strong>";
         }
 
-        // Ninth exam
-        var ninthDate = new Date("May 26, 2017 14:00:00").getTime();
-        var ninthDistance = ninthDate - now;
-        var ninthLeft = Math.floor(ninthDistance / (1000 * 60 * 60 * 24));
-        document.getElementById("ninth").innerHTML = ninthLeft + "d ";
-        if (ninthLeft < 1 && ninthLeft >= 0) {
-            document.getElementById("ninth").innerHTML = "<strong> Tomorrow!! </strong> <br/> Pray and do your best!";
+        // security exam
+        var securityDate = new Date("May 26, 2017 14:00:00").getTime();
+        var securityDistance = securityDate - now;
+        var securityLeft = Math.floor(securityDistance / (1000 * 60 * 60 * 24));
+        document.getElementById("security").innerHTML = securityLeft + "d ";
+        if (securityLeft < 1 && securityLeft >= 0) {
+            document.getElementById("security").innerHTML = "<strong> Tomorrow!! </strong> <br/> Pray and do your best!";
         }
         // If the count down is finished, write some text
-        else if (ninthDistance < 0) {
-            document.getElementById("ninth").innerHTML = "<strong> DONE! </strong>";
+        else if (securityDistance < 0) {
+            document.getElementById("security").innerHTML = "<strong> DONE! </strong>";
         }
 
     </script>
