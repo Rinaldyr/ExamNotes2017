@@ -57,16 +57,17 @@
 <hr/>
 Table of Contents
 <ol>
-    <li> <a href="#fsa"> Finite State Automata </a> <ul>
+    <li> <a href="#fsa"> Language and Automata </a> <ul>
         <li> <a href="#fsa1"> Problems and Computers </a> </li>
         <li> <a href="#fsa2"> Regular Expression </a> </li>
         <li> <a href="#fsa3"> Finite State Automaton</a> </li>
+        <li> <a href="#fsa4"> Bisimulation </a> </li>
     </ul> </li>
 </ol>
 
 <hr/>
 
-<h3 id="fsa"> Finite State Automata </h3>
+<h3 id="fsa"> Languages and Automata </h3>
 <h4 id="fsa1"> Problems and Computers </h4>
 <p> <em> This module is about problems and computers, except for the last part which is about &lambda;-calculus. </em> </p>
 
@@ -156,13 +157,20 @@ A language is a set of words, which means that it is a subset of &Sigma;*. <br/>
 <p> <span style="font-weight: bold;"> Converting DFA into a regexp </span> <br/> So say we have states {0,1,...,<em>n</em> &ndash; 1}. <br/> For any state <em>i</em> and <em>j</em> and any <em>k &le; n</em>, we want a regexp <em> E <span style="position: relative; top: 0.5em; left: -0.3em;"> <em> i&rightarrow;j</em></span> <span style="position:relative; top: -0.5em; left: -1.8em;"> &lt;k </span> </em> <br/> that accepts those words that take us from <em>i</em> and <em>j</em> with intermediate states all &lt; <em>k</em>. <br/>
     The image below shows the formula to convert DFA into a regexp. <br/> <br/> <img src="images/models/fsa4.JPG"/> </p>
 
+<p> <em> Note: Every node in NDFA will always have equal number of transitions, and that number is all the possible transitions, and each of them are labelled with sets of states. </em> </p>
+
+<p> <span style="font-weight: bold;"> Operations on Regular Languages </span> <br/> We can use Kleene's theorem to prove that some languages are regular. Firstly, the complement of a regular language L is regular. <br/> The proof is to get a DFA that recognises L, and by Kleene's theorem, the new complement automaton will have accepting states that are the set &Qopf;\Acc. This recognises the complement of L, so the latter is regular. <br/> The intersection of regular languages L and L' is regular (Corollary), because it's the complement of the union of the complements L and L' by Kleene's theorem. If L and L' are regular, then L \ L' is regular because L &cap; (&Sigma; \ L') by corollary. </p>
+
+<p> <span style="font-weight: bold;"> Proving a language is not regular </span> <br/> We can prove this by finding an L-distinguishing suffix for words. Suppose we have a DFA that recognises the language L. And if we have words that have an L-distinguishing suffix, then each word must take us from the initial state to different states. <br/>
+    If there is a countable sequence of distinctive words, then the minimum states of the DFA will be equal to the size of the set. <br/>
+    However, if it is an infinite sequence of distinctive words, then there will be no DFA, and by Kleene's theorem the language is not regular. <br/> </p>
+<p> Also by the use of <strong> pumping lemma</strong>, which says that for any regular language L there exists a constant p such that any word w in L with length at least p can eb split into three substrings, w = xyz, where the middle portion of y must not be empty, such that the words xz, xyz, xyyz, xyyyz, ... constructed by repeating y zero or more times are still in L. The repetition process is called "pumping". Moreover, the pumping lemma guarantees that the length of xy will be at most p, imposing a limit on the way in which w may be split. Finite languages trivially satisfy the pumping lemma by having p equal to the maximum string length in L plus one. </p>
+
+<h4 id="fsa4"> Bisimulation </h4>
 
 
 
 <hr/>
-
-
-
 <!-- Utils -->
 <button onclick="topFunction()" id="topBtn" title="Go to top">Top</button>
 <script>
