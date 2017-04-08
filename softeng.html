@@ -62,7 +62,11 @@ Table of contents
         <li><a href="#models4"> Incremental Delivery </a></li>
         <li><a href="#models5"> Spiral Development </a></li>
     </ul></li>
-    <li><a href="#reqeng"> Requirements Engineering </a></li>
+    <li><a href="#reqeng"> Requirements Engineering </a><ul>
+        <li><a href="#reqeng1"> Software Development Lifecycle </a></li>
+    </ul></li>
+
+    <li><a href="#system"> System </a></li>
 </ol>
 <hr/> <!----------------------------------------------------------------------------------->
 
@@ -245,9 +249,69 @@ Table of contents
     </ul></li>
 </ol>
 
+<hr/> <!----------------------------------------------------------------------------------->
 
-<h2 id="reqeng"> Requirements Engineering </h2>
+<h2 id="reqeng"> Requirements Engineering (RE) </h2>
+<p> Requirements form the basis for Project Planning, Risk Management, Acceptance Testing and Change Control. </p>
+<p> Most project's critical issues are in the requirements area. Major gaps in Requirements tend to be critical to a project success. Producing a good set of requirements is likely the most difficult job in software system development. </p>
 
+<h4> Recurring problems </h4>
+<ul>
+    <li> Lack of functional requirements by either no requirements have been written, usage scenario not understood and documented, functionality of the system incomplete, customer not known and not contacted, or no acceptance criteria for the system. </li>
+    <li> Lack of performance and capacity requirements: Number and/or types of users undocumented, transaction and data volumes unknown. </li>
+    <li> Lack of operations, administration and management requirements. </li>
+</ul>
+
+<p> Good requirements describe <em> what </em> the system is supposed to do, <strong> not </strong> <em> how </em> the system is supposed to do it. Remember the 5W's and one H. </p>
+
+<p> Requirements are <strong> not </strong> a description of how the system provides the needed functionality. Requirements should <strong>not</strong> specify technology or implementation except where those items are customer constraints. Requirements should not contain assumptions, should not be indecisive with words like "would", "could", "flexible" in the document. The item <strong> will </strong> or <strong> will not </strong> be in the system. Requirement should not be inconsistent or conflicting too. </p>
+
+<p> Requirements are description of <strong> what </strong> the entire system is supposed to do: </p>
+<ul>
+    <li> Reflective of customer need </li>
+    <li> Constraints imposed by the customer </li>
+    <li> Constraints imposed by business and marketing needs </li>
+    <li> Unambiguous (clear and concise) </li>
+    <li> Complete </li>
+    <li> Prioritised </li>
+    <li> Traceable, meaning able to be followed </li>
+    <li> Implementable within project constraints like schedule and budget </li>
+    <li> Formally accepted by the customer, systems engineering and development, system test, and under change control </li>
+</ul>
+<p> Requirements are sometimes referenced for contacts, and also sometimes considered to be contract between systems engineering and development. </p>
+
+<p> Customer and end-user are not always the same person. The end-user is the person who interacts with the system to get the job done, while the customer typically pays for the system. They may have similar or conflicting objectives. Sometimes delighting your end-user delights the customer, but remember that the customer pays for the job. So it is very important to get the customer involved in the initial phase of RE, if at all possible. </p>
+
+<h3 id="reqeng1"> Software Development Lifecycle </h3>
+<p> We have the <strong> V Model</strong>: If problems are found during Verification or Validation phase, he LHS of the V is re-executed to fix the problem. </p>
+<img src="images/softeng/reqeng1.JPG"/>
+<p> Prototyping allows all or part of the system to be constructed quickly in the hopes of clarifying and understanding issues. Iterate requirements and design to ensure common understanding. </p>
+
+<h4> Role of requirements engineering </h4>
+<p> Requirements influence the whole development from the start to end. Testing is with respect to the requirements. A system is accepted against Stakeholder's requirements during Acceptance Test Phase as shown in the image below. </p>
+<img src="images/softeng/reqeng2.JPG"/>
+
+<p> RE provides communication amongst projects. <br/> <strong>Requirements traceability</strong> refers to the ability to understand how high-level requirements (goals, objectives etc) are transformed into low-level requirements (mapping between layers of information: one-to-many usually). It is the ability to assess impact changes introduced at various phases of development lifecycle, and the ability to track progress. <br/> <em> Stakeholders req. met by system req &rightarrow; partitioned into subsystem req &rightarrow; implemented as components </em></p>
+
+<p> <strong>Traceability</strong> is the use of requirements management tools to link requirements statements in on elayer with statement in another. </p>
+
+<p> Main requirements activities include </p>
+<ul>
+    <li> Requirements inception </li>
+    <li> Requirements analysis </li>
+    <li> Requirements specification </li>
+    <li> Requirements verification and validation </li>
+    <li> Requirements management </li>
+    <li> Requirements documents </li>
+</ul>
+
+<hr/> <!----------------------------------------------------------------------------------->
+
+<h2 id="system"> Systems </h2>
+
+
+
+<hr/>
 <!-- Utils -->
 <button onclick="topFunction()" id="topBtn" title="Go to top">Top</button>
 <script>
