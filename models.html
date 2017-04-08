@@ -168,8 +168,19 @@ A language is a set of words, which means that it is a subset of &Sigma;*. <br/>
 <p> Also by the use of <strong> pumping lemma</strong>, which says that for any regular language L there exists a constant p such that any word w in L with length at least p can eb split into three substrings, w = xyz, where the middle portion of y must not be empty, such that the words xz, xyz, xyyz, xyyyz, ... constructed by repeating y zero or more times are still in L. The repetition process is called "pumping". Moreover, the pumping lemma guarantees that the length of xy will be at most p, imposing a limit on the way in which w may be split. Finite languages trivially satisfy the pumping lemma by having p equal to the maximum string length in L plus one. </p>
 
 <h4 id="fsa4"> Bisimulation </h4>
+<p> An <em> unpointed automaton </em> is one that has no initial state. <br/> A <strong> bisimulation </strong> between unpointed total deterministic automata (&Qopf;, &sigma;, Acc) and (&Qopf;', &sigma;', Acc') with the same alphabet L is a relation R &subseteq; &Qopf; &times; &Qopf;' such that if <em> qRq' </em> and a &epsi; L then &sigma;(q,a)R&sigma;'(q',a), and if <em> qRq' </em> then q &epsi; Acc iff q' &epsi; Acc'. <br/>
+    Suppose that we have to unpointed automata for the same alphabet L. Then a state <em>q<sub>0</sub></em> &epsi; Q is bisimilar to a state <em>q'<sub>0</sub></em> if and only if they accept the same language. To prove this, show that for any word <em> w </em>, if <em>qRq'</em> then <em> q </em> accepts <em> w </em> if and only if <em> q' </em> accepts <em> w</em>. This is by induction on <em> w</em>. </p>
 
+<p> The theorem is that two states accept the same language iff they are bisimilar. </p>
 
+<h4 id="fsa5"> Minimisation </h4>
+<p> To minimise an automaton means to throw away unreachable states and to identify bisimilar states. </p>
+<ol>
+    <li> Draw a table for all pairs of states (P,Q) </li>
+    <li> Mark all pairs where P &in; Acc and Q &notin; Acc </li>
+    <li> If there are any unmarked pairs (P,Q) such that transitions [&sigma;(P,x), &sigma;(Q,x)] is marked, then mark [P,Q] where 'x' is an input symbol. Repeat this until no more markings can be made. </li>
+    <li> Combine all the unmarked pairs and make them a single state in the minimised DFA </li>
+</ol>
 
 <hr/>
 <!-- Utils -->
