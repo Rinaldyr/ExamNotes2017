@@ -52,9 +52,9 @@
         }
     </style>
 </head>
-<body>
+<hr/>
 <h1> LI Models of Computation </h1>
-<hr/> <hr/>
+<hr/>
 Table of Contents
 <ol>
     <li> <a href="#fsa"> Finite State Automata </a> <ul>
@@ -141,17 +141,21 @@ A language is a set of words, which means that it is a subset of &Sigma;*. <br/>
     <li> a finite set &Qopf; of states (<em> nodes </em>) </li>
     <li> a transition function &Qopf; &times; &Sigma; &rightarrow; &Qopf; (<em> paths, edges </em>) </li>
     <li> a set Acc &subseteq; &Qopf; of accepting states (<em> double nodes </em>) </li>
-    <li> an initial state <em> q </em> &epsi; &Qopf; (<em> diamond node </em>) </li>
+    <li> an initial state <em> q<sub>0</sub> </em> &epsi; &Qopf; (<em> diamond node </em>) </li>
 </ul>
-<p> Every finite state automaton has an associated language. </p>
+<p> Every finite state automaton has an associated language. To convert a partial FSA into a complete FSA, simply add an error state. </p>
 
-<p style="font-weight: bold;"> Removing &epsilon;-transitions </p>
-<p> There's a <em> slow a-transition </em> from state q to state q' when, starting from state q we can follow some number of &epsilon;-transition, and end in state q'. A state q is <em> slowly accepting </em> when, starting from state q we can follow some number of &epsilon;-transitions and reach an accepting state. </p>
+<p> <span style="font-weight: bold;"> Removing &epsilon;-transitions </span> <br/> There's a <em> slow a-transition </em> from state q to state q' when, starting from state q we can follow some number of &epsilon;-transition, and end in state q'. A state q is <em> slowly accepting </em> when, starting from state q we can follow some number of &epsilon;-transitions and reach an accepting state. </p>
 
 <p> But if we want to remove all &epsilon;-transitions, we keep the set of states, keep the initial state, replace the slow transitions by transitions, and replace slowly accepting states by accepting states. After removing all &epsilon;-transitions, we will obtain a Non-Deterministic Finite Automaton (NDFA). </p>
 
-<p style="font-weight: bold;"> Determinisation </p>
-<p> Given a NDFA, we can form a Deterministic Finite Automaton (DFA). </p>
+<p> <span style="font-weight: bold;"> Determinisation </span> <br/> Given a NDFA, we can form a Deterministic Finite Automaton (DFA) by first having the states a subset of &Qopf;, then from a state U &subseteq; &Qopf;, when we input a, take the set of all states that we can reach by an a-transition from a state in U. An accepting state is any that contains a state in Acc. The initial state is {<em>q<sub>0</sub></em>}. </p>
+
+<p> <span style="font-weight: bold;"> Converting a regexp into a DFA </span> <br/> Convert first into NDFA by removing &epsilon;-transitions, and then determinise as mentioned above. </p>
+
+<p> <span style="font-weight: bold;"> Converting DFA into a regexp </span> <br/> So say we have states {0,1,...,<em>n</em> &ndash; 1}. <br/> For any state <em>i</em> and <em>j</em> and any <em>k &le; n</em>, we want a regexp <em> E <span style="position: relative; top: 0.5em; left: -0.3em;"> <em> i&rightarrow;j</em></span> <span style="position:relative; top: -0.5em; left: -1.8em;"> &lt;k </span> </em> <br/> that accepts those words that take us from <em>i</em> and <em>j</em> with intermediate states all &lt; <em>k</em>. <br/>
+    The image below shows the formula to convert DFA into a regexp. <br/> <br/> <img src="images/models/fsa4.JPG"/> </p>
+
 
 
 
