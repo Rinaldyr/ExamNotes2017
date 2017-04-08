@@ -40,7 +40,7 @@
             color: white;
             cursor: pointer;
             padding: 15px;
-            border-radius:10px;
+            border-radius: 10px;
         }
 
         #homeBtn:hover {
@@ -49,30 +49,227 @@
     </style>
 </head>
 <body>
-<hr/>
-    <h1> LI Software Engineering Extended 1 </h1>
-<hr/>
+<hr/> <!----------------------------------------------------------------------------------->
+<h1> LI Software Engineering Extended 1 </h1>
+<hr/> <!----------------------------------------------------------------------------------->
+Table of contents
+<ol>
+    <li><a href="#intro"> Introduction </a></li>
+    <li><a href="#models"> Software Process Models </a><ul>
+        <li><a href="#models1"> Waterfall Model </a></li>
+        <li><a href="#models2"> Evolutionary Development </a></li>
+        <li><a href="#models3"> Component-based Software Engineering </a></li>
+        <li><a href="#models4"> Incremental Delivery </a></li>
+        <li><a href="#models5"> Spiral Development </a></li>
+    </ul></li>
+    <li><a href="#reqeng"> Requirements Engineering </a></li>
+</ol>
+<hr/> <!----------------------------------------------------------------------------------->
 
-    <!-- Utils -->
-    <button onclick="topFunction()" id="topBtn" title="Go to top">Top</button>
-    <script>
-        // When the user scrolls down 20px from the top of the document, show the button
-        window.onscroll = function() {scrollFunction()};
+<h2 id="intro"> Introduction to Software Engineering </h2>
+<p> What is software engineering? It is a branch of systems engineering concerned with the development of large and
+    complex software intensive systems. It focuses on <strong> real world goals </strong> for, services provided by, and
+    constrains on such systems. There is also the precise <strong> specification of systems structure and
+        behaviour </strong>, and the implementations of these specifications. Furthermore, the activities required in
+    order to develop <strong> an assurance </strong> that the specifications and the real world goals have been met.
+    Also the <strong> evolution </strong> of these systems over time, and across systems families. It is also concerned
+    with the <strong> processes, methods and tools </strong> for the development of software intensive systems in an
+    <strong> economic and timely manner</strong>. </p>
 
-        function scrollFunction() {
-            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                document.getElementById("topBtn").style.display = "block";
-            } else {
-                document.getElementById("topBtn").style.display = "none";
-            }
+<p><strong> Problems in system development </strong> may come from either the End-user's perspective, the Client's
+    perspective, or the Developer's perspective. </p>
+<p> Problems: End-user </p>
+<ul>
+    <li> System is not finished</li>
+    <li> System has poor design, hard to use, poor interface, useless 'help'</li>
+    <li> System is pretty but not useful</li>
+</ul>
+<p> Problems: Client </p>
+<ul>
+    <li> Project is overbudget</li>
+    <li> Project is delivered late</li>
+    <li> Project is no longer needed</li>
+    <li> System is not trustworthy or safe to use</li>
+</ul>
+<p> Problems: Developer </p>
+<ul>
+    <li> Clients changed their minds</li>
+    <li> There is not enough time to complete the project</li>
+    <li> Development is disturbed by changing technology</li>
+    <li> Developer does not have the necessary skills to fix or develop</li>
+    <li> And sometimes, the system works fine but it's just the user with the problems</li>
+</ul>
+
+<p> Things go wrong because of two reasons: Quality and Productivity </p>
+<ul>
+    <li> Quality <ul>
+        <li> The wrong problem is addressed so the system conflicts with business strategy</li>
+        <li> The context is neglected</li>
+        <li> The project has poor software engineering &ndash; incorrect analysis or design, or the team simply lack
+            skills
+        </li>
+        <li> The project is carried out for the wrong reason</li>
+    </ul> </li>
+
+    <li> Productivity <ul>
+        <li> The client needs change over time, so there is always a requirements drift</li>
+        <li> External event changes the environment, e.g. legislation, change in technology</li>
+        <li> Poor project management</li>
+        <li> Implementation not feasible with over ambitious aims</li>
+    </ul> </li>
+</ul>
+
+<p> Software Engineering is one of the most technically challenging and practically demanding subjects in computer science. It addresses problems which are faced by day-to-day practitioners. </p>
+
+<hr/> <!----------------------------------------------------------------------------------->
+
+<h2 id="models"> Software Process Models </h2>
+<p> A structured set of activities required to develop a software system. It consists of <strong> Specification, Design, Validation, Evolution</strong>. A <strong> software process model</strong> is an abstract representation of a process. It presents a description of a process from some particular perspective. </p>
+<p> Process models: </p>
+<ul>
+    <li> Waterfall Model: Separate and distinct phases of specification and development. </li>
+    <li> Evolutionary Development: Specification, development and validation are interleaved. </li>
+    <li> Component-based Soft Eng: The system is assembled from existing components. </li>
+</ul>
+
+<h3 id="models1"> Waterfall Model </h3>
+<img src="images/softeng/models1.JPG"/>
+<ol>
+    <li> <strong> Requirements analysis and definition </strong> <ul>
+        <li> The process of establishing what services are required and the constraints on the system's operation and development. </li>
+        <li> Requirements Engineering Process, which includes feasibility study, requirements elicitation and analysis, requirements specification, requirements validation. <br/><img src="images/softeng/models2.JPG"/> </li>
+    </ul></li>
+
+    <li> <strong> System and software design </strong> a structure that realises the specification <ul>
+        <li> Architectural design </li>
+        <li> Abstract specification </li>
+        <li> Interface design </li>
+        <li> Component design </li>
+        <li> Data structure design </li>
+        <li> Algorithm design </li>
+        <li> And so on... <br/> <img src="images/softeng/models3.JPG"/> </li>
+    </ul></li>
+
+    <li> <strong> Implementation and unit testing </strong> <ul>
+        <li> Have to already produce executable code. </li>
+        <li> Unit testing individual components for functions, classes or programs independently. </li>
+        <li> Components may be functions or objects or coherent groupings of these entities. </li>
+    </ul></li>
+
+    <li> <strong> Integration and system testing </strong> <ul>
+        <li> System testing: Testing the system as a while. Testing of emergent properties is particularly important. </li>
+        <li> Acceptance testing: Testing with customer data to check that the system meets the customer's needs. </li>
+    </ul></li>
+
+    <li> <strong> Operation and maintenance </strong> to keep the system going. </li>
+</ol>
+
+<p><strong> Problems of Waterfall Model </strong></p>
+<ul>
+    <li> One phase has to be complete before moving on to the next phase. </li>
+    <li> Inflexible partitioning of the project into distinct stages makes it difficult to respond to changing customer requirements. <br/> Therefore this model is only appropriate when the requirements are well understood and the changing will be fairly limited during the design process. </li>
+    <li> But only a few business systems have stable requirements. </li>
+</ul>
+
+<h3 id="models2"> Evolutionary Development </h3>
+<p> Specification, development and validation is all concurrently ongoing. <br/>
+    <img src="images/softeng/models4.JPG"/> <br/> </p>
+<ul>
+    <li> Exploratory development: To work with customers and to evolve a final system from an initial outline specification. Start with well understood requirements and add new features as proposed by the customer. </li>
+    <li> Throw-away prototyping: To understand the system requirements. So should start with poorly understood requirements to clarify what is really needed. </li>
+</ul>
+
+<p><strong> Problems with Evolutionary Development </strong></p>
+<ul>
+    <li> Lack of process visibility </li>
+    <li> Systems are often poorly structured </li>
+    <li> Special skills such as in languages for rapid prototyping may be required </li>
+    <li> May not be applicable for small or medium-sized interactive systems </li>
+    <li> May not be applicable for parts of large systems like the user interface </li>
+    <li> May not be applicable for short-lifetime systems </li>
+</ul>
+
+<h3 id="models3"> Component-based Software Engineering </h3>
+<p> This is based on systematic reuse where systems are integrated from existing components or <strong> Commercial-off-the-shelf (COTS) </strong> systems. </p>
+<p> Process stages include component analysis, requirement modification, system design with reuse, and development and integration. <br/> Reuse-oriented development <br/> <img src="images/softeng/models5.JPG"/> </p>
+
+<h3> Process Iteration </h3>
+<p> System requirements <em> ALWAYS </em> evolve in the course of a project, so process iteration where earlier stages are reworked is always part of the process for large systems. Iterations can be applied to any of the generic process models. </p>
+
+<h3 id="models4"> Incremental Delivery </h3>
+<p> Rather than deliver the system as a single delivery, the development and delivery is broken down into increments with each increment delivering part of the required functionality. </p>
+<p> User requirements are prioritised and the highest priority requirements are included in early increments. Once the development of an increment is started, the requirements are frozen through for later increments to evolve. </p>
+<img src="images/softeng/models6.JPG"/>
+<p> The advantage of this development style </p>
+<ul>
+    <li> Early increments act as a prototype to help elicit requirements for later increments. </li>
+    <li> Lower risk of overall project failure. </li>
+    <li> The highest priority system services tend to receive the most testing. </li>
+    <li> Customer value can be delivered with each increment so system functionality is available earlier. </li>
+</ul>
+
+<h3 id="models5"> Spiral Development </h3>
+<p> The process is represented as a spiral rather than as a sequence of activities with backtracking. Each loo[ in the spiral represents a phase in the process. There are no fixed phases such as specification or design &dash; loops in the spiral are chosen depending on what is required. Risks are explicitly assessed and resolved throughout the process. </p>
+<img src="images/softeng/models7.JPG"/>
+
+
+<h3 id="models6"> Rational Unified Process (RUP) </h3>
+<img src="images/softeng/models8.JPG"/>
+<p> There are four RUP phases </p>
+<ol>
+    <li> <strong>Inception</strong>: Establish the business case for the system. <ul>
+        <li> Formulating the scope of the project. </li>
+        <li> Planning and preparing the business case. </li>
+        <li> Synthesizing a candidate architecture. </li>
+        <li> Preparing the environment for the project. </li>
+    </ul></li>
+    <li> <strong>Elaboration</strong>: Develop an understanding of the problem domain and the system architecture. <ul>
+        <li> Defining, validating the baseline architecture. </li>
+        <li> Refining the vision. </li>
+        <li> Creating detail of iteration plans for the construction phase. </li>
+        <li> Refining the development case and putting in [lace the development environment. </li>
+        <li> Refining the architecture and selecting components. </li>
+    </ul></li>
+    <li> <strong>Construction</strong>: System design, programming and testing. <ul>
+        <li> Resource management, control and process optimisation. </li>
+        <li> Complete component development and testing against the defined evaluation criteria. </li>
+        <li> Assessment of product releases against acceptance criteria for the vision. </li>
+    </ul></li>
+    <li> <strong>Transition</strong>: Deploy the system in its operating environment. <ul>
+        <li> Executing deployment plans. </li>
+        <li> Finalising end-user support material. </li>
+        <li> Testing the deliverable product at the development site. </li>
+        <li> Creating a product release and getting user feedback. </li>
+        <li> Fine-tuning the product based on feedback. </li>
+        <li> Making the product available to end-users. </li>
+    </ul></li>
+</ol>
+
+
+<h2 id="reqeng"> Requirements Engineering </h2>
+
+<!-- Utils -->
+<button onclick="topFunction()" id="topBtn" title="Go to top">Top</button>
+<script>
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function () {
+        scrollFunction()
+    };
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("topBtn").style.display = "block";
+        } else {
+            document.getElementById("topBtn").style.display = "none";
         }
+    }
 
-        // When the user clicks on the button, scroll to the top of the document
-        function topFunction() {
-            document.body.scrollTop = 0;
-            document.documentElement.scrollTop = 0;
-        }
-    </script>
-    <button onclick="window.location.href='index.html'" id="homeBtn" title="Back to Home"> Home </button>
+    // When the user clicks on the button, scroll to the top of the document
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+</script>
+<button onclick="window.location.href='index.html'" id="homeBtn" title="Back to Home"> Home</button>
 </body>
 </html>
