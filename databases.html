@@ -5,8 +5,18 @@
     <title> Introductory Databases </title>
     <style type="text/css">
         body {
-            background-color: #ffffcc;
+            background-color: #dbffe0;
             font-family: "Georgia", serif;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+            color: cadetblue;
+        }
+
+        code.type {
+            color: #4913d3;
+            font-weight: bolder;
         }
 
         #topBtn {
@@ -40,7 +50,7 @@
             color: white;
             cursor: pointer;
             padding: 15px;
-            border-radius:10px;
+            border-radius: 10px;
         }
 
         #homeBtn:hover {
@@ -49,30 +59,164 @@
     </style>
 </head>
 <body>
-<hr/>
-    <h1> LI Introductory Databases </h1>
-<hr/>
+<hr/> <!------------------------------------------------------------------------------->
+<h1> LI Introductory Databases </h1>
+<hr/> <!------------------------------------------------------------------------------->
+Table of Contents
+<ol>
+    <li><a href="#intro"> Introduction </a></li>
+    <li><a href="#database"> Database </a><ul>
+        <li><a href="#database1"> Relational Database </a></li>
+    </ul></li>
+    <li><a href="#basics"> Basics </a><ul>
+        <li><a href="#basics1"> Sets </a></li>
+        <li><a href="#basics2"> Keys </a></li>
+        <li><a href="#basics3"> SQL </a></li>
+    </ul></li>
+    <li><a href="#constraints"> Constraints </a></li>
+</ol>
+<hr/> <!------------------------------------------------------------------------------->
 
-    <!-- Utils -->
-    <button onclick="topFunction()" id="topBtn" title="Go to top">Top</button>
-    <script>
-        // When the user scrolls down 20px from the top of the document, show the button
-        window.onscroll = function() {scrollFunction()};
+<h2 id="intro"> 1 &dash; Introduction </h2>
+<p> As the world we are living in today gets more connected, we start to question how to store and share data. Data can be stored in many ways, for instance by memory, written documents, computer Java objects, XML data files, and so on. Data can also be shared through again, memory, sharing files locally in computers, having a document repository, or even data servers. </p>
 
-        function scrollFunction() {
-            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                document.getElementById("topBtn").style.display = "block";
-            } else {
-                document.getElementById("topBtn").style.display = "none";
-            }
+<p> All of these have their applications, but what if we need something that integrates with existing systems? <br/> This is where <strong>databases</strong> comes in. </p>
+
+<p> We will be using <a href="https://www.postgresql.org/"> PostgreSQL</a> for this module.</p>
+
+<hr/> <!------------------------------------------------------------------------------->
+
+<h2 id="database"> 2 &dash; Database </h2>
+<p> <strong> Database </strong> is a structured set of data held in a computer, especially one that is accessible in various ways. </p>
+<p> Database management system (DBMS) is a core data base, which is a representation of data that can be used for retrieval and maintenance. </p>
+<p> There are many database models, but <strong> relational databases </strong> are the pre-eminent choice for general purpose of database systems. </p>
+
+<p> In a database, we want an organised collection of data, also with some desirable properties such as the ACID below. </p>
+<p><strong> ACID </strong></p>
+<ul>
+    <li> Atomicity &dash; a transaction happens as a whole, or not at all. </li>
+    <li> Consistency &dash; a DB is always in a consistent state. </li>
+    <li> Isolation &dash; the effect of two operations happening in parallel is the same as if they had happened sequentially. </li>
+    <li> Durability &dash; once something is stored it won't disappear. </li>
+</ul>
+
+<h3 id="database1"> Relational Database </h3>
+<p> This is the main model for database systems. Data is structured in the form of set and relations, and is connected using basic set theory. They are viewed as <strong>tables</strong>. Queries specify result and <strong>not</strong> how it is computed. </p>
+
+<p> A <strong>query</strong> in database is an statement that specifies a request for information from the database. This will be explored more later on. </p>
+
+<hr/> <!------------------------------------------------------------------------------->
+
+<h2 id="basics"> Basics </h2>
+<p> Relational databases uses the set theory to connect data around. </p>
+<h3 id="basics1"> Sets </h3>
+<p><strong>Sets</strong> are collections of items. They are unordered and do not contain duplicates. They are written as: <code>{2,4,6,8}</code>.</p>
+
+<p> Items inside a set are called <em>elements</em>. <br/> If all the elements of a set are also elements of a second set then the first set is a <em>subset</em> of the second, and the second a <em>superset</em> of the first. <br/> If the second set has extra elements then the first is a <em>proper subset</em> of the second. </p>
+
+<p> Set definitions </p>
+<ul>
+    <li><strong>Union &Union;</strong> of two sets is a set made up of all elements of the two sets. </li>
+    <li><strong>Intersection &Intersection;</strong> between two sets is the set whose elements are in both operand sets. </li>
+    <li><strong>Difference /</strong> between the first the second set is the set whose elements are in the first but not in the second. </li>
+    <li><strong>Empty Set <code>{}</code></strong> is a set without any elements.</li>
+</ul>
+
+<p> Relational Definitions </p>
+<ul>
+    <li><strong>Domain</strong> is a non-empty arbitrary set of atomic values.</li>
+    <li><strong>Attribute name</strong> is a symbol with an associated domain.</li>
+    <li><strong>Relational Schema</strong> is a finite set of attribute names.</li>
+    <li><strong>Tuple</strong> of a relational schema is a mapping from the attributes of a relational schema the union of their domains. </li>
+    <li><strong>Relation</strong> of a relationship schema is a finite set of tuples of a relational schema.</li>
+    <li><strong>Degree or Arity</strong> of a relationship schema is the number of attributes.</li>
+    <li><strong>Cardinality</strong> of a relation is the number of tuples or elements in a set. </li>
+</ul>
+
+<h3 id="basics2"> Keys </h3>
+<p> Keys are used to establish and identify relation between tables. They also ensure that each record within a table can be uniquely identified by combination of one or more fields within a table. </p>
+<ul>
+    <li><strong>Super Key</strong> &dash; a set of attributes that can <em>always</em> be used to differentiate one tuple from another.</li>
+    <li><strong>Candidate Key</strong> &dash; is a subset of a <strong>Super Key</strong>. A candidate key is a single field or the least combination of fields that uniquely identifies each record in the table. Every table must have at least one candidate key but at the same time can have several. </li>
+    <li><strong>Concatenated Key</strong> &dash; a key with more than one attribute.</li>
+    <li><strong>Primary Key</strong> &dash; a candidate key that uniquely identify each record in a table.</li>
+    <li><strong>Foreign Key</strong> &dash; a key that points to primary key attributes.</li>
+</ul>
+
+<h3 id="basics3"> Standard Query Language (SQL) </h3>
+<p> SQL provides the mechanism that is used to manipulate a relational database. The <strong>Data Definition Language </strong> (DDL) is used to create, modify and delete parts of the <em>definition</em> of the database. The <strong>Data Manipulation Language</strong> (DML) is used to <em>manipulate the data</em>. </p>
+<p> In SQL, case and whitespaces are not significant, but there are conventions that is good to follow:</p>
+<ul>
+    <li> SQL keywords in <strong>upper case</strong>.</li>
+    <li> Table names capitalised.</li>
+    <li> Field names lower case. </li>
+    <li> Layout. </li>
+</ul>
+
+<h4> CREATE </h4>
+<p><code> CREATE TABLE Name { <br/> &emsp; field1 type1 constraint, <br/> &emsp; field2 type2 <br/>} </code></p>
+<p> This creates a table with the name, its fields inside the curly braces, and addition of constraints are possible too.</p>
+<p> Constraints on the data should be included on one field or across several. </p>
+<ul>
+    <li><code>NOT NULL</code></li>
+    <li><code>UNIQUE</code></li>
+</ul>
+
+<h4> DROP </h4>
+<p><code> DROP TABLE Name </code></p>
+<p> This deletes the table called Name. Don't just go around dropping everything now!</p>
+
+<h4> ALTER </h4>
+<p><code> ALTER TABLE Name ADD COLUMN field type </code></p>
+<p> This modifies the table definition by adding nulls to the table. </p>
+
+<p> Drop and alter can be applied to other things as well. </p>
+
+<p> Databases are business critical so it may not be possible to rebuild them. They could be live for a very long time, so we update them 'on the fly'. </p>
+
+<p> Some Types </p>
+<ul>
+    <li> <code class="type">BOOLEAN</code> &dash; TRUE, FALSE, or NULL </li>
+    <li> <code class="type">CHAR(size)</code> or <code class="type">CHARACTER(size)</code> &dash; characters </li>
+    <li> <code class="type">VARCHAR</code> &dash; strings </li>
+    <li> <code class="type">INT</code> or <code class="type">INTEGER</code></li>
+    <li> <code class="type">REAL, FLOAT</code> or <code class="type">DOUBLE</code></li>
+    <li> <code class="type">NUMERIC</code> or <code class="type">DECIMAL</code></li>
+    <li> <code class="type">DATE</code> &dash; date types </li>
+    <li> <code class="type">TIME</code> &dash; a type of day value </li>
+</ul>
+
+<hr/> <!------------------------------------------------------------------------------->
+
+<h2 id="constraints"> Constraints </h2>
+
+
+
+
+
+
+<!-- Utils -->
+<button onclick="topFunction()" id="topBtn" title="Go to top">Top</button>
+<script>
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function () {
+        scrollFunction()
+    };
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("topBtn").style.display = "block";
+        } else {
+            document.getElementById("topBtn").style.display = "none";
         }
+    }
 
-        // When the user clicks on the button, scroll to the top of the document
-        function topFunction() {
-            document.body.scrollTop = 0;
-            document.documentElement.scrollTop = 0;
-        }
-    </script>
-    <button onclick="window.location.href='index.html'" id="homeBtn" title="Back to Home"> Home </button>
+    // When the user clicks on the button, scroll to the top of the document
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+</script>
+<button onclick="window.location.href='index.html'" id="homeBtn" title="Back to Home"> Home</button>
 </body>
 </html>
