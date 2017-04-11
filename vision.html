@@ -46,6 +46,20 @@
         #homeBtn:hover {
             background-color: #555;
         }
+
+        table, tr, td {
+            border: 1px solid #000000;
+            border-collapse: collapse;
+        }
+
+        td {
+            text-align: center;
+            width: 15px;
+        }
+
+        table {
+            margin: 5px;
+        }
     </style>
 </head>
 <body>
@@ -106,7 +120,7 @@ Table of contents
 <hr/>
 
 <h2 id="human"> 2 - Human Vision </h2>
-<p> Evolution of eyes:</p>
+<p><strong>Evolution of eyes:</strong></p>
 <ul>
     <li>Single cell - 1D capture of light</li>
     <li>Multiple cell - Better direction resolution</li>
@@ -123,14 +137,14 @@ Table of contents
     </ul></li>
 </ul>
 <p> <strong>Solution:</strong> Use of <strong>light refraction</strong> and hence <strong>lenses</strong></p>
-<p> Refraction (Snell's Law)<br><em>The wavelength changes, but wave crests can't be created or destroyed
+<p> <strong>Refraction</strong> (Snell's Law)<br><em>The wavelength changes, but wave crests can't be created or destroyed
 at the interface, so to make the waves match up, the light has to change <strong>direction.</strong></em></p>
-<p> Pinhole Camera:</p>
+<p><strong>Pinhole Camera:</strong></p>
 <ul>
     <li>Basic geometry</li> <img src="images/vision/pinholeCamera.png" width="400">
     <li>Perspective projection</li> <img src="images/vision/perspectiveProjection.png" width="400">
 </ul>
-<p> Image formation</p>
+<p><strong>Image formation</strong></p>
 <p style="text-align: center;"><img src="images/vision/formation.png" width="300" align="center"></p>
 <ul>
     <li>f = the focal length (metres)</li>
@@ -148,7 +162,7 @@ at the interface, so to make the waves match up, the light has to change <strong
     <li>But if it is 1m away the lens must change shape to produce a sharp image <em><sup>1</sup>&frasl;<sub>f</sub>
         = <sup>1</sup>&frasl;<sub>1</sub> + <sup>1</sup>&frasl;<sub>0.02</sub> = 51 dioptres</em></li>
 </ul>
-<p> The retina contains two types of photoreceptors that respond to light</p>
+<p> The retina contains two types of <strong>photoreceptors</strong> that respond to light</p>
 <ul>
     <li>Rods<ul>
         <li>&approx;120million</li>
@@ -162,7 +176,7 @@ at the interface, so to make the waves match up, the light has to change <strong
         <li>Higher resolution as Signal processed by several neurons</li>
     </ul></li>
 </ul>
-<p>2 types of Ganglion cells</p>
+<p><strong>2 types of Ganglion cells</strong></p>
 <ul>
     <li>On-center: stimulated when the center of its receptive field is exposed to light, inhibited when the surround
     is exposed to light</li>
@@ -194,15 +208,285 @@ at the interface, so to make the waves match up, the light has to change <strong
 <hr/>
 
 <h2 id="edge"> 3 - Edge Detection </h2>
+<p>Intensity Images</p>
+<ul>
+    <li>Data matrix where values represent intensities</li>
+    <li>Single matrix, with each element corresponding to one image pixel</li>
+</ul>
+<p><strong>Indexed Images</strong></p>
+<ul>
+    <li>Consists of data matrix and a colormap matrix</li>
+    <li>Map is an m-by-3 array of doubles containing floating point values between 0 and 1</li>
+    <li>Each row of map specifies RGB components of a single color</li>
+</ul>
+<p><strong>Intensity gradients</strong></p>
+<ul>
+    <li>Image is a function that maps coordinates to intensity - <em>f(x,y)</em></li>
+    <li>Gradient of intensity is a vector with x and y components</li>
+</ul>
+<p><strong>Approximating the gradient</strong></p>
+<ul>
+    <li>We use a 2x2 mask<br>
+    <table style="float: left">
+        <caption>G<sub>x</sub></caption>
+        <tr>
+            <td>-1</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>-1</td>
+            <td>1</td>
+        </tr>
+    </table>
+    <table>
+        <caption>G<sub>y</sub></caption>
+        <tr>
+            <td>1</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>-1</td>
+            <td>-1</td>
+        </tr>
+    </table></li>
+    <li>For each mask of weights you multiply the corresponding pixel by the weight and sum over all pixels</li>
+</ul>
+<p>Other edge detectors</p>
+<ul>
+    <li><strong>Roberts</strong><br>
+        <table style="float: left">
+            <caption>G<sub>x</sub></caption>
+            <tr>
+                <td>1</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>0</td>
+                <td>-1</td>
+            </tr>
+        </table>
+        <table>
+            <caption>G<sub>y</sub></caption>
+            <tr>
+                <td>0</td>
+                <td>-1</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>0</td>
+            </tr>
+        </table>
+    </li>
+    <br>
+    <li><strong>Sobel</strong><br>
+        <table style="float: left">
+            <caption>G<sub>x</sub></caption>
+            <tr>
+                <td>-1</td>
+                <td>0</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>-2</td>
+                <td>0</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>-1</td>
+                <td>0</td>
+                <td>1</td>
+            </tr>
+        </table>
+        <table>
+            <caption>G<sub>y</sub></caption>
+            <tr>
+                <td>1</td>
+                <td>2</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>-1</td>
+                <td>-2</td>
+                <td>-1</td>
+            </tr>
+        </table>
+    </li>
+</ul>
+<p><strong>Convolution</strong></p>
+<ul>
+    <li>Computation of weighted sums of image pixels</li>
+    <li>For each pixel [i,j], the value of h[i,j] is calculated by <strong>translating</strong> the mask
+    to pixel [i,j] and taking the weighted sum of pixels in neighbourhood</li>
+</ul>
+<p>Steps:</p>
+<ul>
+    <li>Take image</li>
+    <li>Convolve mask with image for each direction<ul>
+        <li>Calculate G<sub>x</sub> and G<sub>y</sub></li>
+    </ul></li>
+    <li>Calculate magnitude (using Pythagoras' theorem)</li>
+</ul>
+<p><strong>Filtering</strong></p>
+<ul>
+    <li>We can detect edges by calculating intensity change (gradient) across image</li>
+    <li>This is implemented using the idea of filtering</li>
+</ul>
 <hr/>
 
 <h2 id="noise"> 4 - Noise Filtering </h2>
+<p><strong>Noise</strong></p>
+<ul>
+    <li>We need to remove noise</li>
+    <li>There are many noise filters</li>
+    <li>Most can be implemented using convolution</li>
+    <li>e.g. Mean filter - this is a linear filter</li>
+    <li>The most widely used is <strong>Gaussian filtering</strong></li>
+</ul>
+<p><strong>Sequenced filters</strong></p>
+<ul>
+    <li>We can replace a 2D Gaussian filter with 2, 1D Gaussian filters in sequence</li>
+    <li>Efficiency and performance</li>
+</ul>
+<p><em>Reading: Laplacian, Laplacian of Gaussian, Gaussian (Canny) Edge detection and Thresholding</em></p>
 <hr/>
 
 <h2 id="colour"> 5 - Colour </h2>
+<ul>
+    <li>Objects selectively absorb some wavelengths and absorb others</li>
+    <li>Human retinas contain 3 different kinds of cones to give us the ability to distinguish different
+        forms of same objects</li>
+</ul>
+<p><strong>Colour mixing</strong></p>
+<ul>
+    <li><strong>Trichromatic (three colour) theory: </strong>eye's 3 different types of receptors sensitive
+    to different hues. Any colour can be produced by appropriate mixing of the 3 primary colours</li>
+    <li>Retina contains approximately equal numbers of red and green cones, but only 8% of blue</li>
+    <li>Theory explains:<ul>
+        <li>How we discriminate wavelengths 2nm in difference</li>
+        <li>How we can match a mixture of wavelengths to a single colour</li>
+        <li>Some types of colour blindness</li>
+    </ul></li>
+    <li>Does <strong>NOT</strong> account for colour blending<ul>
+        <li>Some colour blend while others don't</li>
+    </ul></li>
+    <li>Primary colours: Yellow, Blue, Red and Green<ul>
+        <li>Trichromatic theory cannot explain why yellow is a primary colour</li>
+    </ul></li>
+</ul>
+<p><strong>Opponent Process Coding</strong></p>
+<ul>
+    <li>Neurons respond to <strong>pairs</strong> of primary colours</li>
+    <li>Some respond in centre-surround fashion</li>
+    <li>Response characteristics determines by appropriate ganglion cells connections<br>
+    <img src="images/vision/colorganglion.png" width="300"></li>
+</ul>
 <hr/>
 
 <h2 id="adv"> 6 - Advanced Edge Detection </h2>
+<p>What causes intensity changes?</p>
+<ul>
+    <li>Geometric events<ul>
+        <li>surface orientation (boundary) discontinuities</li>
+        <li>depth discontinuities</li>
+        <li>colour and texture discontinuities</li>
+    </ul></li><br>
+    <li>Non-geometric events<ul>
+        <li>illumination changes</li>
+        <li>specularities</li>
+        <li>shadows</li>
+        <li>inter-reflections</li>
+    </ul><br><img src="images/vision/causes.png" width="300"></li>
+</ul>
+<p><strong>Edge Descriptors</strong></p>
+<ul>
+    <li><strong>Edge direction</strong><ul>
+        <li>perpendicular to the direction of maximum intensity change (i.e. edge normal)</li>
+    </ul></li>
+    <li><strong>Edge strength</strong><ul>
+        <li>related to the local image contrast along the normal</li>
+    </ul></li>
+    <li><strong>Edge position</strong><ul>
+        <li>the image position at which the edge is located</li>
+    </ul><br><img src="images/vision/descriptors.png" width="200"></li>
+</ul>
+<p><strong>Main Steps of Edge Detection</strong></p>
+<ol>
+    <li><strong>Smoothing</strong><ul>
+        <li>suppress as much noise as possible, without destroying true edges</li>
+    </ul></li>
+    <li><strong>Enhancement</strong><ul>
+        <li>apply differentiation to enhance the quality of edges (i.e. sharpening)</li>
+    </ul></li>
+    <li><strong>Thresholding</strong><ul>
+        <li>determine which edge pixels should be discarded as noise and which should be kept</li>
+    </ul></li>
+    <li><strong>Localisation</strong><ul>
+        <li>determine the exact edge location</li>
+        <li><em>sub-pixel resolution might be required for some applications to estimate
+        the location of an edge to better than spacing between pixels</em></li>
+    </ul></li>
+</ol>
+<p><strong>Edge Detection Using Derivatives</strong></p>
+<ul>
+    <li>Often points that lie on an edge are detected by:<ol>
+        <li>Detecting the local <strong>maxima</strong> or <strong>minima</strong> of 1st derivative</li>
+        <li>Detecting the <strong>zero-crossings</strong> of the 2nd derivative</li>
+    </ol> <br><img src="images/vision/derivatives.png" width="200"></li>
+</ul>
+<p><strong>Practical Issues</strong></p>
+<ul>
+    <li>Noise suppression-localisation tradeoff<ul>
+        <li>Smoothing depends on mask size</li>
+        <li>Larger mask sizes reduce noise, but worsen localisation (i.e. add uncertainty to the location
+        of the edge) and vice versa</li>
+    </ul></li>
+    <li>Choice of threshold<br><img src="images/vision/thresholding.png" width="500"></li>
+</ul>
+<p><strong>Criteria for Optimal Edge Detection</strong></p>
+<ol>
+    <li><strong>Good detection</strong><ul>
+        <li><strong>Minimise</strong> the probability of <strong>false positives</strong> (i.e. spurious
+            edges)</li>
+        <li><strong>Minimise</strong> the probability of <strong>false negatives</strong> (i.e. missing
+        real edges)</li>
+    </ul></li>
+    <li><strong>Good localisation</strong><ul>
+        <li>Detected edges must be as close as possible to the true edges</li>
+    </ul></li>
+    <li><strong>Single response</strong><ul>
+        <li>Minimise the number of local maxima around the true edge</li>
+    </ul></li>
+</ol>
+<p><strong>Canny edge detector</strong></p>
+<ul>
+    <li>Canny has shown that the <strong>first derivative of the Gaussian</strong> closely approximates
+    the operator that optimises the product of <em>signal-to-noise ratio</em> and <em>localisation
+        </em></li>
+</ul>
+<p><strong>Hysteresis Thresholding</strong></p>
+<ul>
+    <li>Standard thresholding<ul>
+        <li>Can only select "strong" edges</li>
+        <li>Does not guarantee "continuity</li>
+    </ul></li>
+    <li>Hysteresis thresholding uses two thresholds:<ul>
+        <li>low threshold - t<sub>l</sub></li>
+        <li>high threshold - t<sub>h</sub> (usually t<sub>h</sub> = 2t<sub>l</sub>)</li>
+    </ul></li>
+    <li>Making the assumption that important edges should be along continuous curves in the image allows us to
+        follow a faint section of a given line and to discard a few noisy pixels that do not constitute a line
+        but have produced large gradients.</li>
+    <li>We begin by applying a high threshold. This marks out the edges we can be fairly sure are genuine.</li>
+    <li>Starting from these, using the directional information derived earlier,
+        edges can be traced through the image.</li>
+    <li>While tracing an edge, we apply the lower threshold, allowing us to trace faint
+        sections of edges as long as we find a starting point.</li>
+</ul>
 <hr/>
 
 <h2 id="hough"> 7 - Hough Transform </h2>
