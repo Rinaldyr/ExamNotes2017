@@ -490,9 +490,116 @@ at the interface, so to make the waves match up, the light has to change <strong
 <hr/>
 
 <h2 id="hough"> 7 - Hough Transform </h2>
+<p>So far we have only found edge points, not edge segments<br>
+The Hough transform is a common approach to finding parameterised line segments</p>
+<p>The basic idea:</p>
+<p align="center"><img src="images/vision/hough1.png" width="150"></p>
+<ul>
+    <li>Each <strong>straight line</strong> in this image can be described by an <strong>equation</strong></li>
+    <li>Each <strong>white point</strong>, if considered in isolation, could lie on an <strong>infinite</strong>
+    number of <strong>straight lines</strong></li>
+</ul>
+<p align="center"><img src="images/vision/hough2.png" width="150"></p>
+<ul>
+    <li>In the Hough transform each point <strong>votes</strong> for every line it could be on</li>
+    <li>The lines with the <strong>most votes</strong> win</li>
+</ul>
+<p align="center"><img src="images/vision/hough3.png" width="150"></p>
+<ul>
+    <li>Any line can be represented by two numbers</li>
+    <li>The yellow line will be represented by (w,&Phi;)<br>In other wods we define it using:<ul>
+        <li>a line from an agreed origin</li>
+        <li>of length w</li>
+        <li>at angle &Phi; to the horizontal</li>
+    </ul></li>
+</ul>
+<p align="center"><img src="images/vision/hough4.png" width="150"></p>
+<ul>
+    <li>
+        So we can represent any line in the image space as a point in the plane defined by (w,&Phi;)
+    </li>
+    <li>This is called <strong>Hough Space</strong></li>
+</ul>
+<p align="center"><img src="images/vision/hough5.png" width="350"></p>
+<ul>
+    <li>One point in image space corresponds to a sinusoidal curve in houghspace</li>
+    <li>Two points correspond to two curves in Hough space</li>
+    <li>The intersection of those two curves has "two votes"</li>
+    <li>This intersection represents the straight line in image space that passes through both points</li>
+</ul>
+<p align="center"><img src="images/vision/hough6.png" width="250"></p>
+<ul>
+    <li>There are generalised versions for ellipses, circles</li>
+    <li>For the straight line transform we need to supress <strong>non-local maxima</strong></li>
+    <li>The input image could also benefit from <strong>edge thinning</strong></li>
+    <li>Single line segments not isolated</li>
+    <li>Will still fail in the face of certain textures</li>
+</ul>
+<p><strong>Circle Hough Transform</strong></p>
+<ul>
+    <li>Can be used to determine parameters of a circle when a number of points that fall on perimeter are known</li>
+    <li>A circle with radius R and center (a,b) can be described with the following parametric equations:<ul>
+        <li><em>x = a + Rcos(&theta;)</em></li>
+        <li><em>y = b + Rsin(&theta;)</em></li>
+    </ul></li>
+    <li>When &theta; sweeps through the full 360 degree range, the points (x,y) trace the perimeter of the circle</li>
+    <li>If an image contains many points, some of which are on the perimeters of circles, then the job
+    of the search program is to find parameter triplets (a,b,R) to describe each circle</li>
+    <li>The fact that the parameter space is 3D makes a direct implementation of the Hough technique
+    more expensive in computer memory and time</li>
+    <li>Examples:</li>
+</ul>
+<p align="center"><img src="images/vision/hough7.png" width="500"></p>
 <hr/>
 
 <h2 id="sift"> 8 - SIFT - Scale Invariant Feature Transform </h2>
+<p><em>Why do we care about matching features?</em></p>
+<ul>
+    <li>Object Recognition</li>
+    <li>Wide baseline matching<ul>
+        <li>Given any two images, estimate the fundamental matrix and a set of matched interest points</li>
+    </ul></li>
+    <li>Tracking</li>
+</ul>
+<p><strong>We want Invariance!!!</strong></p>
+<ul>
+    <li>Good features should be robust to all sorts of nastiness that can occur between images</li>
+</ul>
+<p><strong>Types of invariance:</strong></p>
+<ul>
+    <li>Illumination</li>
+    <li>Scale</li>
+    <li>Rotation</li>
+    <li>Affine</li>
+    <li>Full Perspective</li>
+</ul>
+<p>How to achieve illumination invariance</p>
+<ul>
+    <li>Normalising (easy way)</li>
+    <li>Difference based metrics (sift)</li>
+</ul>
+<p>How to achieve scale invariance</p>
+<ul>
+    <li>Pyramids<ul>
+        <li>Divide width and height by 2</li>
+        <li>Take average of 4 pixels for each pixel(or Gaussian blur)</li>
+        <li>Repeat until image is tiny</li>
+        <li>Run filter over each size image and hope its robust</li>
+    </ul></li>
+    <li>Scale Space (DOG method)<ul>
+        <li>Pyramids but fill gaps with blurred images</li>
+        <li>Like having a nice linear scaling without the expense</li>
+        <li>Take features from difference of these images</li>
+        <li>If the feature is repeatably present in between Difference of Gaussians it is Scale Invariant
+        and we should keep it</li>
+    </ul></li>
+</ul>
+<p>How to achieve rotation invariance</p>
+<ul>
+    <li>Rotate all features to go the same way in a determined manner</li>
+    <li>Take histogram of Gradient directions</li>
+    <li>Rotate to most dominant</li>
+</ul>
 <hr/>
 
 <h2 id="face"> 9 - Face Recognition </h2>
