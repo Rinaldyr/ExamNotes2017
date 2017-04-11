@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!--[if lt IE 9]>
+    <script> document.createElement("keyword"); </script>
+    <![endif]-->
     <meta charset="UTF-8">
     <title> Software Engineering </title>
     <style type="text/css">
         body {
             background-color: #b8e6e4;
             font-family: "Georgia", serif;
+        }
+
+        keyword {
+            color: #a90001;
+            font-weight: bold;
         }
 
         #topBtn {
@@ -65,12 +73,16 @@ Table of contents
     <li><a href="#reqeng"> Requirements Engineering </a><ul>
         <li><a href="#reqeng1"> Software Development Lifecycle </a></li>
     </ul></li>
+    <li><a href="#system"> System </a><ul>
+        <li><a href="#system1"> Critical System </a></li>
+        <li><a href="#system2"> Dependability </a></li>
+        <li><a href="#system3"> Faults and Failures </a></li>
+    </ul></li>
 
-    <li><a href="#system"> System </a></li>
 </ol>
 <hr/> <!----------------------------------------------------------------------------------->
 
-<h2 id="intro"> Introduction to Software Engineering </h2>
+<h2 id="intro"> 1 &ndash; Introduction to Software Engineering </h2>
 <p> What is software engineering? It is a branch of systems engineering concerned with the development of large and
     complex software intensive systems. It focuses on <strong> real world goals </strong> for, services provided by, and
     constrains on such systems. There is also the precise <strong> specification of systems structure and
@@ -127,8 +139,8 @@ Table of contents
 
 <hr/> <!----------------------------------------------------------------------------------->
 
-<h2 id="models"> Software Process Models </h2>
-<p> A structured set of activities required to develop a software system. It consists of <strong> Specification, Design, Validation, Evolution</strong>. A <strong> software process model</strong> is an abstract representation of a process. It presents a description of a process from some particular perspective. </p>
+<h2 id="models"> 2 &ndash; Software Process Models </h2>
+<p> A structured set of activities required to develop a software system. It consists of <keyword> Specification, Design, Validation, Evolution</keyword>. A <keyword> software process model</keyword> is an abstract representation of a process. It presents a description of a process from some particular perspective. </p>
 <p> Process models: </p>
 <ul>
     <li> Waterfall Model: Separate and distinct phases of specification and development. </li>
@@ -136,15 +148,15 @@ Table of contents
     <li> Component-based Soft Eng: The system is assembled from existing components. </li>
 </ul>
 
-<h3 id="models1"> Waterfall Model </h3>
+<h3 id="models1"> 2.1 &dash; Waterfall Model </h3>
 <img src="images/softeng/models1.JPG"/>
 <ol>
-    <li> <strong> Requirements analysis and definition </strong> <ul>
+    <li> <keyword> Requirements analysis and definition </keyword> <ul>
         <li> The process of establishing what services are required and the constraints on the system's operation and development. </li>
         <li> Requirements Engineering Process, which includes feasibility study, requirements elicitation and analysis, requirements specification, requirements validation. <br/><img src="images/softeng/models2.JPG"/> </li>
     </ul></li>
 
-    <li> <strong> System and software design </strong> a structure that realises the specification <ul>
+    <li> <keyword> System and software design </keyword> a structure that realises the specification <ul>
         <li> Architectural design </li>
         <li> Abstract specification </li>
         <li> Interface design </li>
@@ -154,18 +166,18 @@ Table of contents
         <li> And so on... <br/> <img src="images/softeng/models3.JPG"/> </li>
     </ul></li>
 
-    <li> <strong> Implementation and unit testing </strong> <ul>
+    <li> <keyword> Implementation and unit testing </keyword> <ul>
         <li> Have to already produce executable code. </li>
         <li> Unit testing individual components for functions, classes or programs independently. </li>
         <li> Components may be functions or objects or coherent groupings of these entities. </li>
     </ul></li>
 
-    <li> <strong> Integration and system testing </strong> <ul>
+    <li> <keyword> Integration and system testing </keyword> <ul>
         <li> System testing: Testing the system as a while. Testing of emergent properties is particularly important. </li>
         <li> Acceptance testing: Testing with customer data to check that the system meets the customer's needs. </li>
     </ul></li>
 
-    <li> <strong> Operation and maintenance </strong> to keep the system going. </li>
+    <li> <keyword> Operation and maintenance </keyword> to keep the system going. </li>
 </ol>
 
 <p><strong> Problems of Waterfall Model </strong></p>
@@ -175,7 +187,7 @@ Table of contents
     <li> But only a few business systems have stable requirements. </li>
 </ul>
 
-<h3 id="models2"> Evolutionary Development </h3>
+<h3 id="models2"> 2.2 &ndash; Evolutionary Development </h3>
 <p> Specification, development and validation is all concurrently ongoing. <br/>
     <img src="images/softeng/models4.JPG"/> <br/> </p>
 <ul>
@@ -193,14 +205,14 @@ Table of contents
     <li> May not be applicable for short-lifetime systems </li>
 </ul>
 
-<h3 id="models3"> Component-based Software Engineering </h3>
-<p> This is based on systematic reuse where systems are integrated from existing components or <strong> Commercial-off-the-shelf (COTS) </strong> systems. </p>
+<h3 id="models3"> 2.3 &ndash; Component-based Software Engineering </h3>
+<p> This is based on systematic reuse where systems are integrated from existing components or <keyword> Commercial-off-the-shelf (COTS) </keyword> systems. </p>
 <p> Process stages include component analysis, requirement modification, system design with reuse, and development and integration. <br/> Reuse-oriented development <br/> <img src="images/softeng/models5.JPG"/> </p>
 
 <h3> Process Iteration </h3>
 <p> System requirements <em> ALWAYS </em> evolve in the course of a project, so process iteration where earlier stages are reworked is always part of the process for large systems. Iterations can be applied to any of the generic process models. </p>
 
-<h3 id="models4"> Incremental Delivery </h3>
+<h3 id="models4"> 2.4 &ndash; Incremental Delivery </h3>
 <p> Rather than deliver the system as a single delivery, the development and delivery is broken down into increments with each increment delivering part of the required functionality. </p>
 <p> User requirements are prioritised and the highest priority requirements are included in early increments. Once the development of an increment is started, the requirements are frozen through for later increments to evolve. </p>
 <img src="images/softeng/models6.JPG"/>
@@ -212,34 +224,34 @@ Table of contents
     <li> Customer value can be delivered with each increment so system functionality is available earlier. </li>
 </ul>
 
-<h3 id="models5"> Spiral Development </h3>
-<p> The process is represented as a spiral rather than as a sequence of activities with backtracking. Each loo[ in the spiral represents a phase in the process. There are no fixed phases such as specification or design &dash; loops in the spiral are chosen depending on what is required. Risks are explicitly assessed and resolved throughout the process. </p>
+<h3 id="models5"> 2.5 &ndash; Spiral Development </h3>
+<p> The process is represented as a spiral rather than as a sequence of activities with backtracking. Each loo[ in the spiral represents a phase in the process. There are no fixed phases such as specification or design &ndash; loops in the spiral are chosen depending on what is required. Risks are explicitly assessed and resolved throughout the process. </p>
 <img src="images/softeng/models7.JPG"/>
 
 
-<h3 id="models6"> Rational Unified Process (RUP) </h3>
+<h3 id="models6"> 1.6 &ndash; Rational Unified Process (RUP) </h3>
 <img src="images/softeng/models8.JPG"/>
 <p> There are four RUP phases </p>
 <ol>
-    <li> <strong>Inception</strong>: Establish the business case for the system. <ul>
+    <li> <keyword>Inception</keyword>: Establish the business case for the system. <ul>
         <li> Formulating the scope of the project. </li>
         <li> Planning and preparing the business case. </li>
         <li> Synthesizing a candidate architecture. </li>
         <li> Preparing the environment for the project. </li>
     </ul></li>
-    <li> <strong>Elaboration</strong>: Develop an understanding of the problem domain and the system architecture. <ul>
+    <li> <keyword>Elaboration</keyword>: Develop an understanding of the problem domain and the system architecture. <ul>
         <li> Defining, validating the baseline architecture. </li>
         <li> Refining the vision. </li>
         <li> Creating detail of iteration plans for the construction phase. </li>
         <li> Refining the development case and putting in [lace the development environment. </li>
         <li> Refining the architecture and selecting components. </li>
     </ul></li>
-    <li> <strong>Construction</strong>: System design, programming and testing. <ul>
+    <li> <keyword>Construction</keyword>: System design, programming and testing. <ul>
         <li> Resource management, control and process optimisation. </li>
         <li> Complete component development and testing against the defined evaluation criteria. </li>
         <li> Assessment of product releases against acceptance criteria for the vision. </li>
     </ul></li>
-    <li> <strong>Transition</strong>: Deploy the system in its operating environment. <ul>
+    <li> <keyword>Transition</keyword>: Deploy the system in its operating environment. <ul>
         <li> Executing deployment plans. </li>
         <li> Finalising end-user support material. </li>
         <li> Testing the deliverable product at the development site. </li>
@@ -251,7 +263,7 @@ Table of contents
 
 <hr/> <!----------------------------------------------------------------------------------->
 
-<h2 id="reqeng"> Requirements Engineering (RE) </h2>
+<h2 id="reqeng"> 3 &ndash; Requirements Engineering (RE) </h2>
 <p> Requirements form the basis for Project Planning, Risk Management, Acceptance Testing and Change Control. </p>
 <p> Most project's critical issues are in the requirements area. Major gaps in Requirements tend to be critical to a project success. Producing a good set of requirements is likely the most difficult job in software system development. </p>
 
@@ -282,8 +294,8 @@ Table of contents
 
 <p> Customer and end-user are not always the same person. The end-user is the person who interacts with the system to get the job done, while the customer typically pays for the system. They may have similar or conflicting objectives. Sometimes delighting your end-user delights the customer, but remember that the customer pays for the job. So it is very important to get the customer involved in the initial phase of RE, if at all possible. </p>
 
-<h3 id="reqeng1"> Software Development Lifecycle </h3>
-<p> We have the <strong> V Model</strong>: If problems are found during Verification or Validation phase, the LHS of the V is re-executed to fix the problem. </p>
+<h3 id="reqeng1"> 3.1 &ndash; Software Development Lifecycle (SDLC) </h3>
+<p> We have the <keyword> V Model</keyword>: If problems are found during Verification or Validation phase, the LHS of the V is re-executed to fix the problem. </p>
 <img src="images/softeng/reqeng1.JPG"/>
 <p> Prototyping allows all or part of the system to be constructed quickly in the hopes of clarifying and understanding issues. Iterate requirements and design to ensure common understanding. </p>
 
@@ -291,9 +303,9 @@ Table of contents
 <p> Requirements influence the whole development from the start to end. Testing is with respect to the requirements. A system is accepted against Stakeholder's requirements during Acceptance Test Phase as shown in the image below. </p>
 <img src="images/softeng/reqeng2.JPG"/>
 
-<p> RE provides communication amongst projects. <br/> <strong>Requirements traceability</strong> refers to the ability to understand how high-level requirements (goals, objectives etc) are transformed into low-level requirements (mapping between layers of information: one-to-many usually). It is the ability to assess impact changes introduced at various phases of development lifecycle, and the ability to track progress. <br/> <em> Stakeholders req. met by system req &rightarrow; partitioned into subsystem req &rightarrow; implemented as components </em></p>
+<p> RE provides communication amongst projects. <br/> <keyword>Requirements traceability</keyword> refers to the ability to understand how high-level requirements (goals, objectives etc) are transformed into low-level requirements (mapping between layers of information: one-to-many usually). It is the ability to assess impact changes introduced at various phases of development lifecycle, and the ability to track progress. <br/> <em> Stakeholders req. met by system req &rightarrow; partitioned into subsystem req &rightarrow; implemented as components </em></p>
 
-<p> <strong>Traceability</strong> is the use of requirements management tools to link requirements statements in on elayer with statement in another. </p>
+<p> <keyword>Traceability</keyword> is the use of requirements management tools to link requirements statements in on layer with statement in another. </p>
 
 <p> Main requirements activities include </p>
 <ul>
@@ -307,11 +319,121 @@ Table of contents
 
 <hr/> <!----------------------------------------------------------------------------------->
 
-<h2 id="system"> Systems </h2>
+<h2 id="system"> 4 &ndash; Systems </h2>
+<p> A <keyword>system</keyword> is an organised or complex whole: an assemblage or combination of things or parts forming a complex or unitary whole. It is also a set of interrelated elements. </p>
 
+<p> If the elements of a system are of a reasonable degree of complexity, which made them systems, then we call them <keyword>sub-systems</keyword>. </p>
 
+<p> The <keyword>environment</keyword> of a system is the set of elements which are NOT part of the system, but a change in any of which can produce a change in the state of the system. </p>
 
-<hr/>
+<h3 id="system1"> 4.1 &ndash; Critical Systems </h3>
+<p> <keyword>Critical system</keyword> is a system where failure can lead to high economic loss, physical damage, or threats ot life. There are three critical systems: </p>
+<ul>
+    <li><keyword>Safety-critical</keyword><ul>
+        <li> Failure results in loss of life, injury or damage to the environment. </li>
+        <li> E.g. Chemical plant protection system </li>
+    </ul></li>
+    <li><keyword>Mission-critical</keyword><ul>
+        <li> Failure results in failure of some goal-directed activity. </li>
+        <li> E.g. Spacecraft navigation system </li>
+    </ul></li>
+    <li><keyword>Business-critical</keyword><ul>
+        <li> Failure results in high economic loss. </li>
+        <li> E.g. Customer accounting system in a bank </li>
+    </ul></li>
+</ul>
+<p> It is usually the case that the most important system property is the <keyword>dependability</keyword> of the system. The dependability of a system reflects the user's degree of trust in that system. It reflects the extent of the user's confidence that it will operate as users expect and that it will not fail in normal use. </p>
+
+<p> Systems that are not dependable (<keyword>unreliable, unsafe, insecure</keyword>) may be rejected by their users. The cost of critical system failure may be very high such that development method may be used for other types of system. </p>
+
+<p><keyword>Socio-technical</keyword> in an organisational development is an approach to complex organisational work design that recognises the interaction between people and technology in workplaces. </p>
+<ul>
+    <li><keyword>Hardware failure</keyword><ul>
+        <li> Design and manufacturing errors. </li>
+        <li> Components have reached the end of their natural life. </li>
+    </ul></li>
+    <li><keyword>Software failure</keyword><ul>
+        <li> Errors in its specification, design or implementation. </li>
+    </ul></li>
+    <li><keyword>Operational failure</keyword><ul>
+        <li> Human operators make mistakes. </li>
+    </ul></li>
+</ul>
+
+<h3 id="system2"> 4.2 &ndash; Dependability </h3>
+<p> <keyword>Dependability</keyword> of a system equates to its trustworthiness. The principal dimensions of dependability are: </p>
+<ul>
+    <li><keyword>Availability</keyword><ul>
+        <li> Probability that the system will be available to deliver services when requested. </li>
+    </ul></li>
+    <li><keyword>Reliability</keyword><ul>
+        <li> Probability that system services will be delivered as specified. </li>
+    </ul></li>
+    <li><keyword>Safety</keyword><ul>
+        <li> The ability of the system to operate without catastrophic failure. </li>
+    </ul></li>
+    <li><keyword>Security</keyword><ul>
+        <li> The ability of the system to protect itself against accidental or deliberate intrusion. </li>
+    </ul></li>
+    <li>Repairability<ul>
+        <li> Reflects the extent to which the system can be repaired in the event of a failure. </li>
+    </ul></li>
+    <li>Maintainability<ul>
+        <li> Reflects the extent to which the system can be adapted to new requirements. </li>
+    </ul></li>
+    <li>Survivability<ul>
+        <li> Reflects the extent to which the system can deliver services whilst under hostile attack. </li>
+    </ul></li>
+    <li>Error tolerance<ul>
+        <li> Reflects the extent to which the user-input errors can be avoided and tolerated. </li>
+    </ul></li>
+</ul>
+
+<p>Untrustworthy systems may cause loss of valuable information. It may be rejected by their users and failures cost very high. </p>
+
+<p> There will be <strong>trade-offs</strong> between performance and dependability. </p>
+<p> The costs tend to increase exponentially as increasing levels of dependability are required. This is because of: </p>
+<ul>
+    <li> Use of more expensive <strong>development techniques</strong> </li>
+    <li> Increased <strong>testing and system validation</strong> </li>
+</ul>
+<img src="images/softeng/system1.JPG"/>
+
+<p><keyword>Safety</keyword> is the system's ability to operate <strong>without danger of causing human injury or death</strong> and <strong>without damage to the system's environment</strong>.</p>
+
+<p><keyword>Security</keyword> of a system is the system's ability to <strong>protect</strong> itself from <strong>accidental or deliberate external attack</strong>. It is an essential pre-requisite for availability, reliability and safety. </p>
+<p> Damages that can be done from insecure systems: </p>
+<ul>
+    <li> Denial of service (DOS) </li>
+    <li> Corruption of programs or data </li>
+    <li> Disclosure of confidential information </li>
+</ul>
+
+<h3 id="system3"> 4.3 &ndash; Faults and Failures </h3>
+<p> There are some terminologies related to reliability: </p>
+<ul>
+    <li><keyword>System Failure</keyword><ul>
+        <li> An event that occurs at some point in time when the system does not deliver a service as expected by its users. </li>
+    </ul></li>
+    <li><keyword>System Error</keyword><ul>
+        <li> An errorneous system state that can lead to system behavior that is unexpected by system users. </li>
+    </ul></li>
+    <li><keyword>System Fault</keyword><ul>
+        <li> A characteristic of a software system that can lead to a system error. E.g. failure to initialise a variable leading to null pointers. </li>
+    </ul></li>
+    <li><keyword>Human Error</keyword><ul>
+        <li> Human behaviour that results in the introduction of faults into a system. </li>
+    </ul></li>
+</ul>
+<p> <keyword>Failures</keyword> are usually a result of system errors that are derived from the faults in the system. Faults do not necessarily result in system errors. Errors do not necessarily lead to system failures. </p>
+
+<p><keyword>Fault avoidance</keyword> development techniques are used to minimise the possibility of mistakes or trap mistakes before they result in faults.</p>
+<p><keyword>Fault detection and removal</keyword> verification and validation techniques are used to detect errors before the system goes into service. </p>
+<p><keyword>Fault tolerance</keyword> runtime techniques are used to ensure that system faults do not result in system errors which do not lead to system failures. </p>
+
+<hr/> <!----------------------------------------------------------------------------------->
+
+<hr/> <!----------------------------------------------------------------------------------->
 <!-- Utils -->
 <button onclick="topFunction()" id="topBtn" title="Go to top">Top</button>
 <script>
