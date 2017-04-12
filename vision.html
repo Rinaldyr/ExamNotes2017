@@ -46,6 +46,20 @@
         #homeBtn:hover {
             background-color: #555;
         }
+
+        table, tr, td {
+            border: 1px solid #000000;
+            border-collapse: collapse;
+        }
+
+        td {
+            text-align: center;
+            width: 15px;
+        }
+
+        table {
+            margin: 5px;
+        }
     </style>
 </head>
 <body>
@@ -106,7 +120,7 @@ Table of contents
 <hr/>
 
 <h2 id="human"> 2 - Human Vision </h2>
-<p> Evolution of eyes:</p>
+<p><strong>Evolution of eyes:</strong></p>
 <ul>
     <li>Single cell - 1D capture of light</li>
     <li>Multiple cell - Better direction resolution</li>
@@ -123,14 +137,14 @@ Table of contents
     </ul></li>
 </ul>
 <p> <strong>Solution:</strong> Use of <strong>light refraction</strong> and hence <strong>lenses</strong></p>
-<p> Refraction (Snell's Law)<br><em>The wavelength changes, but wave crests can't be created or destroyed
+<p> <strong>Refraction</strong> (Snell's Law)<br><em>The wavelength changes, but wave crests can't be created or destroyed
 at the interface, so to make the waves match up, the light has to change <strong>direction.</strong></em></p>
-<p> Pinhole Camera:</p>
+<p><strong>Pinhole Camera:</strong></p>
 <ul>
     <li>Basic geometry</li> <img src="images/vision/pinholeCamera.png" width="400">
     <li>Perspective projection</li> <img src="images/vision/perspectiveProjection.png" width="400">
 </ul>
-<p> Image formation</p>
+<p><strong>Image formation</strong></p>
 <p style="text-align: center;"><img src="images/vision/formation.png" width="300" align="center"></p>
 <ul>
     <li>f = the focal length (metres)</li>
@@ -148,7 +162,7 @@ at the interface, so to make the waves match up, the light has to change <strong
     <li>But if it is 1m away the lens must change shape to produce a sharp image <em><sup>1</sup>&frasl;<sub>f</sub>
         = <sup>1</sup>&frasl;<sub>1</sub> + <sup>1</sup>&frasl;<sub>0.02</sub> = 51 dioptres</em></li>
 </ul>
-<p> The retina contains two types of photoreceptors that respond to light</p>
+<p> The retina contains two types of <strong>photoreceptors</strong> that respond to light</p>
 <ul>
     <li>Rods<ul>
         <li>&approx;120million</li>
@@ -162,7 +176,7 @@ at the interface, so to make the waves match up, the light has to change <strong
         <li>Higher resolution as Signal processed by several neurons</li>
     </ul></li>
 </ul>
-<p>2 types of Ganglion cells</p>
+<p><strong>2 types of Ganglion cells</strong></p>
 <ul>
     <li>On-center: stimulated when the center of its receptive field is exposed to light, inhibited when the surround
     is exposed to light</li>
@@ -194,27 +208,601 @@ at the interface, so to make the waves match up, the light has to change <strong
 <hr/>
 
 <h2 id="edge"> 3 - Edge Detection </h2>
+<p>Intensity Images</p>
+<ul>
+    <li>Data matrix where values represent intensities</li>
+    <li>Single matrix, with each element corresponding to one image pixel</li>
+</ul>
+<p><strong>Indexed Images</strong></p>
+<ul>
+    <li>Consists of data matrix and a colormap matrix</li>
+    <li>Map is an m-by-3 array of doubles containing floating point values between 0 and 1</li>
+    <li>Each row of map specifies RGB components of a single color</li>
+</ul>
+<p><strong>Intensity gradients</strong></p>
+<ul>
+    <li>Image is a function that maps coordinates to intensity - <em>f(x,y)</em></li>
+    <li>Gradient of intensity is a vector with x and y components</li>
+</ul>
+<p><strong>Approximating the gradient</strong></p>
+<ul>
+    <li>We use a 2x2 mask<br>
+    <table style="float: left">
+        <caption>G<sub>x</sub></caption>
+        <tr>
+            <td>-1</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>-1</td>
+            <td>1</td>
+        </tr>
+    </table>
+    <table>
+        <caption>G<sub>y</sub></caption>
+        <tr>
+            <td>1</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>-1</td>
+            <td>-1</td>
+        </tr>
+    </table></li>
+    <li>For each mask of weights you multiply the corresponding pixel by the weight and sum over all pixels</li>
+</ul>
+<p>Other edge detectors</p>
+<ul>
+    <li><strong>Roberts</strong><br>
+        <table style="float: left">
+            <caption>G<sub>x</sub></caption>
+            <tr>
+                <td>1</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>0</td>
+                <td>-1</td>
+            </tr>
+        </table>
+        <table>
+            <caption>G<sub>y</sub></caption>
+            <tr>
+                <td>0</td>
+                <td>-1</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>0</td>
+            </tr>
+        </table>
+    </li>
+    <br>
+    <li><strong>Sobel</strong><br>
+        <table style="float: left">
+            <caption>G<sub>x</sub></caption>
+            <tr>
+                <td>-1</td>
+                <td>0</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>-2</td>
+                <td>0</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>-1</td>
+                <td>0</td>
+                <td>1</td>
+            </tr>
+        </table>
+        <table>
+            <caption>G<sub>y</sub></caption>
+            <tr>
+                <td>1</td>
+                <td>2</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>-1</td>
+                <td>-2</td>
+                <td>-1</td>
+            </tr>
+        </table>
+    </li>
+</ul>
+<p><strong>Convolution</strong></p>
+<ul>
+    <li>Computation of weighted sums of image pixels</li>
+    <li>For each pixel [i,j], the value of h[i,j] is calculated by <strong>translating</strong> the mask
+    to pixel [i,j] and taking the weighted sum of pixels in neighbourhood</li>
+</ul>
+<p>Steps:</p>
+<ul>
+    <li>Take image</li>
+    <li>Convolve mask with image for each direction<ul>
+        <li>Calculate G<sub>x</sub> and G<sub>y</sub></li>
+    </ul></li>
+    <li>Calculate magnitude (using Pythagoras' theorem)</li>
+</ul>
+<p><strong>Filtering</strong></p>
+<ul>
+    <li>We can detect edges by calculating intensity change (gradient) across image</li>
+    <li>This is implemented using the idea of filtering</li>
+</ul>
 <hr/>
 
 <h2 id="noise"> 4 - Noise Filtering </h2>
+<p><strong>Noise</strong></p>
+<ul>
+    <li>We need to remove noise</li>
+    <li>There are many noise filters</li>
+    <li>Most can be implemented using convolution</li>
+    <li>e.g. Mean filter - this is a linear filter</li>
+    <li>The most widely used is <strong>Gaussian filtering</strong></li>
+</ul>
+<p><strong>Sequenced filters</strong></p>
+<ul>
+    <li>We can replace a 2D Gaussian filter with 2, 1D Gaussian filters in sequence</li>
+    <li>Efficiency and performance</li>
+</ul>
+<p><em>Reading: Laplacian, Laplacian of Gaussian, Gaussian (Canny) Edge detection and Thresholding</em></p>
 <hr/>
 
 <h2 id="colour"> 5 - Colour </h2>
+<ul>
+    <li>Objects selectively absorb some wavelengths and absorb others</li>
+    <li>Human retinas contain 3 different kinds of cones to give us the ability to distinguish different
+        forms of same objects</li>
+</ul>
+<p><strong>Colour mixing</strong></p>
+<ul>
+    <li><strong>Trichromatic (three colour) theory: </strong>eye's 3 different types of receptors sensitive
+    to different hues. Any colour can be produced by appropriate mixing of the 3 primary colours</li>
+    <li>Retina contains approximately equal numbers of red and green cones, but only 8% of blue</li>
+    <li>Theory explains:<ul>
+        <li>How we discriminate wavelengths 2nm in difference</li>
+        <li>How we can match a mixture of wavelengths to a single colour</li>
+        <li>Some types of colour blindness</li>
+    </ul></li>
+    <li>Does <strong>NOT</strong> account for colour blending<ul>
+        <li>Some colour blend while others don't</li>
+    </ul></li>
+    <li>Primary colours: Yellow, Blue, Red and Green<ul>
+        <li>Trichromatic theory cannot explain why yellow is a primary colour</li>
+    </ul></li>
+</ul>
+<p><strong>Opponent Process Coding</strong></p>
+<ul>
+    <li>Neurons respond to <strong>pairs</strong> of primary colours</li>
+    <li>Some respond in centre-surround fashion</li>
+    <li>Response characteristics determines by appropriate ganglion cells connections<br>
+    <img src="images/vision/colorganglion.png" width="300"></li>
+</ul>
 <hr/>
 
 <h2 id="adv"> 6 - Advanced Edge Detection </h2>
+<p>What causes intensity changes?</p>
+<ul>
+    <li>Geometric events<ul>
+        <li>surface orientation (boundary) discontinuities</li>
+        <li>depth discontinuities</li>
+        <li>colour and texture discontinuities</li>
+    </ul></li><br>
+    <li>Non-geometric events<ul>
+        <li>illumination changes</li>
+        <li>specularities</li>
+        <li>shadows</li>
+        <li>inter-reflections</li>
+    </ul><br><img src="images/vision/causes.png" width="300"></li>
+</ul>
+<p><strong>Edge Descriptors</strong></p>
+<ul>
+    <li><strong>Edge direction</strong><ul>
+        <li>perpendicular to the direction of maximum intensity change (i.e. edge normal)</li>
+    </ul></li>
+    <li><strong>Edge strength</strong><ul>
+        <li>related to the local image contrast along the normal</li>
+    </ul></li>
+    <li><strong>Edge position</strong><ul>
+        <li>the image position at which the edge is located</li>
+    </ul><br><img src="images/vision/descriptors.png" width="200"></li>
+</ul>
+<p><strong>Main Steps of Edge Detection</strong></p>
+<ol>
+    <li><strong>Smoothing</strong><ul>
+        <li>suppress as much noise as possible, without destroying true edges</li>
+    </ul></li>
+    <li><strong>Enhancement</strong><ul>
+        <li>apply differentiation to enhance the quality of edges (i.e. sharpening)</li>
+    </ul></li>
+    <li><strong>Thresholding</strong><ul>
+        <li>determine which edge pixels should be discarded as noise and which should be kept</li>
+    </ul></li>
+    <li><strong>Localisation</strong><ul>
+        <li>determine the exact edge location</li>
+        <li><em>sub-pixel resolution might be required for some applications to estimate
+        the location of an edge to better than spacing between pixels</em></li>
+    </ul></li>
+</ol>
+<p><strong>Edge Detection Using Derivatives</strong></p>
+<ul>
+    <li>Often points that lie on an edge are detected by:<ol>
+        <li>Detecting the local <strong>maxima</strong> or <strong>minima</strong> of 1st derivative</li>
+        <li>Detecting the <strong>zero-crossings</strong> of the 2nd derivative</li>
+    </ol> <br><img src="images/vision/derivatives.png" width="200"></li>
+</ul>
+<p><strong>Practical Issues</strong></p>
+<ul>
+    <li>Noise suppression-localisation tradeoff<ul>
+        <li>Smoothing depends on mask size</li>
+        <li>Larger mask sizes reduce noise, but worsen localisation (i.e. add uncertainty to the location
+        of the edge) and vice versa</li>
+    </ul></li>
+    <li>Choice of threshold<br><img src="images/vision/thresholding.png" width="500"></li>
+</ul>
+<p><strong>Criteria for Optimal Edge Detection</strong></p>
+<ol>
+    <li><strong>Good detection</strong><ul>
+        <li><strong>Minimise</strong> the probability of <strong>false positives</strong> (i.e. spurious
+            edges)</li>
+        <li><strong>Minimise</strong> the probability of <strong>false negatives</strong> (i.e. missing
+        real edges)</li>
+    </ul></li>
+    <li><strong>Good localisation</strong><ul>
+        <li>Detected edges must be as close as possible to the true edges</li>
+    </ul></li>
+    <li><strong>Single response</strong><ul>
+        <li>Minimise the number of local maxima around the true edge</li>
+    </ul></li>
+</ol>
+<p><strong>Canny edge detector</strong></p>
+<ul>
+    <li>Canny has shown that the <strong>first derivative of the Gaussian</strong> closely approximates
+    the operator that optimises the product of <em>signal-to-noise ratio</em> and <em>localisation
+        </em></li>
+</ul>
+<p><strong>Hysteresis Thresholding</strong></p>
+<ul>
+    <li>Standard thresholding<ul>
+        <li>Can only select "strong" edges</li>
+        <li>Does not guarantee "continuity</li>
+    </ul></li>
+    <li>Hysteresis thresholding uses two thresholds:<ul>
+        <li>low threshold - t<sub>l</sub></li>
+        <li>high threshold - t<sub>h</sub> (usually t<sub>h</sub> = 2t<sub>l</sub>)</li>
+    </ul></li>
+    <li>Making the assumption that important edges should be along continuous curves in the image allows us to
+        follow a faint section of a given line and to discard a few noisy pixels that do not constitute a line
+        but have produced large gradients.</li>
+    <li>We begin by applying a high threshold. This marks out the edges we can be fairly sure are genuine.</li>
+    <li>Starting from these, using the directional information derived earlier,
+        edges can be traced through the image.</li>
+    <li>While tracing an edge, we apply the lower threshold, allowing us to trace faint
+        sections of edges as long as we find a starting point.</li>
+</ul>
 <hr/>
 
 <h2 id="hough"> 7 - Hough Transform </h2>
+<p>So far we have only found edge points, not edge segments<br>
+The Hough transform is a common approach to finding parameterised line segments</p>
+<p>The basic idea:</p>
+<p align="center"><img src="images/vision/hough1.png" width="150"></p>
+<ul>
+    <li>Each <strong>straight line</strong> in this image can be described by an <strong>equation</strong></li>
+    <li>Each <strong>white point</strong>, if considered in isolation, could lie on an <strong>infinite</strong>
+    number of <strong>straight lines</strong></li>
+</ul>
+<p align="center"><img src="images/vision/hough2.png" width="150"></p>
+<ul>
+    <li>In the Hough transform each point <strong>votes</strong> for every line it could be on</li>
+    <li>The lines with the <strong>most votes</strong> win</li>
+</ul>
+<p align="center"><img src="images/vision/hough3.png" width="150"></p>
+<ul>
+    <li>Any line can be represented by two numbers</li>
+    <li>The yellow line will be represented by (w,&Phi;)<br>In other wods we define it using:<ul>
+        <li>a line from an agreed origin</li>
+        <li>of length w</li>
+        <li>at angle &Phi; to the horizontal</li>
+    </ul></li>
+</ul>
+<p align="center"><img src="images/vision/hough4.png" width="150"></p>
+<ul>
+    <li>
+        So we can represent any line in the image space as a point in the plane defined by (w,&Phi;)
+    </li>
+    <li>This is called <strong>Hough Space</strong></li>
+</ul>
+<p align="center"><img src="images/vision/hough5.png" width="350"></p>
+<ul>
+    <li>One point in image space corresponds to a sinusoidal curve in houghspace</li>
+    <li>Two points correspond to two curves in Hough space</li>
+    <li>The intersection of those two curves has "two votes"</li>
+    <li>This intersection represents the straight line in image space that passes through both points</li>
+</ul>
+<p align="center"><img src="images/vision/hough6.png" width="250"></p>
+<ul>
+    <li>There are generalised versions for ellipses, circles</li>
+    <li>For the straight line transform we need to supress <strong>non-local maxima</strong></li>
+    <li>The input image could also benefit from <strong>edge thinning</strong></li>
+    <li>Single line segments not isolated</li>
+    <li>Will still fail in the face of certain textures</li>
+</ul>
+<p><strong>Circle Hough Transform</strong></p>
+<ul>
+    <li>Can be used to determine parameters of a circle when a number of points that fall on perimeter are known</li>
+    <li>A circle with radius R and center (a,b) can be described with the following parametric equations:<ul>
+        <li><em>x = a + Rcos(&theta;)</em></li>
+        <li><em>y = b + Rsin(&theta;)</em></li>
+    </ul></li>
+    <li>When &theta; sweeps through the full 360 degree range, the points (x,y) trace the perimeter of the circle</li>
+    <li>If an image contains many points, some of which are on the perimeters of circles, then the job
+    of the search program is to find parameter triplets (a,b,R) to describe each circle</li>
+    <li>The fact that the parameter space is 3D makes a direct implementation of the Hough technique
+    more expensive in computer memory and time</li>
+    <li>Examples:</li>
+</ul>
+<p align="center"><img src="images/vision/hough7.png" width="500"></p>
 <hr/>
 
 <h2 id="sift"> 8 - SIFT - Scale Invariant Feature Transform </h2>
+<p><em>Why do we care about matching features?</em></p>
+<ul>
+    <li>Object Recognition</li>
+    <li>Wide baseline matching<ul>
+        <li>Given any two images, estimate the fundamental matrix and a set of matched interest points</li>
+    </ul></li>
+    <li>Tracking</li>
+</ul>
+<p><strong>We want Invariance!!!</strong></p>
+<ul>
+    <li>Good features should be robust to all sorts of nastiness that can occur between images</li>
+</ul>
+<p><strong>Types of invariance:</strong></p>
+<ul>
+    <li>Illumination</li>
+    <li>Scale</li>
+    <li>Rotation</li>
+    <li>Affine</li>
+    <li>Full Perspective</li>
+</ul>
+<p>How to achieve illumination invariance</p>
+<ul>
+    <li>Normalising (easy way)</li>
+    <li>Difference based metrics (sift)</li>
+</ul>
+<p>How to achieve scale invariance</p>
+<ul>
+    <li>Pyramids<ul>
+        <li>Divide width and height by 2</li>
+        <li>Take average of 4 pixels for each pixel(or Gaussian blur)</li>
+        <li>Repeat until image is tiny</li>
+        <li>Run filter over each size image and hope its robust</li>
+    </ul></li>
+    <li>Scale Space (DOG method)<ul>
+        <li>Pyramids but fill gaps with blurred images</li>
+        <li>Like having a nice linear scaling without the expense</li>
+        <li>Take features from difference of these images</li>
+        <li>If the feature is repeatably present in between Difference of Gaussians it is Scale Invariant
+        and we should keep it</li>
+    </ul></li>
+</ul>
+<p>How to achieve rotation invariance</p>
+<ul>
+    <li>Rotate all features to go the same way in a determined manner</li>
+    <li>Take histogram of Gradient directions</li>
+    <li>Rotate to most dominant</li>
+</ul>
 <hr/>
 
 <h2 id="face"> 9 - Face Recognition </h2>
+<p><strong>Eigenfaces</strong></p>
+<ul>
+    <li>Think of a face as being a weighted combination of some "components" or "basis" faces</li>
+    <li>These basis faces are called <strong>eigenfaces</strong></li>
+    <li>These basis faces can be differently weighted to represent any face</li>
+    <li>So we can use different vector of weights to represent different faces</li>
+</ul>
+<p align="center"><img src="images/vision/faceweights.png" width="600"></p>
+<p>Using Eigenfaces</p>
+<ul>
+    <li>Reconstruction:<ul>
+        <li>We can store and then reconstruct a face from a set of weights</li>
+    </ul></li>
+    <li>Recognition<ul>
+        <li>We can recognise a new picture of a familiar face</li>
+    </ul></li>
+</ul>
+<p>Learning Eigenfaces</p>
+<ul>
+    <li>We take a set of real training faces</li>
+    <li>Then we find (learn) a set of basis faces which best represents the differences between them</li>
+    <li>We'll use a statistical criterion for measuring this notion of "best representation of the
+        differences between the training faces"</li>
+    <li>We can then store each face as a set of weights for those basis faces</li>
+    <li>We use a method called <strong>Principle Components Analysis (PCA)</strong></li>
+    <li>To understand this we need to understand:<ul>
+        <li><strong>Eigenvectors</strong></li>
+        <li><strong>Covariance</strong></li>
+    </ul></li>
+</ul>
+<p>Looking at PCA qualitatively</p>
+<p>Subspaces</p>
+<ul>
+    <li>Imagine our face is simply a (high dimensional) vector of pixels</li>
+    <li>As an example data in two dimensions can be represented in one dimension by a straight line</li>
+    <li>Some lines will represent the data in this way well, some badly</li>
+    <li>This is because the projection onto some lines separates the data well, and the projection
+    onto some line separates the data badly</li>
+    <li>Rather than a line, we can perform roughly the same trick with a vector v<br>
+        <img src="images/vision/eigenvector1.png" width="400"></li>
+    <li>Noe we have to scale the vector to obtain any point on the line
+        <div align="center"><em>&Phi;<sub>i</sub> = &mu;v</em></div></li>
+</ul>
+<p><strong>Eigenvectors</strong></p>
+<ul>
+    <li>An eigenvector is a vector <em>v</em> that obeys the following rule:
+        <div align="center"><strong>A</strong><em>v = &mu;v</em></div><ul>
+            <li>Where A is a matrix and &mu; is a scalar (called the <strong>eigenvalue</strong>)</li>
+        </ul></li>
+</ul>
+<p align="center"><img src="images/vision/eigenvector2.png" width="400"></p>
+<ul>
+    <li>We can think of matrices as performing <strong>transformations</strong> on vectors
+    (e.g rotations, reflections)</li>
+    <li>We can think of the eigenvectors of a matrix as being special vectors (for that matrix)
+    that are scaled by that matrix</li>
+    <li>Different matrices have different eigenvectors</li>
+    <li>Only square matrices have eigenvectors</li>
+    <li>Not all square matrices have eigenvectors</li>
+    <li>An n by n matrix has at most n distinct eigenvectors</li>
+    <li>All the distinct eigenvectors of a matrix are <strong>orthogonal</strong></li>
+</ul>
+<p><strong>Covariance</strong></p>
+<ul>
+    <li>The single vector used to separate points in a 2D graph is a vector that expresses the direction
+    of correlation</li>
+    <li>i.e. Imagine there are 2 variables x<sub>1</sub> and x<sub>2</sub></li>
+    <li>They co-vary (y tends to change in roughly the same direction as x)</li>
+</ul>
+<p align="center"><img src="images/vision/covariance.png" width="500"></p>
+<p align="center"><img src="images/vision/covariance2.png" width="600"></p>
+<p>Expressing points using eigenvectors</p>
+<ul>
+    <li>Suppose the eigenvectors are specifying a new vector space</li>
+    <li>i.e. Can reference any point in terms of those eigenvectors</li>
+    <li>A point's position in this new coordinate system is its "weight vector"</li>
+    <li>For many data sets you can cope with fewer dimensions in the new space than in the old space</li>
+    <li>All we are doing in the face case is treating the face as a <strong>point</strong> in high dimensional space,
+    then treating the training set of face pictures as our set of points</li>
+    <li>To train:<ul>
+        <li>Calculate the covariance matrix of the faces</li>
+        <li>Find the eigenvectors of that covariance matrix</li>
+    </ul></li>
+    <li>These eigenvectors are the eigenfaces or basis faces</li>
+    <li>Eigenfaces with bigger eigenvalues will explain more of the variation in the set of faces, i.e.
+    will be more distinguishing</li>
+</ul>
+<p>Image space to Face space</p>
+<ul>
+    <li>When we see an image of a face we can transform it to face space
+        <div align="center"><strong>w</strong><em><sub>k</sub></em> = <strong>x<sup>i</sup></strong>.<em>
+            v<sub>k</sub></em></div></li>
+    <li>There are k=1...n eigenfaces v<sub>k</sub></li>
+    <li>The i<sup>th</sup> face in image space is a vector <strong>x<sup>i</sup></strong></li>
+    <li>The corresponding weight is <strong>w</strong><em><sub>k</sub></em></li>
+    <li>We calculate the corresponding weight for every eigenface</li>
+</ul>
+<p>Recognition in face space</p>
+<ul>
+    <li>Recognition is now simple. We find the <strong>euclidean distance d</strong> between our face
+    and all the other stored faces in face space: <br>
+        <div align="center"><img src="images/vision/recognition.png" width="200"></div></li>
+    <li>The <strong>closest face</strong> in face space is the chosen match</li>
+</ul>
+<p>Reconstruction</p>
+<ul>
+    <li>The more eigenfaces you have the better the reconstruction, but you can have high quality
+    reconstruction even with a small number of eigenfaces</li>
+</ul>
 <hr/>
 
 <h2 id="motion"> 10 - Motion </h2>
+<p>Vision is inferential</p>
+<ul>
+    <li>Light</li>
+    <li>Prior knowledge</li>
+    <li>Boundary detection</li>
+    <li>Tracking</li>
+    <li>Optical flow</li>
+    <li>Video mosaics</li>
+    <li>Video compression</li>
+    <li>Geo registration</li>
+    <li>Video segmentation</li>
+</ul>
+<p><strong>Dynamic Vision</strong></p>
+<ul>
+    <li>FOUR possibilities for dynamic nature of camera and world:<ul>
+        <li>Stationary Camera and stationary Objects</li>
+        <li>Stationary Camera and moving Objects</li>
+        <li>Moving Camera and stationary Objects</li>
+        <li>Moving Camera and moving Objects</li>
+    </ul></li>
+</ul>
+<p>Detecting a change</p>
+<ul>
+    <li>Where has an image changed?</li>
+    <li>F(x,y,i) is the intensity of an image at point x,y at time i</li>
+    <li>Difference Picture, DP<br>
+        <div align="center"><img src="images/vision/differencepicture.png" width="400"></div></li>
+    <li>If we have random noise in image the difference picture will include all the noise points in both images</li>
+    <li>So we need to filter out all pixels that are not part of a larger structure </li>
+</ul>
+<p><strong>Connectedness</strong></p>
+<ul>
+    <li>To filter out noise, we can use the idea of 8 or 4 connectedness:<ul>
+        <li>Two pixels are 4-neighbours if they share a common boundary<br>
+            <div align="center"><img src="images/vision/4neigbours.png" width="100"></div></li>
+        <li>Two pixels are 8-neighbours if they share at least a common corner<br>
+            <div align="center"><img src="images/vision/8neighbours.png" width="100"></div></li>
+        <li>Two pixels are 8 connected if we can create a path of 8-neighbours from one to the other<br>
+            <div align="center"><img src="images/vision/8connected.png" width="100"></div></li>
+    </ul></li></ul>
+<p>Removing noise</p>
+<ul>
+    <li>Pixels not in a connected cluster of a certain size are removed from the difference image</li>
+</ul>
+<p>Determining motion</p>
+<ul>
+    <li>Want to determine motion of bodies in the image</li>
+    <li>Not enough information in local intensity changes in an image to determine motion</li>
+</ul>
+<p><strong>Aperture problem</strong></p>
+<ul>
+    <li>Grating appears to be moving down and to the right</li>
+    <li>But it could be moving in many other directions such as only down, or only right<br>
+        <div align="center"><img src="images/vision/aperture.png" width="150"></div>
+        <div align="center"><img src="images/vision/aperture2.png" width="250"></div></li>
+    <li>Locally we only see the horizontal component of motion</li>
+</ul>
+<p><strong>Motion correspondence</strong></p>
+<ul>
+    <li>One way is to pick a bunch of interesting points in each image</li>
+    <li>And then match them (hoping they can be matched)</li>
+    <li>e.g. Pick <strong>corner</strong> points using a corner detector</li>
+</ul>
+<p><strong>Moravec Operator</strong></p>
+<ul>
+    <li>Considered a corner detector</li>
+    <li>defines interest points as point where there is a large intensity variation in <strong>every </strong>
+    direction</li>
+    <li>This is the case at corners</li>
+    <li>Sensitive to detecting <strong>isolated pixels</strong> as corners<br>
+        <div align="center"><img src="images/vision/moravec.png" width="500"></div></li>
+    <li>Measure the intensity variation by placing a small square window centered at P</li>
+    <li>Shift this window by one pixel in each of the <strong>eight</strong> principe directions</li>
+    <li>This operator is applied to every point (i,j) in the image</li>
+    <li>This produces a new <strong>interest</strong> image</li>
+    <li>We keep only the <strong>local maxima</strong> (i.e. points that are locally most interesting)</li>
+</ul>
+<p><strong>Motion correspondence ctd.</strong></p>
+<ul>
+    <li>Now we have our points of interest</li>
+    <li>We can try to match points in one image with those in another</li>
+    <li>By doing this we are able to <strong>estimate</strong> the motion</li>
+    <li>Matching is guided by <strong>three principles:</strong><ol>
+        <li><strong>Discreteness:</strong> a measure of the distinctiveness of individual points</li>
+        <li><strong>Similarity:</strong> a measure of how closely two points resemble one another</li>
+        <li><strong>Consistency:</strong> a measure of how well a match conforms with nearby matches</li>
+    </ol></li>
+</ul>
 <hr/>
 
 <h2 id="roc"> 11 - ROC Analysis </h2>

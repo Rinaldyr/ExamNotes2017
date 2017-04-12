@@ -52,20 +52,20 @@
 <h2> Progress </h2>
 <!-- Change value and max after finishing the table of contents for each module -->
 Software Engineering <br>
-<progress value="3" max="18"></progress> 3/18<br><br>
+<progress value="5" max="18"></progress> 5/18<br><br>
 
 Computational Vision <br>
-<progress value="2" max="13"></progress> 2/13<br><br>
+<progress value="10" max="13"></progress> 10/13<br><br>
 
-Models of Computation (<a href="#" onclick="document.getElementById('modelstopics').style.display =''">Topic list</a>) <br>
+Models of Computation (<a href="#" onclick="if(document.getElementById('modelstopics').style.display==='none') {document.getElementById('modelstopics').style.display=''; this.innerHTML='Hide';} else {document.getElementById('modelstopics').style.display='none'; this.innerHTML='Topic list'}">Topic list</a>) <br>
 <progress value="7" max="31"></progress> 7/31<br><br>
-<div> <img id="modelstopics" style="display: none;" src="images/models/topiclist.JPG"/> </div>
+<div id="modelstopics" style="display: none;"> <img src="images/models/topiclist.JPG"/> </div>
 
 Introductory Databases <br>
-<progress value="3" max="20"></progress> 3/20<br><br>
+<progress id="db" value="5" max="20"></progress> <span id="dbs"></span><br><br>
 
 Professional Computing <br>
-<progress value="55" max="100"></progress> 55/100<br><br>
+<progress id="pc" value="55" max="100"></progress> <span id="pcs"></span><br><br>
 
 Computer Systems and Architecture <br>
 <progress value="0" max="100"></progress> 0/100<br><br>
@@ -76,8 +76,28 @@ C/C++ <br>
 Graphics <br>
 <progress value="0" max="100"></progress> 0/100<br><br>
 
-Math Techniques <br>
-<progress value="0" max="100"></progress> 0/100<br><br>
+Math Techniques (<a href="#" onclick="if(document.getElementById('math').style.display==='none') {document.getElementById('math').style.display=''; this.innerHTML='Hide';} else {document.getElementById('math').style.display='none'; this.innerHTML='Topic list'}">Topic list</a>)<br>
+<progress value="0" max="16"></progress> 0/16 <br><br>
+<div id="math" style="display: none;">
+    <h4> Mathematical Techniques for Computer Science Topics </h4>
+    <ol>
+        <li> Systems of Linear Equations. Gaussian Elimination </li>
+        <li> Gaussian Elimination special cases </li>
+        <li> Analytic geometry in the plane </li>
+        <li> Analytic geometry in 3D </li>
+        <li> Two other ways of describing lines and plane </li>
+        <li> The Inner product </li>
+        <li> Matrices and matrix algebra </li>
+        <li> Sets </li>
+        <li> Cardinality: Countable and Uncountable sets </li>
+        <li> Relations </li>
+        <li> Functions </li>
+        <li> Inductive definitions </li>
+        <li> Probability </li>
+        <li> Discrete Random Variables </li>
+        <li> Continuous Random Variables </li>
+    </ol>
+</div>
 
 Computer Security <br>
 <progress value="0" max="100"></progress> 0/100<br><br>
@@ -88,6 +108,22 @@ Natural Language Processing <br>
 <!-- Utils -->
 <button onclick="topFunction()" id="topBtn" title="Go to top">Top</button>
 <script>
+
+    // Writes the percentage progress for Database
+    var dbValue = document.getElementById('db').getAttribute('value');
+    var dbMax = document.getElementById('db').getAttribute('max');
+    document.getElementById('dbs').innerHTML = getPercentage(dbValue, dbMax) + "%";
+
+    // Writes the percentage progress for Professional Computing
+    var pcValue = document.getElementById('pc').getAttribute('value');
+    var pcMax = document.getElementById('pc').getAttribute('max');
+    document.getElementById('pcs').innerHTML = getPercentage(pcValue, pcMax) + "%";
+
+    // Function to return the percentage value as integers
+    function getPercentage(numerator, denominator) {
+        return parseInt((numerator/denominator) * 100);
+    }
+
     // When the user scrolls down 20px from the top of the document, show the button
     window.onscroll = function() {scrollFunction()};
 
