@@ -62,10 +62,10 @@ Models of Computation (<a href="#" onclick="if(document.getElementById('modelsto
 <div> <img id="modelstopics" style="display: none;" src="images/models/topiclist.JPG"/> </div>
 
 Introductory Databases <br>
-<progress value="3" max="20"></progress> 3/20<br><br>
+<progress id="db" value="5" max="20"></progress> <span id="dbs"></span><br><br>
 
 Professional Computing <br>
-<progress value="55" max="100"></progress> 55/100<br><br>
+<progress id="pc" value="55" max="100"></progress> <span id="pcs"></span><br><br>
 
 Computer Systems and Architecture <br>
 <progress value="0" max="100"></progress> 0/100<br><br>
@@ -88,6 +88,22 @@ Natural Language Processing <br>
 <!-- Utils -->
 <button onclick="topFunction()" id="topBtn" title="Go to top">Top</button>
 <script>
+
+    // Writes the percentage progress for Database
+    var dbValue = document.getElementById('db').getAttribute('value');
+    var dbMax = document.getElementById('db').getAttribute('max');
+    document.getElementById('dbs').innerHTML = getPercentage(dbValue, dbMax) + "%";
+
+    // Writes the percentage progress for Professional Computing
+    var pcValue = document.getElementById('pc').getAttribute('value');
+    var pcMax = document.getElementById('pc').getAttribute('max');
+    document.getElementById('pcs').innerHTML = getPercentage(pcValue, pcMax) + "%";
+
+    // Function to return the percentage value as integers
+    function getPercentage(numerator, denominator) {
+        return parseInt((numerator/denominator) * 100);
+    }
+
     // When the user scrolls down 20px from the top of the document, show the button
     window.onscroll = function() {scrollFunction()};
 
