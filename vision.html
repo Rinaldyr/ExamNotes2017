@@ -603,6 +603,115 @@ The Hough transform is a common approach to finding parameterised line segments<
 <hr/>
 
 <h2 id="face"> 9 - Face Recognition </h2>
+<p><strong>Eigenfaces</strong></p>
+<ul>
+    <li>Think of a face as being a weighted combination of some "components" or "basis" faces</li>
+    <li>These basis faces are called <strong>eigenfaces</strong></li>
+    <li>These basis faces can be differently weighted to represent any face</li>
+    <li>So we can use different vector of weights to represent different faces</li>
+</ul>
+<p align="center"><img src="images/vision/faceweights.png" width="600"></p>
+<p>Using Eigenfaces</p>
+<ul>
+    <li>Reconstruction:<ul>
+        <li>We can store and then reconstruct a face from a set of weights</li>
+    </ul></li>
+    <li>Recognition<ul>
+        <li>We can recognise a new picture of a familiar face</li>
+    </ul></li>
+</ul>
+<p>Learning Eigenfaces</p>
+<ul>
+    <li>We take a set of real training faces</li>
+    <li>Then we find (learn) a set of basis faces which best represents the differences between them</li>
+    <li>We'll use a statistical criterion for measuring this notion of "best representation of the
+        differences between the training faces"</li>
+    <li>We can then store each face as a set of weights for those basis faces</li>
+    <li>We use a method called <strong>Principle Components Analysis (PCA)</strong></li>
+    <li>To understand this we need to understand:<ul>
+        <li><strong>Eigenvectors</strong></li>
+        <li><strong>Covariance</strong></li>
+    </ul></li>
+</ul>
+<p>Looking at PCA qualitatively</p>
+<p>Subspaces</p>
+<ul>
+    <li>Imagine our face is simply a (high dimensional) vector of pixels</li>
+    <li>As an example data in two dimensions can be represented in one dimension by a straight line</li>
+    <li>Some lines will represent the data in this way well, some badly</li>
+    <li>This is because the projection onto some lines separates the data well, and the projection
+    onto some line separates the data badly</li>
+    <li>Rather than a line, we can perform roughly the same trick with a vector v<br>
+        <img src="images/vision/eigenvector1.png" width="400"></li>
+    <li>Noe we have to scale the vector to obtain any point on the line
+        <div align="center"><em>&Phi;<sub>i</sub> = &mu;v</em></div></li>
+</ul>
+<p><strong>Eigenvectors</strong></p>
+<ul>
+    <li>An eigenvector is a vector <em>v</em> that obeys the following rule:
+        <div align="center"><strong>A</strong><em>v = &mu;v</em></div><ul>
+            <li>Where A is a matrix and &mu; is a scalar (called the <strong>eigenvalue</strong>)</li>
+        </ul></li>
+</ul>
+<p align="center"><img src="images/vision/eigenvector2.png" width="400"></p>
+<ul>
+    <li>We can think of matrices as performing <strong>transformations</strong> on vectors
+    (e.g rotations, reflections)</li>
+    <li>We can think of the eigenvectors of a matrix as being special vectors (for that matrix)
+    that are scaled by that matrix</li>
+    <li>Different matrices have different eigenvectors</li>
+    <li>Only square matrices have eigenvectors</li>
+    <li>Not all square matrices have eigenvectors</li>
+    <li>An n by n matrix has at most n distinct eigenvectors</li>
+    <li>All the distinct eigenvectors of a matrix are <strong>orthogonal</strong></li>
+</ul>
+<p><strong>Covariance</strong></p>
+<ul>
+    <li>The single vector used to separate points in a 2D graph is a vector that expresses the direction
+    of correlation</li>
+    <li>i.e. Imagine there are 2 variables x<sub>1</sub> and x<sub>2</sub></li>
+    <li>They co-vary (y tends to change in roughly the same direction as x)</li>
+</ul>
+<p align="center"><img src="images/vision/covariance.png" width="500"></p>
+<p align="center"><img src="images/vision/covariance2.png" width="600"></p>
+<p>Expressing points using eigenvectors</p>
+<ul>
+    <li>Suppose the eigenvectors are specifying a new vector space</li>
+    <li>i.e. Can reference any point in terms of those eigenvectors</li>
+    <li>A point's position in this new coordinate system is its "weight vector"</li>
+    <li>For many data sets you can cope with fewer dimensions in the new space than in the old space</li>
+    <li>All we are doing in the face case is treating the face as a <strong>point</strong> in high dimensional space,
+    then treating the training set of face pictures as our set of points</li>
+    <li>To train:<ul>
+        <li>Calculate the covariance matrix of the faces</li>
+        <li>Find the eigenvectors of that covariance matrix</li>
+    </ul></li>
+    <li>These eigenvectors are the eigenfaces or basis faces</li>
+    <li>Eigenfaces with bigger eigenvalues will explain more of the variation in the set of faces, i.e.
+    will be more distinguishing</li>
+</ul>
+<p>Image space to Face space</p>
+<ul>
+    <li>When we see an image of a face we can transform it to face space
+        <div align="center"><strong>w</strong><em><sub>k</sub></em> = <strong>x<sup>i</sup></strong>.<em>
+            v<sub>k</sub></em></div></li>
+    <li>There are k=1...n eigenfaces v<sub>k</sub></li>
+    <li>The i<sup>th</sup> face in image space is a vector <strong>x<sup>i</sup></strong></li>
+    <li>The corresponding weight is <strong>w</strong><em><sub>k</sub></em></li>
+    <li>We calculate the corresponding weight for every eigenface</li>
+</ul>
+<p>Recognition in face space</p>
+<ul>
+    <li>Recognition is now simple. We find the <strong>euclidean distance d</strong> between our face
+    and all the other stored faces in face space: <br>
+        <div align="center"><img src="images/vision/recognition.png" width="200"></div></li>
+    <li>The <strong>closest face</strong> in face space is the chosen match</li>
+</ul>
+<p>Reconstruction</p>
+<ul>
+    <li>The more eigenfaces you have the better the reconstruction, but you can have high quality
+    reconstruction even with a small number of eigenfaces</li>
+</ul>
 <hr/>
 
 <h2 id="motion"> 10 - Motion </h2>
