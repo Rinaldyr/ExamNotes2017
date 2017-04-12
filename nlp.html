@@ -53,6 +53,381 @@
     <h1> LI Natural Language Processing </h1>
 <hr/>
 
+
+<p><strong>Introduction</strong></p>
+<p>2 approaches to NPL:</p>
+<ul>
+<li>Science: What aspects of language can be captured by a formal algorithm?</li>
+<li>Engineering: How can we build useful stuff?</li>
+</ul>
+<p>&nbsp;</p>
+<p>NLP is the automatic processing of text for:</p>
+<ul>
+<li>Searching for keywords</li>
+<li>Spotting related concepts</li>
+<li>Spelling correction and other kinds of transformation</li>
+<li>Grammar Checking</li>
+</ul>
+<p>&nbsp;</p>
+<p>Natural Language:</p>
+<ul>
+<li>An essential part of being human</li>
+<li>Human intuition</li>
+<li>Linguistic rules</li>
+<li>Data</li>
+</ul>
+<p>&nbsp;</p>
+<p>Levels of Linguistic Analysis:</p>
+<ul>
+<li>Phonology</li>
+<li>Morphology</li>
+<li>Syntax</li>
+<li>Semantics</li>
+<li>Pragmatics</li>
+</ul>
+<p>&nbsp;</p>
+<p>Pipeline of tasks:</p>
+<ul>
+<li>Sentence Splitting</li>
+<li>Lemmatisation (or stemming)</li>
+<li>Part of Speech tagging</li>
+<li>Chunking</li>
+<li>Named Entity Recognition</li>
+<li>Parsing</li>
+<li>Information Extraction</li>
+<li>Deep Semantics</li>
+</ul>
+<p>&nbsp;</p>
+<p><strong>Lecture 2</strong><br /> Finite State Automata &ndash; can be Deterministic or Non-Deterministic&nbsp;</p>
+<p>Finite State Automata define languages called regular languages</p>
+<p>Can also be defined by regex</p>
+<p>&nbsp;</p>
+<p>Regular Expressions</p>
+<table border="1">
+<tbody>
+<tr>
+<td width="64">
+<p>\w</p>
+</td>
+<td width="198">
+<p>Any unicode character [a-z0-9]</p>
+</td>
+</tr>
+<tr>
+<td width="64">
+<p>\d</p>
+</td>
+<td width="191">
+<p>Any unicode digit [0-9]</p>
+</td>
+</tr>
+<tr>
+<td width="64">
+<p>^</p>
+</td>
+<td width="191">
+<p>Matches start of string</p>
+</td>
+</tr>
+<tr>
+<td width="64">
+<p>$</p>
+</td>
+<td width="191">
+<p>Matches end of string</p>
+</td>
+</tr>
+<tr>
+<td width="64">
+<p>.</p>
+</td>
+<td width="191">
+<p>Any character</p>
+</td>
+</tr>
+<tr>
+<td width="64">
+<p>+</p>
+</td>
+<td width="191">
+<p>1 or more</p>
+</td>
+</tr>
+<tr>
+<td width="64">
+<p>*</p>
+</td>
+<td width="191">
+<p>0 or more</p>
+</td>
+</tr>
+<tr>
+<td width="64">
+<p>a|b</p>
+</td>
+<td width="191">
+<p>A or b</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<p>FSA and Regex are equivalent (Kleene's Theorem) - they describe same set of languages (regular languages)</p>
+<p>Translating from FSA to Regex:</p>
+<ul>
+<li>Remove middle nodes first and replace arcs with regex</li>
+<li>Repeat until you have 1 node</li>
+<li>Carefully create a single Regex</li>
+<li>Can be automated (some thought is useful when choosing middle nodes - Brzozowski's Algorithm (don't need to know for nlp 1)</li>
+</ul>
+<p><br /> Morphology - the study of how words are built up using smaller units</p>
+<p>Morphemes - the smallest unit of "meaning"</p>
+<p><br /> Derivational Morphology</p>
+<ul>
+<li>Derivation creates a new word in a different word class - often incomplete</li>
+<li>Derivation is also recursive</li>
+</ul>
+<p>&nbsp;</p>
+<p>Finite State Morphological Parsing</p>
+<p>&nbsp;</p>
+<p>Lexicon - List of every word</p>
+<p>For realistic applications such a list is too large</p>
+<p>&nbsp;</p>
+<p>Two Level Morphological Parsing</p>
+<p>Finite State Transducer</p>
+<p><br /> FSAs are computationally very efficient and well understood but limited to what they can represent</p>
+<p>Very useful in dealing with morphology</p>
+<p>Many engineering applications - spelling correction, word prediction in phones</p>
+<p>&nbsp;</p>
+<p><strong>Lecture 3</strong></p>
+<p>&nbsp;</p>
+<p>Information Retrieval:</p>
+<ul>
+<li>Mainly - document retrieval given set of search terms</li>
+<li>Citation metrics</li>
+<li>Author attribution</li>
+<li>Subject classification</li>
+</ul>
+<p>&nbsp;</p>
+<p>Unclear relationship between IR &amp; NLP:</p>
+<ul>
+<li>Historical divergence in the 1950s</li>
+<li>Both look at text</li>
+<li>Both (often) employ the same techniques</li>
+<li>Sophisticated NLP usually damages IR performance</li>
+<li>This may change</li>
+</ul>
+<p>&nbsp;</p>
+<p>True Positives&nbsp;(TP)&nbsp;&ndash;&nbsp;correctly retrieved&nbsp;instances</p>
+<p>True Negatives (TN)&nbsp;&ndash;&nbsp;correctly ignored non-instances</p>
+<p>False Positives&nbsp;(FP)&nbsp;&ndash;&nbsp;incorrectly classed instances</p>
+<p>False Negatives&nbsp;(FN)&nbsp;&ndash;&nbsp;actual instances which are missed.</p>
+<p>Word Normalisation:<br /> Can pre-processing make things easier? (we&rsquo;ll have to do pre-processing for most things)</p>
+<p>Every NLP task needs to do normalisation</p>
+<p>Segmenting/tokenising words in running text</p>
+<p>Normalising word formats</p>
+<p>Segmenting sentences in running text</p>
+<p>&nbsp;</p>
+<p>Corpus/Corpora</p>
+<ul>
+<li>Any collection of text (usually large collection)</li>
+<li>Balanced versus Specific Corpora</li>
+<li>Newspapers &amp; other media bias</li>
+<li>Bank of English is made up of mainly newspaper text (as it's free)</li>
+<li>Annotations&nbsp;&ndash;&nbsp;XML? YAML?</li>
+</ul>
+<p>&nbsp;</p>
+<p>Words are ambiguous</p>
+<ul>
+<li>Part of Speech: Race&nbsp;&ndash;&nbsp;noun v.&nbsp;verb&nbsp;(syntactic)</li>
+<li>Word sense: Race&nbsp;&ndash;&nbsp;a sporting contest versus ethnicity (semantic)</li>
+</ul>
+<p>&nbsp;</p>
+<p>Lemma&nbsp;versus Word Form</p>
+<ul>
+<li>Word forms = Kick, kicks, kicked, kicking</li>
+<li>Lemma&nbsp;= same&nbsp;stem, part of speech, word sense.</li>
+</ul>
+<p>&nbsp;</p>
+<p>Tokenisation</p>
+<p>Types versus Tokens</p>
+<p>Types - Vocabulary (how many different words) |V|</p>
+<p>Tokens - No. of distinct words |N|</p>
+<p>Church &amp; Gale (1990) |V| &gt; O(N^0.5)</p>
+<p>&nbsp;</p>
+<p>Zipf's Law(s) - In a corpus, the frequency of any word is inversely proportional to its rank in the frequecy table (Zipf 1949)</p>
+<p>&nbsp;</p>
+<p>If probability of word of rank r is Pr and N is the total number of word occurrences:</p>
+<p>Pr = f/N = A/r typically A &gt;&gt; 0.1</p>
+<p><br /> Stemming</p>
+<p>Conflates inflected/derived words to a stem (root)<br /> Stem is not () the morphological root<br /> Crude, imperfect by nature but very effective for IR</p>
+<p>&nbsp;</p>
+<p>Porter Stemmer</p>
+<ul>
+<li>Algorithm dates from&nbsp;1980</li>
+<li>Still the default first choice in most app</li>
+<li>Good trade-off&nbsp;between speed, readability, and accuracy</li>
+<li>Stems via a set of&nbsp;transformations, applied in&nbsp;succession About 60 rules in 6 steps</li>
+<li>No recursion&nbsp;Usually implemented as a FST</li>
+</ul>
+<p>&nbsp;</p>
+<p>Stemmer Issues</p>
+<p>Stemming does not necessarily produce&nbsp;words</p>
+<ul>
+<li>Bottle&nbsp;=&gt;&nbsp;bottl Bottling&nbsp;=&gt;&nbsp;bottl</li>
+</ul>
+<p>&nbsp;</p>
+<p>For IR this doesn&rsquo;t usually matter</p>
+<p>We only need to match search terms with similar&nbsp;terms in document</p>
+<p>&nbsp;</p>
+<p>Distinct&nbsp;terms are sometimes conflated.</p>
+<ul>
+<li>Severing vs. several =&gt;&nbsp;sever</li>
+<li>University&nbsp;vs. universe&nbsp;=&gt; univers</li>
+<li>Iron vs. ironic =&gt; iron</li>
+<li>Animal vs. animated =&gt; anim</li>
+</ul>
+<p>&nbsp;</p>
+<p>Stemming improves recall but damages precision</p>
+<p>(Google started using stemming in 2003)</p>
+<p>&nbsp;</p>
+<p>Lemmatization (what we want for NLP)</p>
+<ul>
+<li>More sophisticated than Stemming</li>
+<li>We need to reduce words to their lemma (base form)</li>
+<li>Basic idea is to use rules similar to Porter but constantly check</li>
+<li>that word produced&nbsp;is in a dictionary</li>
+</ul>
+<p>&nbsp;</p>
+<p>Usually the Part of&nbsp;Speech is required for eg &ldquo;Loving&rdquo;</p>
+<ul>
+<li>as a&nbsp;Verb&nbsp;&ldquo;Love&rdquo;</li>
+<li>As a&nbsp;Noun&nbsp;&ldquo;Loving&rdquo;</li>
+</ul>
+<p>&nbsp;</p>
+<p>IR views lemmatization as something which aids precision but damages recall and generally not worth it</p>
+<p>&nbsp;</p>
+<p>Case folding - In IR reduce all letters to lower/upper case.</p>
+<p>&nbsp;</p>
+<p>Possible Exceptions</p>
+<ul>
+<li>Intelligent Business Machines.</li>
+<li>&ldquo;U S&nbsp;WEST&nbsp;went through&nbsp;a period&nbsp;of union-management relations that bordered on positive during the early 1990s.&rdquo; (wikipedia)</li>
+</ul>
+<p>&nbsp;</p>
+<p>For more&nbsp;sophisticated NLP</p>
+<ul>
+<li>Useful&nbsp;clues for&nbsp;syntactic analysis (names)</li>
+<li>Sentiment Analysis&nbsp;&ldquo;I&rsquo;m going to HURT!&rdquo;</li>
+<li>US versus us.</li>
+</ul>
+<p>&nbsp;</p>
+<p>Summary</p>
+<ul>
+<li>Word Normalisation is a task you'll do for any text processing</li>
+<li>In IR effective techniques tend to be fast but crude</li>
+<li>NLP can actually damage effectiveness</li>
+<li>In NLP application, we need more sophistication</li>
+<li>This usually means more work and higher error rate</li>
+</ul>
+<p>&nbsp;</p>
+<p><strong>Lecture 4</strong></p>
+<p>&nbsp;</p>
+<p>N-grams</p>
+<p>&nbsp;</p>
+<p>Probabilistic Language Models</p>
+<p>Speech Recognition has used statistical models since the 80s</p>
+<p>&nbsp;</p>
+<p>For NLP we assign probability to sentences</p>
+<p>Machine Translation</p>
+<p>Spelling Correction</p>
+<p>Word Sense Disambiguation</p>
+<p>For e.g P(about fifteen minutes) &gt; P(about fifteen minuets)</p>
+<p>&nbsp;</p>
+<p>Language Model - model of the various probabilities of sentences</p>
+<p>&nbsp;</p>
+<p>P(W) = P(w1,w2,w3&hellip;wn)</p>
+<p>Related Task - word prediction</p>
+<p>P(wn | w1,w2,w3&hellip;wn-1)</p>
+<p>&nbsp;</p>
+<p>We can't just count as there are too many possible sentences and we'll never see enough data for anything over a sequence of 3 or 4 words</p>
+<p>&nbsp;</p>
+<p>Chain Rule - gets us closer</p>
+<p>&nbsp;</p>
+<p>P(w1,w2,w3,w4) = P(w1)P(w2|w1)P(w3|w1w2)P(w4|w1w2w3)</p>
+<p>&nbsp;</p>
+<p>Markov assumption</p>
+<p>The probability of an event is conditional only to the previous event</p>
+<p>&nbsp;</p>
+<p>We can guestimate long probability chains as approximating&nbsp;very short chains</p>
+<p>&nbsp;</p>
+<p>Unigrams - probability based on individual words</p>
+<p>Bigrams - condition on the previous word</p>
+<p>Trigrams -</p>
+<p>&nbsp;</p>
+<p>Estimating N-grams probabilities</p>
+<p>Maximum Likelihood Estimate</p>
+<p>&nbsp;</p>
+<p>We'll still encounter new words that aren't in a corpus</p>
+<p>&nbsp;</p>
+<p>Rough solution for new words</p>
+<ol>
+<li>create a&nbsp;fixed&nbsp;vocabulary in&nbsp;our training corpus (e.g. all&nbsp;words</li>
+</ol>
+<p>above a certain&nbsp;frequency)</p>
+<ol start="2">
+<li>Re label all rare words as UNK</li>
+<li>Train language model</li>
+<li>Use UNK&nbsp;statistics when we&nbsp;encounter unknown words in the</li>
+</ol>
+<p>wild</p>
+<p>&nbsp;</p>
+<p>A small number of events occur with high frequency</p>
+<p>A large number of events occur with low frequency</p>
+<p>&nbsp;</p>
+<p>You might need a huge amount of data to get valid statistics on low frequency events</p>
+<p>&ndash;&nbsp;Some zeroes in the table are really zeros</p>
+<p>&ndash;&nbsp;Some are simply low frequency events you haven't seen yet.</p>
+<p>&nbsp;</p>
+<p>Extrinsic Evaluation</p>
+<p>&ndash;&nbsp;The best evaluation of any LM is to use the model in a specific task &amp;&nbsp;measure accuracy</p>
+<p>&ndash;&nbsp;With real data, this might take days/weeks for training.</p>
+<p>&nbsp;</p>
+<p>Perplexity:</p>
+<p>Intrinsic evaluation:</p>
+<ul>
+<li>Perplexity only works if test data is very similar to training data</li>
+<li>Useful only in pilot experiments</li>
+<li>Fast metric for developing system</li>
+</ul>
+<p>How good is our LM on average at predicting the next word?</p>
+<p>Minimising Perplexity = Maximising Probability</p>
+<p>Perplexity is a metric for both LM &amp; diversity in corpus</p>
+<p>&nbsp;</p>
+<p>Laplace Smoothing</p>
+<p>Taking the probability mass from things we've seen &amp; give it to things that we haven't seen</p>
+<p>Laplace Smoothing, we add 1 to every possible count (replace 0's in table with 1)<br /><br /></p>
+<p>Problems with Laplace Smoothing:</p>
+<p>In practice&nbsp;this is far too&nbsp;crude&nbsp;for the word&nbsp;prediction task</p>
+<ul>
+<li>Because the data is so sparse</li>
+<li>exaggerates&nbsp;probability&nbsp;of&nbsp;very unlikely events</li>
+<li>(Worse) greatly&nbsp;underestimates&nbsp;probability&nbsp;of common bigrams</li>
+</ul>
+<p>However Laplace is&nbsp;standard practice in&nbsp;other&nbsp;NLP tasks such as text&nbsp;classification</p>
+<p>&nbsp;</p>
+<p>Estimating the probability of a&nbsp;sentence or the next word in a sequence is useful for a&nbsp;wide range of&nbsp;NLP&nbsp;techniques.</p>
+<p>The Basic Idea of the use of a&nbsp;Language Model:</p>
+<ul>
+<li>We base Language Models on&nbsp;N-Grams</li>
+<li>typically unigrams, bigrams &amp;&nbsp;trigrams</li>
+</ul>
+<p>Perplexity can be used to evaluate LM</p>
+<p>Raw LM are bad with unseen&nbsp;data</p>
+<p>We need good&nbsp;smoothing algorithms for&nbsp;generalisation</p>
+<p>&nbsp;</p>
+
+
     <!-- Utils -->
     <button onclick="topFunction()" id="topBtn" title="Go to top">Top</button>
     <script>
