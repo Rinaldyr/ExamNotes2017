@@ -715,6 +715,94 @@ The Hough transform is a common approach to finding parameterised line segments<
 <hr/>
 
 <h2 id="motion"> 10 - Motion </h2>
+<p>Vision is inferential</p>
+<ul>
+    <li>Light</li>
+    <li>Prior knowledge</li>
+    <li>Boundary detection</li>
+    <li>Tracking</li>
+    <li>Optical flow</li>
+    <li>Video mosaics</li>
+    <li>Video compression</li>
+    <li>Geo registration</li>
+    <li>Video segmentation</li>
+</ul>
+<p><strong>Dynamic Vision</strong></p>
+<ul>
+    <li>FOUR possibilities for dynamic nature of camera and world:<ul>
+        <li>Stationary Camera and stationary Objects</li>
+        <li>Stationary Camera and moving Objects</li>
+        <li>Moving Camera and stationary Objects</li>
+        <li>Moving Camera and moving Objects</li>
+    </ul></li>
+</ul>
+<p>Detecting a change</p>
+<ul>
+    <li>Where has an image changed?</li>
+    <li>F(x,y,i) is the intensity of an image at point x,y at time i</li>
+    <li>Difference Picture, DP<br>
+        <div align="center"><img src="images/vision/differencepicture.png" width="400"></div></li>
+    <li>If we have random noise in image the difference picture will include all the noise points in both images</li>
+    <li>So we need to filter out all pixels that are not part of a larger structure </li>
+</ul>
+<p><strong>Connectedness</strong></p>
+<ul>
+    <li>To filter out noise, we can use the idea of 8 or 4 connectedness:<ul>
+        <li>Two pixels are 4-neighbours if they share a common boundary<br>
+            <div align="center"><img src="images/vision/4neigbours.png" width="100"></div></li>
+        <li>Two pixels are 8-neighbours if they share at least a common corner<br>
+            <div align="center"><img src="images/vision/8neighbours.png" width="100"></div></li>
+        <li>Two pixels are 8 connected if we can create a path of 8-neighbours from one to the other<br>
+            <div align="center"><img src="images/vision/8connected.png" width="100"></div></li>
+    </ul></li></ul>
+<p>Removing noise</p>
+<ul>
+    <li>Pixels not in a connected cluster of a certain size are removed from the difference image</li>
+</ul>
+<p>Determining motion</p>
+<ul>
+    <li>Want to determine motion of bodies in the image</li>
+    <li>Not enough information in local intensity changes in an image to determine motion</li>
+</ul>
+<p><strong>Aperture problem</strong></p>
+<ul>
+    <li>Grating appears to be moving down and to the right</li>
+    <li>But it could be moving in many other directions such as only down, or only right<br>
+        <div align="center"><img src="images/vision/aperture.png" width="150"></div>
+        <div align="center"><img src="images/vision/aperture2.png" width="250"></div></li>
+    <li>Locally we only see the horizontal component of motion</li>
+</ul>
+<p><strong>Motion correspondence</strong></p>
+<ul>
+    <li>One way is to pick a bunch of interesting points in each image</li>
+    <li>And then match them (hoping they can be matched)</li>
+    <li>e.g. Pick <strong>corner</strong> points using a corner detector</li>
+</ul>
+<p><strong>Moravec Operator</strong></p>
+<ul>
+    <li>Considered a corner detector</li>
+    <li>defines interest points as point where there is a large intensity variation in <strong>every </strong>
+    direction</li>
+    <li>This is the case at corners</li>
+    <li>Sensitive to detecting <strong>isolated pixels</strong> as corners<br>
+        <div align="center"><img src="images/vision/moravec.png" width="500"></div></li>
+    <li>Measure the intensity variation by placing a small square window centered at P</li>
+    <li>Shift this window by one pixel in each of the <strong>eight</strong> principe directions</li>
+    <li>This operator is applied to every point (i,j) in the image</li>
+    <li>This produces a new <strong>interest</strong> image</li>
+    <li>We keep only the <strong>local maxima</strong> (i.e. points that are locally most interesting)</li>
+</ul>
+<p><strong>Motion correspondence ctd.</strong></p>
+<ul>
+    <li>Now we have our points of interest</li>
+    <li>We can try to match points in one image with those in another</li>
+    <li>By doing this we are able to <strong>estimate</strong> the motion</li>
+    <li>Matching is guided by <strong>three principles:</strong><ol>
+        <li><strong>Discreteness:</strong> a measure of the distinctiveness of individual points</li>
+        <li><strong>Similarity:</strong> a measure of how closely two points resemble one another</li>
+        <li><strong>Consistency:</strong> a measure of how well a match conforms with nearby matches</li>
+    </ol></li>
+</ul>
 <hr/>
 
 <h2 id="roc"> 11 - ROC Analysis </h2>
