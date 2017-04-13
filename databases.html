@@ -7,10 +7,12 @@
 
     <meta charset="UTF-8">
     <title> Introductory Databases </title>
+    <link href="images/icon.png" rel="icon"/>
     <style type="text/css">
         body {
             background-color: #dbffe0;
             font-family: "Georgia", serif;
+            margin: 20px;
         }
 
         code {
@@ -86,6 +88,14 @@ Table of Contents
         <li><a href="#constraints1"> Primary Key </a></li>
         <li><a href="#constraints2"> Foreign Key </a></li>
     </ul></li>
+    <li><a href="#joins"> Joins </a></li>
+    <li><a href="#jdbc"> Java Database Connection </a></li>
+    <li><a href="#transaction"> Transaction </a></li>
+    <li><a href="#dbdesign"> Database Designs </a></li>
+    <li><a href="#webapps"> Web Applications </a></li>
+    <li><a href="#jsp"> Java Server Pages (JSP) </a></li>
+    <li><a href="#session"> Session Tracking </a></li>
+    <li><a href="#normalisation"> Database Normalisation </a></li>
 </ol>
 <hr/> <!------------------------------------------------------------------------------->
 
@@ -121,7 +131,7 @@ Table of Contents
 
 <h2 id="basics"> 3 &dash; Basics </h2>
 <p> Relational databases uses the set theory to connect data around. </p>
-<h3 id="basics1"> Sets </h3>
+<h3 id="basics1"> 3.1 &ndash; Sets </h3>
 <p><strong>Sets</strong> are collections of items. They are unordered and do not contain duplicates. They are written as: <code>{2,4,6,8}</code>.</p>
 
 <p> Items inside a set are called <em>elements</em>. <br/> If all the elements of a set are also elements of a second set then the first set is a <em>subset</em> of the second, and the second a <em>superset</em> of the first. <br/> If the second set has extra elements then the first is a <em>proper subset</em> of the second. </p>
@@ -145,7 +155,7 @@ Table of Contents
     <li><keyword>Cardinality</keyword> of a relation is the number of tuples or elements in a set. </li>
 </ul>
 
-<h3 id="basics2"> Keys </h3>
+<h3 id="basics2"> 3.2 &ndash; Keys </h3>
 <p> Keys are used to establish and identify relation between tables. They also ensure that each record within a table can be uniquely identified by combination of one or more fields within a table. </p>
 <ul>
     <li><keyword>Super Key</keyword> &ndash; a set of attributes that can <em>always</em> be used to differentiate one tuple from another.</li>
@@ -155,7 +165,7 @@ Table of Contents
     <li><keyword>Foreign Key</keyword> &ndash; a key that points to primary key attributes.</li>
 </ul>
 
-<h3 id="basics3"> Standard Query Language (SQL) </h3>
+<h3 id="basics3"> 3.3 &ndash; Standard Query Language (SQL) </h3>
 <p> SQL provides the mechanism that is used to manipulate a relational database. The <keyword>Data Definition Language </keyword> (DDL) is used to create, modify and delete parts of the <em>definition</em> of the database. The <keyword>Data Manipulation Language</keyword> (DML) is used to <em>manipulate the data</em>. </p>
 <p> In SQL, case and whitespaces are not significant, but there are conventions that is good to follow:</p>
 <ul>
@@ -248,6 +258,7 @@ Table of Contents
         <li><code> INSERT INTO Table VALUES (data1, data2); </code></li>
         <li><code> INSERT INTO Student (id, name) VALUES (4, 'John Doe'); </code></li>
     </ul> </li>
+
     <li> UPDATE <ul>
         <li> <keyword>Modify</keyword> values in rows. </li>
         <li> Specify table <strong>rows</strong> and <strong>attributes</strong> and their <em>new</em> values. </li>
@@ -255,6 +266,7 @@ Table of Contents
         <li><code> UPDATE Student SET course='CS' WHERE id=23; </code></li>
         <li> If code meet conditions, then data will be updated. </li>
     </ul> </li>
+
     <li> DELETE <ul>
         <li> <keyword>Deletes</keyword> rows from the table. </li>
         <li><code> DELETE FROM Table WHERE field=data; </code></li>
@@ -275,13 +287,16 @@ Table of Contents
         <li><code> SELECT name FROM Student WHERE id=4; </code></li>
         <li><code> SELECT Student.name, Student.id FROM Student WHERE Student.course='CS'; </code></li>
     </ul></li>
+
     <li> DISTINCT <ul>
         <li> <keyword>Remove duplicate</keyword> rows</li>
         <li><code> SELECT DISTINCT course From Student; </code></li>
     </ul></li>
+
     <li> AS <ul>
         <li> Attaches a <keyword>label</keyword> to a column. </li>
     </ul></li>
+
     <li> ORDER BY <ul>
         <li> Allows the <keyword>order</keyword> of rows to be specified </li>
         <li> ASC/DESC </li>
@@ -305,6 +320,7 @@ Table of Contents
             </ul></li>
         </ul></li>
     </ul></li>
+
     <li> LIKE <ul>
         <li> Provides <keyword>pattern matching</keyword> on <strong>strings</strong>.</li>
         <li><code>_</code> &ndash; matches <strong>any</strong> character </li>
@@ -315,6 +331,140 @@ Table of Contents
 
 <hr/> <!------------------------------------------------------------------------------->
 
+<h2 id="joins"> 6 &ndash; Joins </h2>
+<h3 id="joins1"> 6.1 &ndash; Join Variations </h3>
+<p> <keyword>Join</keyword> returns a table specified in the query. This can be a <em>substitute</em> for WHERE. </p>
+<p> For example, </p>
+<img src="images/database/joins1.JPG"/>
+<p id="name"> If there are any <em>ambiguity</em> in a field name, then the table name should be included too. </p>
+<p><code> SELECT S.id, M.id FROM Student S, Marks M WHERE S.id = M.id </code></p>
+<p> Joins are conceptually: </p>
+<ul>
+    <li> Form <keyword>cross product</keyword> of the set of tables. </li>
+    <li> <keyword>Select columns</keyword> listed in the SELECT. </li>
+    <li> <keyword>Select rows</keyword> that meet any WHERE condition. </li>
+</ul>
+<ul>
+    <li style="padding-bottom: 20px"> INNER JOIN <ul>
+        <li> Produces only the set of records that <keyword>match in both tables</keyword>. </li>
+        <li><code> SELECT * FROM TableA <br/> <strong>INNER JOIN</strong> TableB <br/> ON TableA.field=TableB.field; </code> <br/> <img src="images/database/joins2.png"/>
+    </ul></li>
+
+    <li style="padding-bottom: 20px"> FULL OUTER JOIN <ul>
+        <li> Produces the set of <keyword>all records</keyword> in TableA and TableB , matching records from both sides where available. </li>
+        <li> If there is <keyword>no match</keyword>, the missing side wil contain <strong>null</strong>. </li>
+        <li><code> SELECT * FROM TableA <br/> <strong>FULL OUTER JOIN</strong> TableB <br/> ON TableA.field=TableB.field; </code> <br/> <img src="images/database/joins3.png"/>
+    </ul></li>
+
+    <li> FULL OUTER JOIN<em>* extra</em> <ul>
+        <li> Produces the set of records <keyword>without intersection</keyword> from both tables. </li>
+        <li><code> SELECT * FROM TableA <br/> FULL OUTER JOIN <br/> TableB <br/> ON TableA.field=TableB.field <br/> <strong> WHERE TableA.id IS null <br/> OR TableB.id IS null</strong>; </code> <br/> <img src="images/database/joins6.png"/>
+    </ul></li>
+
+    <li style="padding-bottom: 20px"> LEFT JOIN <ul>
+        <li> Just like INNER JOIN but: <ul>
+            <li> Includes rows in the <keyword>left table</keyword> that are not matched. </li>
+            <li> <strong>null</strong>s are added. </li>
+        </ul></li>
+        <li><code> SELECT * FROM TableA <br/> <strong>LEFT JOIN</strong> TableB <br/> ON TableA.field=TableB.field; </code> <br/> <img src="images/database/joins4.png"/>
+    </ul></li>
+
+    <li style="padding-bottom: 20px"> LEFT OUTER JOIN<em>*</em> <ul>
+        <li> Produces a complete set of records from TableA but not in TableB. </li>
+        <li><code> SELECT * FROM TableA <br/> LEFT OUTER JOIN TableB <br/> ON TableA.field = TableB.field <br/> <strong>WHERE TableA.id IS null</strong>;</code> <br/> <img src="images/database/joins5.png"/>
+    </ul></li>
+
+    <li style="padding-bottom: 20px"> RIGHT JOIN <ul>
+        <li> Just the same like LEFT JOIN, but focuses on the <keyword>right table</keyword>. </li>
+    </ul></li>
+
+    <li style="padding-bottom: 20px"> EQUI JOIN <ul>
+        <li> Just INNER Join where the condition only includes <keyword>equality</keyword>. </li>
+    </ul></li>
+
+    <li style="padding-bottom: 20px"> NATURAL JOIN <ul>
+        <li> Equality test is implicit based on the names of attributes. </li>
+        <li> <keyword> Don't use this! </keyword></li>
+    </ul></li>
+
+    <li style="padding-bottom: 20px"> CROSS JOIN <ul>
+        <li> Default without any selection. </li>
+        <li> Gives every <keyword>permutation</keyword> of rows in each table. </li>
+    </ul></li>
+</ul>
+<p><em>* might be useful to know.</em></p>
+
+<p> Another notation would be </p> <pre><code>USING (field)</code></pre> <p> instead of </p> <pre><code>ON TableA.field=TableB.field</code></pre>
+
+<h3 id="joins2"> 6.2 &ndash; Set Operations </h3>
+<p> A Query can be formulated as <keyword>set operations</keyword> on two results. </p>
+<ul>
+    <li> UNION </li>
+    <li> INTERSECT </li>
+    <li> EXCEPT (set difference) </li>
+</ul>
+<img src="images/database/joins7.JPG"/>
+
+<h3 id="joins3"> 6.3 &ndash; Subqueries </h3>
+<p> <keyword>Subqueries</keyword> may be used in the result of the <keyword>outer query</keyword>. </p>
+<p> There are many operators that can be used with the sub-result: </p>
+<ul>
+    <li> [NOT] IN </li>
+    <li> [NOT] EXISTS </li>
+    <li> [operation] ANY </li>
+    <li> [operation] ALL </li>
+</ul>
+<p> We can <keyword>reference</keyword> the <strong>outer row</strong> within the nested query by using its <a href="#name">names</a> we created for the tables. </p>
+<pre><code>
+    SELECT S1.id FROM Student S1 <br/>
+    WHERE S1.dob > ALL <br/>
+    &emsp; ( SELECT S2.dob FROM Student S2 <br/>
+    &emsp; &nbsp; WHERE S2.course='CS' );
+</code></pre>
+
+<h3 id="joins4"> 6.4 &ndash; Groups </h3>
+<p> <code>GROUP BY</code> and <code>HAVING</code> allows operation over <keyword>groups of rows</keyword>. </p>
+<ul>
+    <li> GROUP BY <ul>
+        <li> Specifies <keyword>grouping</keyword> of rows. </li>
+    </ul></li>
+
+    <li> HAVING <ul>
+        <li> Specifies <keyword>selection criteria</keyword> for groups. </li>
+    </ul></li>
+
+</ul>
+<pre><code>
+    SELECT customerName, SUM(orderQuantity) <br/>
+    FROM Sales <br/>
+    GROUP BY customerName <br/>
+    HAVING SUM(orderQuantity > 5);
+</code></pre>
+<p> This <keyword>joins</keyword> the tables, then <keyword>filter</keyword> rows using WHERE clause if any, then <keyword>group</keyword> the table using the <strong>attributes</strong> specified in the GROUP BY clause, returning one row per group. Finally, it <keyword>removes</keyword> rows where the HAVING clause <strong>does not</strong> return TRUE. </p>
+
+<p> <strong>Exercise</strong>: Return a table which lists each student registered on course 'CS' with their average mark over all modules: </p>
+<ul>
+    <li> Extend to only include students with average &ge; 70; </li>
+    <li> and all marks &ge; 40. </li>
+</ul>
+<!--
+<span onclick="this.innerHTML='<pre><code> ' +
+  'SELECT name, AVG(marks) <br/> ' +
+  'FROM Marks <br/> ' +
+  'GROUP BY name <br/>' +
+  ' marks > (SELECT AVG(marks) FROM Marks) ;</code></pre>'" style="border: 1px solid black;"> Click for answer </span>
+-->
+
+<h3 id="joins5"> 6.5 &ndash; Views </h3>
+<p><keyword>Views</keyword> provide a mechanism whereby a user can be given an <keyword>alternative view</keyword> onto the underlying database. </p>
+<p> A <em>view</em> is specified in terms of underlying tables. </p>
+<ul>
+    <li> <keyword>Derived Tables</keyword> &ndash; A table expression that appears in the FROM clause of a query. </li>
+    <li> <keyword>Base Tables </keyword> &ndash; A table that contains just stored records. </li>
+</ul>
+<p> This is for <keyword>convenience</keyword> and <keyword>security</keyword>. </p>
+
+<hr/> <!------------------------------------------------------------------------------->
 
 <!-- Utils -->
 <button onclick="topFunction()" id="topBtn" title="Go to top">Top</button>
