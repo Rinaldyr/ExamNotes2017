@@ -806,6 +806,45 @@ The Hough transform is a common approach to finding parameterised line segments<
 <hr/>
 
 <h2 id="roc"> 11 - ROC Analysis </h2>
+<p><strong>Receiver operating characteristic</strong></p>
+<ul>
+    <li>Provides tools to select possibly optimal models and to discard suboptimal ones</li>
+</ul>
+<p><strong>Type of errors</strong></p>
+<p align="center"><img src="images/vision/errortypes.png" width="300"></p>
+<p>In ROC analysis two statistics are used:</p>
+<ul>
+    <li><strong>Sensitivity = TP / (TP+FN)</strong><ul>
+        <li>i.e. The likelihood of spotting a positive case when there is one</li>
+        <li>the proportion of edges we find</li>
+    </ul></li>
+    <li><strong>Specificity = TN / (TN+FP)</strong><ul>
+        <li>i.e. The likelihood of spotting a negative case when there is one</li>
+        <li>the proportion of non-edges we find</li>
+    </ul></li>
+</ul>
+<p><strong>The ROC space</strong></p>
+<ul>
+    <li>Only the <strong>True Positive Rate (TPR)</strong> and <strong>False Positive Rate (FPR)</strong>
+    are needed<ul>
+            <li><strong>TPR</strong> determines a classifier test performance on classifying positive
+            instances correctly among all positive samples available during the test <strong>(sensitivity)</strong></li>
+            <li><strong>FPR</strong> defines how many incorrect positive results occur among all negative samples
+            available during the test <strong>(1-specificity)</strong></li>
+        </ul></li>
+    <li>A ROC space is defined by <strong>FPR</strong> and <strong>TRP</strong> as <strong>x</strong> and
+    <strong> y </strong>axes respectively</li>
+</ul>
+<p align="center"><img src="images/vision/roccurve.png" width="200"></p>
+<ul>
+    <li>All the optimal detectors lie on the <strong>convex hull</strong></li>
+    <li>Which one is the best depends on the ratio of edges to non-edges, and the different cost of
+        misclassification</li>
+    <li>Any detector on this side can lead to a better detector by flipping its output</li><br>
+    <li><em>Should always quote sensitivity and specificity for your algorithm, if possible plotting an
+    ROC graph. Any statistic you quote should be an average over a suitable range of tests for your algorithm</em></li>
+</ul>
+
 <hr/>
 
 <h2 id="object"> 12 - Object Recognition </h2>
