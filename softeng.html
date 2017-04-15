@@ -121,7 +121,10 @@ Table of contents
         <li><a href="#usecase1"> Use Case Diagram </a></li>
         <li><a href="#usecase2"> Use Case Description </a></li>
     </ul></li>
-
+    <li><a href="#sysdgn"> System Architecture </a><ul>
+        <li><a href="#sysdgn1"> Major Activities </a></li>
+        <li><a href="#sysdgn2"> Software Architecture </a></li>
+    </ul></li>
 
 </ol>
 <hr/> <!----------------------------------------------------------------------------------->
@@ -1120,12 +1123,12 @@ Table of contents
             <li> Happens when there is a functionality that can be <strong>re-used</strong></li>
             <li> Connecting line with an <strong>arrow</strong> </li>
             <li> <code>&lt;&lt;include&gt;&gt;</code> &ndash; Second use case is <strong>always</strong> invoked by the first. </li>
-            <li> <code>&lt;&lt;extend&gt;&gt;</code> &ndash; Second use case is <strong>occasionally</strong> invoked by the first.  </li>
+            <li> <code>&lt;&lt;extend&gt;&gt;</code> &ndash; Second use case is <strong>occasionally</strong> invoked by the first. </li>
         </ul> </li>
     </ul></li>
 </ul>
 <img src="images/softeng/usecase1.JPG"/>
-<img src="images/softeng/usecase2.jpg"/>
+<img width="600" src="images/softeng/usecase2.jpg"/>
 
 <h4> Finding Use Cases </h4>
 <ol>
@@ -1140,6 +1143,96 @@ Table of contents
 <img src="images/softeng/usecase3.jpg"/>
 <img src="images/softeng/usecase4.jpg"/>
 
+<hr/> <!----------------------------------------------------------------------------------->
+
+<h2 id="sysdgn"> 11 &ndash; System Design </h2>
+<p> <keyword>System Architecture</keyword> is concerned with the <strong>overall structure</strong> of the system and its <strong>interactions</strong> with other systems. System architecture is split between <keyword>software and hardware</keyword> architecture. </p>
+
+<h3 id="sysdgn1"> 11.1 &ndash; Major Activities </h3>
+<ol>
+    <li> Sub-systems and major <keyword>components</keyword> are identified. </li>
+    <li> Any <keyword>inherent concurrency</keyword> is identified. </li>
+    <li> Sub-systems are are <keyword>allocated to processors</keyword>. </li>
+    <li> <keyword>Data management strategy</keyword> is selected. </li>
+    <li> Standards for <keyword>Human Computer Interaction</keyword> is selected. </li>
+    <li> <keyword>Code development standards</keyword> are specified. </li>
+    <li> <keyword>Control aspects</keyword> of the application are planned. </li>
+    <li> <keyword>Test plans</keyword> are produced. </li>
+    <li> <keyword>Priorities</keyword> are set for design. </li>
+    <li> <keyword>Implementation requirements</keyword> are identified. </li>
+</ol>
+
+<h4> Application Types </h4>
+<ul>
+    <li><keyword>Data Processing Applications</keyword><ul>
+        <li> Process data in batches <strong>without explicit user intervention</strong> during the processing. </li>
+        <li> Has input-process-output structure. </li>
+        <li> E.g. Billing systems; payroll systems. </li>
+    </ul></li>
+
+    <li><keyword>Transaction Processing Applications</keyword><ul>
+        <li> Process user requests and <strong>update information</strong> in system database. </li>
+        <li> E.g. E-commerce; reservation systems. <br/> <img src="images/softeng/sysdgn1.jpg"/> </li>
+    </ul></li>
+
+    <li><keyword>Event Processing Systems</keyword><ul>
+        <li> System actions depend on <strong>interpreting events</strong> from the system's environment. </li>
+        <li> E.g. Word processors; real-time systems. </li>
+    </ul></li>
+
+    <li><keyword>Language Processing Systems</keyword><ul>
+        <li> User's intentions are specified in a <strong>formal language</strong> that is <strong>processed and interpreted</strong> by the system. </li>
+        <li> E.g. Compilers; command interpreters. </li>
+    </ul></li>
+</ul>
+
+<h3 id="sysdgn2"> 11.2 &ndash; Software Architecture </h3>
+<p> No fixed definition. Could be <keyword>class design</keyword> or description of <keyword>sub-systems</keyword> and their relationships. </p>
+
+<h4> Sub-systems </h4>
+<p> Collection of system elements that have <keyword>common properties</keyword>. </p>
+
+<h4> Advantages of sub-systems </h4>
+<ul>
+    <li> Produces <keyword>smaller units of development</keyword>. </li>
+    <li> Helps <keyword>maximise reuse</keyword> at a component level. </li>
+    <li> Helps developers <keyword>cope</keyword> with complexity. </li>
+    <li> Improves <keyword>maintainability</keyword>. </li>
+    <li> Aids <keyword>portability</keyword>. </li>
+</ul>
+
+<h4> Layering and Partitioning </h4>
+<p> There are two method to divide software systems into sub-systems: </p>
+<ul>
+    <li> Layering <ul>
+        <li> Different levels usually represent different levels of abstraction. <br/> <img src="images/softeng/sysdgn2.JPG"/> </li>
+        <li> OSI-7 Layer Model <br/> <img width="400" src="images/softeng/sysdgn3.jpg"/> </li>
+        <li> Issues: <ul>
+            <li> <keyword>Maintaining the stability</keyword> of the interfaces of each layer. </li>
+            <li> <keyword>Construction of other systems</keyword> using some of the lower layers.</li>
+            <li> Variations in the level of each sub-systems. </li>
+            <li> <keyword>Further sub-division</keyword> of complex layers. </li>
+            <li> <keyword>Performance reductions</keyword> due to a closed layered architecture. </li>
+        </ul></li>
+        
+        <li> Developing a Layered Architecture <ol>
+            <li> Define the <keyword>criteria</keyword>. </li>
+            <li> Determine the <keyword>number of layers</keyword>. </li>
+            <li> Name the layers and <keyword>assign functionality</keyword>. </li>
+            <li> Specify layer's <keyword>services</keyword> </li>
+            <li> Refine layering by <keyword>iterating back</keyword> from step 1. </li>
+            <li> <keyword>Specify interfaces</keyword> for each layer. </li>
+            <li> <keyword>Specify the structure</keyword> of each layer. </li>
+            <li> <keyword>Specify the communication</keyword> between layers. </li>
+            <li> <keyword>Reduce the coupling</keyword> between adjacent layers. </li>
+        </ol></li>
+    </ul></li>
+
+    <li> Partitioning <ul>
+        <li> Each sub-system focuses on a different aspect of the system functionality. <br/> <img width="600" src="images/softeng/sysdgn4.jpg"/> </li>
+        <li> This also depends on the system architect. </li>
+    </ul></li>
+</ul>
 
 <hr/> <!----------------------------------------------------------------------------------->
 
