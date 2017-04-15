@@ -81,6 +81,7 @@ Table of contents
     <li><a href="#roc"> ROC Analysis </a></li>
     <li><a href="#object"> Object Recognition </a></li>
     <li><a href="#model"> Model Based Object Recognition </a></li>
+    <li><a href="#papers"> Past Papers </a></li>
 </ol>
 <hr/>
 
@@ -848,9 +849,248 @@ The Hough transform is a common approach to finding parameterised line segments<
 <hr/>
 
 <h2 id="object"> 12 - Object Recognition </h2>
+<p>Can be defined as labelling problem</p>
+<ul>
+    <li>Based on models of known objects</li>
+</ul>
+<p>What is object recognition?</p>
+<ul>
+    <li>Given:<ul>
+        <li>an image containing one or more objects</li>
+        <li>a background</li>
+        <li>A set of labels corresponding to a set of known models to the system</li>
+    </ul></li>
+    <li>Assign correct labels to regions in image</li>
+    <br>
+    <li>Closely linked to image segmentation<ul>
+        <li>Segmentation needed for object recognition</li>
+        <li>Object recognition needed for segmentation</li>
+    </ul></li>
+</ul>
+<p><strong>System Components needed for Object Recognition</strong></p>
+<ul>
+    <li>Model database</li>
+    <li>Feature detector</li>
+    <li>Hypothesizer</li>
+    <li>Hypothesis verifier</li>
+</ul>
+<p><strong>Model Database</strong></p>
+<ul>
+    <li>Contains all models known to system</li>
+    <li>Information in model depends on approach used for recognition<ul>
+        <li>Qualitative or functional description</li>
+        <li>Precise geometric surface information</li>
+    </ul></li>
+    <li>Typically abstract feature vectors<ul>
+        <li>Feature: some attribute of object thought to be important for recognition, eg shape, colour, size</li>
+    </ul></li>
+</ul>
+<p><strong>Feature Detector</strong></p>
+<ul>
+    <li>Applies operators to image and identifies location of features</li>
+    <li>Depends on type of objects and organisation of model database</li>
+</ul>
+<p><strong>Hypothesizer</strong></p>
+<ul>
+    <li>Using detected features in image, assigns likelihoods to objects present</li>
+    <li>Used to reduce search space by using certain features</li>
+    <li>Modelbase organised such thtat helps eliminate unlikely objects as candidates</li>
+</ul>
+<p><strong>Hypothesis verifier</strong></p>
+<ul>
+    <li>Uses object models to verify hypothesis</li>
+    <li>Refines the likelihood of objects</li>
+    <li>System then selects the object with highest likelihood, based on evidence</li>
+</ul>
+<p><strong>Issues</strong></p>
+<ul>
+    <li><strong>Object vs Model representation</strong><ul>
+        <li>How should models be represented in model databases?</li>
+        <li>What are the important features to be captured?</li>
+        <li>Some models, geometry alone is sufficient, whereas in some functional may be needed</li>
+        <li>So: representation should capture all relevant information and should be well organised.</li>
+    </ul></li>
+    <li><strong>Feature Extraction</strong><ul>
+        <li>What features should be detected?</li>
+        <li>How can they be detected well?</li>
+        <li>2D vs 3D features</li>
+    </ul></li>
+    <li><strong>Feature-Model matching</strong><ul>
+        <li>How can features in images be matched to models?</li>
+        <li>Usually many features, exhaustive search is computationally too slow</li>
+        <li>Effectiveness and efficiency must be considered</li>
+    </ul></li>
+    <li><strong>Hypothesis formation</strong><ul>
+        <li>How are a set of likely objects based on feature matching selected?</li>
+        <li>How can probabilities be assigned?</li>
+        <li>Normally just used to reduce search space</li>
+        <li>Likelihood of presence of an object based on detected features</li>
+    </ul></li>
+    <li><strong>Object verification</strong><ul>
+        <li>How to select most likely object based on a set of probable objects?</li>
+        <li>Not always easy - but if geometric can be much easier</li>
+    </ul></li>
+</ul>
+<p><strong>Complexity</strong></p>
+<ul>
+    <li>Images of a scene depend on<ul>
+        <li>Illumination</li>
+        <li>Camera parameters</li>
+        <li>Camera location</li>
+    </ul></li>
+    <li>Need to consider several factors for object recognition<ul>
+        <li><strong>Scene constancy</strong><ul>
+            <li>Image acquired in similar conditions as models</li>
+        </ul></li>
+        <li><strong>Image-model spaces</strong><ul>
+            <li>3D objects considered as 2D<ul>
+                <li>If perspective effects can not be ignored, it is more complex</li>
+            </ul></li>
+        </ul></li>
+        <li><strong>Number of objects in model database</strong><ul>
+            <li>If small, no hypothesis formation stage needed</li>
+            <li>Otherwise may be crucial to reduce parameter space</li>
+        </ul></li>
+        <li><strong>Number of objects in image AND occlusion</strong><ul>
+            <li>If only one object, it may be easily visible</li>
+            <li>As number of object increases, the probability of occlusion increases</li>
+            <li>Causes absence of features and generation of unexpected features</li>
+        </ul></li>
+    </ul></li>
+</ul>
+<p><strong>2D images</strong></p>
+<ul>
+    <li>If objects always in a stable position in a scene they can be considered 2D</li>
+    <li>Therefore use a 2D database</li>
+    <li>Two possible cases:<ul>
+        <li>Objects will not be occluded as an industrial setting</li>
+        <li>Object ay be occluded by other objects or only partially visible</li>
+    </ul></li>
+</ul>
+<p><strong>3D images</strong></p>
+<ul>
+    <li>If images obtained from arbitrary view point then object may appear different in each view<ul>
+        <li>Perspective effect and view point must be considered</li>
+    </ul></li>
+    <li>Remember that images only contain 2D information and will therefore affect object recognition<ul>
+        <li>Are two object separated from each other or not?</li>
+    </ul></li>
+</ul>
 <hr/>
 
 <h2 id="model"> 13 - Model Based Object Recognition </h2>
+<p><strong>Model Based Approach</strong></p>
+<ul>
+    <li>David Marr defined approach to study of vision in 70s</li>
+    <li>Saw this computational approach as having 3 levels:<ul>
+        <li><strong>Computational theory:</strong> What is it that the model is trying ti accomplish?
+        What are the processed for?</li>
+        <li><strong>Algorithmic level:</strong> What algorithm is needed? What sort of processes might be
+        needed?</li>
+        <li><strong>Mechanism level:</strong> What mechanism is needed to implement the algorithm?
+        With the brain this would be associated with it neurology</li>
+    </ul></li>
+    <li><strong>Problems with such theories</strong><ul>
+        <li>We cannot really be sure that they are truly representative of actual brain function</li>
+        <li>Cannot infer an algorithm from the properties of cells, and nor can we definitely infer
+        a mechanism if we know the algorithm</li>
+    </ul></li>
+    <li>His contribution:<ul>
+        <li>Was a critical ste in formulation of computational theory concerning discovery of the <strong>
+            properties of the visible world</strong></li>
+        <li>Provided many examples of un-determined problems. i.e.<ul>
+            <li>The world is made up of solid, non-deformable objects</li>
+            <li>Only one can occupy a given point in space and time</li>
+            <li>Therefore can use laws of Physics to determine</li>
+        </ul></li>
+    </ul></li>
+</ul>
+<p><strong>Marr's Approach</strong></p>
+<ul>
+    <li>Based on 3 main representations:<ul>
+        <li><strong>The primal sketch</strong><ul>
+            <li>Description of the intensity changes in the image and their local geometry -> intensity variations
+                are likely to correspond to physical reality</li>
+        </ul></li>
+        <li><strong>The 2.5D sketch</strong><ul>
+            <li>Viewer centred description of orientation, contour and depth</li>
+        </ul></li>
+        <li><strong>The 3D model</strong><ul>
+            <li>Object centred representation of 3D objects -> allowing handling and recognition</li>
+        </ul></li>
+    </ul></li>
+</ul>
+<p><strong> Models Based Approach ctd.</strong></p>
+<ul>
+    <li>There is an infinite variety of object. How do we represent, store and access models of them
+    efficiently?</li>
+    <li>One suggestion was the use of a small library of 3D parts from which many complex models can
+    be constructed</li>
+    <li>There are many schemes: generalised cylinders, Geons, ...</li>
+    <li>But they didn't work very well...</li>
+</ul>
+<p align="center"><img src="images/vision/geons.png" width="300"></p>
+<p><strong>Appearance based recognition: SIFT (Scale-Invariant Feature Transform)</strong></p>
+<ul>
+    <li>These statistical approaches characterise some aspects of the appearance of an object that can be used
+        to recognise it</li>
+    <li>But this means they are (largely) view dependent, you have to learn a different statistical model
+        for each different view</li>
+    <li>e.g. SIFT based recognition<ul>
+        <li>Find interest points in the scale space<ul>
+            <li>the image is convolved with Gaussian filters at different scales,
+                and then the difference of successive Gaussian-blurred images are taken</li>
+        </ul></li>
+        <li>Re-describe the interest points so that they are robust to:<ul>
+            <li>Image translation, scaling, rotation</li>
+            <li>Partially invariant to illumination changes, affine and 3d projection changes</li>
+        </ul></li>
+    </ul></li>
+</ul>
+<p><strong>Part-Based Model</strong></p>
+<ul>
+    <li>Refers to a broad class of detection algorithms used no images, in which various parts
+    of the image are used separately in order to determine if and where an object of interest exists</li>
+    <li>Use smaller part detectors, for instance mouth, nose, and eye detectors and make a judgement
+    about whether an image has a face based on the relative positions in which the components exist</li>
+</ul>
+<p><strong>Constellation Model</strong></p>
+<ul>
+    <li>A probabilistic, generative model for category-level object recognition. Like other
+    part-based models, it attempts to represent an object class by a set of N parts under <strong>
+            mutual geometric constraints</strong></li>
+    <li>Because it considers the geometric relationship between different parts,
+        the Constellation Model differs significantly from appearance-only,
+        or "bag-of-parts" representation models, which explicitly disregard the location of image features.</li>
+    <li>The task becomes significantly complicated by factors such as background clutter, occlusion,
+        and variations in viewpoint, illumination, and scale.</li>
+    <li>Ideally, we would like the particular representation we choose to be robust to as
+        many of these factors as possible.</li>
+    <li>Even if two objects belong to the <strong>same visual category</strong>,
+        their appearances may be <strong>significantly different.</strong></li>
+    <li>For structured objects such as cars, bicycles, and people,
+        separate instances of objects from the same category are subject to similar geometric constraints</li>
+</ul>
+<p><strong>Summary</strong></p>
+<ul>
+    <li>This is not a resolved debate</li>
+    <li>There is evidence for both sides</li>
+    <li>Structural 3d information is almost certainly extracted by the brain too</li>
+    <li>Model based: how do we extract good enough low level features (e.g. a depth map)?</li>
+    <li>Appearance based: only seems to be good for recognition, which is a small part of the vision problem.</li>
+</ul>
+<hr/>
+
+<h2 id="papers"> Past Papers </h2>
+<ol>
+    <li><a href="https://portal-app-prod.bham.ac.uk/xis/do/xpdbChan?hval=1b18243cf9b45bdb4a87ade52328305a&pid=514&doaction=viewpaper"> 2011 </a></li>
+    <li><a href="https://portal-app-prod.bham.ac.uk/xis/do/xpdbChan?hval=1b18243cf9b45bdb4a87ade52328305a&pid=2068&doaction=viewpaper"> 2013 </a></li>
+    <li><a href="https://portal-app-prod.bham.ac.uk/xis/do/xpdbChan?hval=1b18243cf9b45bdb4a87ade52328305a&pid=3603&doaction=viewpaper"> 2015 </a></li>
+    <li><a href="https://portal-app-prod.bham.ac.uk/xis/do/xpdbChan?hval=1b18243cf9b45bdb4a87ade52328305a&pid=4400&doaction=viewpaper"> 2016 </a></li>
+
+</ol>
+
+
 
     <!-- Utils -->
     <button onclick="topFunction()" id="topBtn" title="Go to top">Top</button>
