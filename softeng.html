@@ -3,8 +3,8 @@
 <head>
     <!--[if lt IE 9]>
     <script> document.createElement("keyword"); </script>
-
     <![endif]-->
+
     <meta charset="UTF-8">
     <title> Software Engineering </title>
     <link href="images/icon.png" rel="icon"/>
@@ -12,6 +12,7 @@
         body {
             background-color: #b8e6e4;
             font-family: "Georgia", serif;
+            margin: 20px;
         }
 
         keyword {
@@ -94,6 +95,12 @@ Table of contents
         <li><a href="#agile2"> Agile Methods </a></li>
         <li><a href="#agile3"> Rapid Application Development </a></li>
     </ul></li>
+    <li><a href="#inception"> Inception Phase </a><ul>
+        <li><a href="#inception1"> Business Process Modelling </a></li>
+        <li><a href="#inception2"> Activity Diagram </a></li>
+    </ul></li>
+    <li><a href="#reqdoc"> Requirements Documentation </a></li>
+
 </ol>
 <hr/> <!----------------------------------------------------------------------------------->
 
@@ -643,7 +650,324 @@ Table of contents
 
 <hr/> <!----------------------------------------------------------------------------------->
 
+<h2 id="inception"> 6 &ndash; Inception Phase </h2>
+<p> The <keyword>Inception phase</keyword> focuses on the <keyword>business process modeling</keyword>, <keyword>requirements capture</keyword>, and the <keyword>start of analysis</keyword>. </p>
 
+<p> Analysis has three parts: </p>
+<ul>
+    <li> Business Modelling </li>
+    <li> Requirements Analysis </li>
+    <li> System Analysis </li>
+</ul>
+
+<h3 id="inception1"> 6.1 &ndash; Business Process Modelling </h3>
+<ol>
+    <li> Build a <keyword>business process map</keyword> </li>
+    <li> Develop <keyword>business scenarios</keyword> </li>
+    <li> Derive <keyword>business workflows</keyword> </li>
+    <li> Produce <keyword>business object models</keyword> </li>
+</ol>
+<h4> Business Process Map </h4>
+<img src="images/softeng/inception1.JPG"/>
+
+<h4> Business Scenario Analysis </h4>
+<p> Forms the basis of analysis process: </p>
+<ul>
+    <li> <keyword>Business</keyword> analysis </li>
+    <li> <keyword>Use case</keyword> analysis </li>
+</ul>
+<p> There are four parts to analysis is to describe and identify: </p>
+<ol>
+    <li> <keyword>Scenarios</keyword> &ndash; described by primary and alternative paths </li>
+    <li> <keyword>Primary Paths</keyword> </li>
+    <li> <keyword>Alternative Paths</keyword> </li>
+    <li> <keyword>Exceptions</keyword> &ndash; when alternative paths fails </li>
+</ol>
+
+<p> The <keyword>80/20 principle</keyword> states that 80% of <strong>effort</strong> goes into 20% of <strong>activity</strong>. </p>
+
+<h3 id="inception2"> 6.2 &ndash; Activity Diagrams </h3>
+<p> A branch of UML diagrams, made by merging scenario analysis' <keyword>primary</keyword> and <keyword>alternative paths</keyword>. Used to <keyword>model business processes</keyword>. </p>
+<img src="images/softeng/inception2.jpg"/>
+<p> Apart from these we also have <keyword>swimlanes</keyword> which are useful to separate actors. </p>
+<img src="images/softeng/inception5.JPG"/>
+<p> Some examples: </p>
+<div>
+<img src="images/softeng/inception3.JPG"/>
+<img src="images/softeng/inception4.JPG"/>
+</div>
+
+<h4> Stakeholder Involvement </h4>
+<p> Building business processes requires many discussions with clients and stakeholders. </p>
+<p> Record process in a <keyword>Process Catalogue</keyword>.</p>
+<ul>
+    <li> <keyword>Goals</keyword> of the process </li>
+    <li> Necessary <keyword>preconditions</keyword> before the process can run </li>
+    <li> <keyword>Criticality</keyword> of the process </li>
+    <li> <keyword>Business actors</keyword> involved in the process </li>
+</ul>
+
+<hr/> <!----------------------------------------------------------------------------------->
+
+<h2 id="reqdoc"> 7 &ndash; Requirements Documentation </h2>
+<p> A <keyword>requirement</keyword> may be the basis for a bid for a contract, or it may be the basis for the contract itself, or both. </p>
+
+<h3 id="reqdoc1"> 7.1 &ndash; Types of Requirements </h3>
+<ul>
+    <li> <keyword>User</keyword> <ul>
+        <li> Statements in <keyword>natural language</keyword> and diagrams of the services the system provides and its constraints. </li>
+        <li> Should describe <keyword>functional</keyword> and <keyword>non-functional</keyword> requirements. </li>
+        <li> Written for <keyword>clients</keyword> without technical knowledge. </li>
+    </ul></li>
+    
+    <li> <keyword>System</keyword> <ul>
+        <li> Descriptions of the system's functions, services and operational <keyword>constraints</keyword>. </li>
+        <li> Defines what should be <keyword>implemented</keyword>. </li>
+        <li> Part of the contract. </li>
+    </ul></li>
+</ul>
+
+<h3 id="reqdoc2"> 7.2 &ndash; Functional and Non-Functional Requirements </h3>
+<p> Brief definition of these two: Functional requirements describe <strong>what</strong> the system <keyword>should do</keyword> while non-functional requirements describe <strong>how</strong> the system <keyword>works</keyword> </p>
+<img src="images/softeng/reqdoc1.jpg"/>
+<p> Requirements have to be written properly without any <keyword>ambiguity</keyword> or developers may interpret it differently than what is asked for. </p>
+
+<p> Requirements have to be both complete and consistent: </p>
+<ul>
+    <li> Complete <ul>
+        <li> They should include <keyword>descriptions</keyword> of all facilities required. </li>
+    </ul></li>
+
+    <li> Consistent <ul>
+        <li> There should be <keyword>no conflicts or contradictions</keyword> in the descriptions of the system facilities. </li>
+    </ul></li>
+</ul>
+
+<h4> Types of Non-functional Requirements </h4>
+<ul>
+    <li> <keyword>Product</keyword> requirements <ul>
+        <li> Specify the way the delivered product must behave. </li>
+        <li> Performance, Reliability, Availability, etc. </li>
+    </ul> </li>
+
+    <li> <keyword>Organisational</keyword> requirements <ul>
+        <li> Consequence of organisational policies and procedures </li>
+        <li> Process standards used, implementation requirements, etc. </li>
+    </ul> </li>
+
+    <li> <keyword>External</keyword> requirements <ul>
+        <li> Factors which are external to the system and its development process </li>
+        <li> Legislative requirements, etc. </li>
+    </ul> </li>
+</ul>
+
+<p> A requirement is <keyword>verifiable</keyword> if it is possible to create and run a <keyword>test</keyword> of the final system that clearly demonstrates the requirement has been met. </p>
+
+<p> <keyword>Domain</keyword> requirements are derived from the application domain and describe <keyword>system characteristics</keyword> and features that reflect the domain. </p>
+
+<h4> Guidelines for Writing Requirements </h4>
+<p> Create a <keyword>standard format</keyword> and use it for all requirements. Use language in a constant way. Use <keyword>shall</keyword> for mandatory requirements, <keyword>should</keyword> for desirable requirements. Avoid computing <keyword>jargon</keyword>. </p>
+
+<h4> Problems with Natural Language </h4>
+<ul>
+    <li> <keyword>Ambiguous</keyword> &ndash; Different people may interpret it differently. </li>
+    <li> <keyword>Too flexible</keyword> &ndash; Many ways to describe the same thing. </li>
+    <li> <keyword>Lack of modularisation</keyword> &ndash; NL Structures are inadequate to structure system requirements. </li>
+</ul>
+
+<p> <strong>Alternatives to NL specification</strong> </p>
+<table>
+    <tr>
+        <th> Notation </th>
+        <th> Description </th>
+    </tr>
+    <tr>
+        <td> Structured natural language </td>
+        <td> Depends on defining standard forms to express the specification. </td>
+    </tr>
+    <tr>
+        <td> Design description languages </td>
+        <td> Uses a language like a programming language with more abstract features and models to specify the requirements . </td>
+    </tr>
+    <tr>
+        <td> Graphical notations </td>
+        <td> Graphics supplemented with text annotations. This includes use-case descriptions and sequence diagrams. </td>
+    </tr>
+    <tr>
+        <td> Mathematical specifications </td>
+        <td> Languages based on math concepts like finite state machines. </td>
+    </tr>
+</table>
+
+<h3 id="reqdoc3"> 7.3 &ndash; Sequence Diagrams </h3>
+<p> Shows the <keyword>sequence of events</keyword> that take place during some <keyword>user interaction</keyword> with a system. </p>
+<div>
+<img src="images/softeng/reqdoc2.JPG"/>
+<img src="images/softeng/reqdoc3.JPG"/>
+</div>
+<ul>
+    <li> <keyword>Synchronous</keyword> <ul>
+        <li> Method call and <keyword>wait for return</keyword>. </li>
+        <li> Represented as full solid arrow. </li>
+        <li> Dashed arrow indicated return. </li>
+    </ul> </li>
+
+    <li> <keyword>Asynchronous</keyword> <ul>
+        <li> Method call <keyword>without return</keyword>. </li>
+        <li> Represented as arrow without solid head. </li>
+    </ul> </li>
+</ul>
+
+<h3 id="reqdoc4"> About of Requirements Documents </h3>
+<h4> Users </h4>
+<ul>
+    <li> System Customers </li>
+    <li> Software Managers </li>
+    <li> System Engineers </li>
+    <li> System Test Engineers </li>
+    <li> System Maintenance Engineers </li>
+</ul>
+
+<h4> IEEE Requirements Standard </h4>
+<p> A useful starting point for defining more detailed specific requirements standards. </p>
+<ul>
+    <li> Introduction </li>
+    <li> General Description </li>
+    <li> Specific Requirements </li>
+    <li> Appendix </li>
+    <li> Index </li>
+</ul>
+
+<hr/> <!----------------------------------------------------------------------------------->
+
+<h2 id="reqcap"> 8 &ndash; Requirements Capture </h2>
+<h3 id="reqcap1"> 8.1 &ndash; About Requirements Capture </h3>
+<p> Involves <keyword>analysts</keyword> working with clients to find out about the application domain, services that the system should provide and the system's operational constraints. May involve <keyword>stakeholders</keyword>. </p>
+
+<h4> Problems with Requirements </h4>
+<ul>
+    <li> Stakeholders <keyword>don't know what they really want</keyword>. </li>
+    <li> Stakeholders express requirements in their <keyword>own terms</keyword>. </li>
+    <li> Different stakeholders may have <keyword>conflicting requirements</keyword>. </li>
+    <li> Organisational and political factors may <keyword>influence</keyword> the system requirements. </li>
+    <li> Requirements <keyword>change</keyword> during the analysis process. </li>
+</ul>
+
+<h4> Process Activities </h4>
+<ul>
+    <li><keyword>Requirements Discovery</keyword><ul>
+        <li> <strong>Interacting with stakeholders</strong> to discover their requirements. </li>
+    </ul></li>
+
+    <li><keyword>Requirements Classification and Organisation</keyword><ul>
+        <li> <strong>Group related requirements</strong> and <strong>organises</strong> them into <strong>coherent clusters</strong>. </li>
+    </ul></li>
+
+    <li><keyword>Prioritisation and Negotiation</keyword><ul>
+        <li><strong>Prioritising requirements</strong> and <strong>resolving requirement conflicts</strong>.</li>
+    </ul></li>
+
+    <li><keyword>Requirements Documentation</keyword><ul>
+        <li> Requirements are <strong>documented</strong> and input into next iteration. </li>
+    </ul></li>
+</ul>
+
+<h3 id="reqcap2"> 8.2 &ndash; Viewpoints </h3>
+<p> A way of <keyword>structuring</keyword> the requirements to represent the <keyword>perspectives</keyword> of different stakeholders. Stakeholders may be classified under different viewpoints. </p>
+
+<h3 id="reqcap3"> 8.3 &ndash; Fact-Finding Techniques </h3>
+<table>
+    <tr>
+        <th> Technique </th>
+        <th> Definition </th>
+        <th> Pros </th>
+        <th> Cons</th>
+    </tr>
+    <tr>
+        <td><keyword>Background Reading</keyword></td>
+        <td> Company reports, organisation charts, policy manuals of existing systems. </td>
+        <td> Helps understand the organisation and prepare for other types of fact finding. </td>
+        <td> Written documents often do not match reality; out of date for example. </td>
+    </tr>
+    <tr>
+        <td><keyword>Interviewing</keyword></td>
+        <td> A <strong>structured meeting</strong> between the analyst and a stakeholder. </td>
+        <td><ul>
+            <li> Allows analyst to adapt to what the interviewee says. </li>
+            <li> Analyst can probe in <strong>greater depth</strong>.</li>
+            <li> Interview can be terminated early if interviewee has nothing to say. </li>
+        </ul></td>
+        <td><ul>
+            <li> Interviews are <strong>time-consuming</strong> and therefore <strong>costly</strong>. </li>
+            <li> Results have to be <strong>transcribed or written up</strong> after the interview. </li>
+            <li> Can be subject to <strong>bias</strong> if the analyst has a closed mind. </li>
+            <li> Different interviewees may provide <strong>conflicting information</strong>. </li>
+        </ul></td>
+    </tr>
+    <tr>
+        <td><keyword>Observation</keyword></td>
+        <td> Allows the analyst to identify social and organisational factors. </td>
+        <td><ul>
+            <li> Provides <strong>first-hand</strong> experience of how the current system operates. </li>
+            <li> Data collected in <strong>real time</strong> hence having high level of validity. </li>
+            <li> Baseline performance data can be collected. </li>
+            <li> Can be used to verify other sources of information. </li>
+        </ul></td>
+        <td><ul>
+            <li> Most people don't like being observed and may <strong>behave differently</strong>. </li>
+            <li> Required <strong>skilled and trained</strong> observer to be effective. </li>
+            <li> Can give rise to <strong>logistical problems</strong>. </li>
+            <li> <strong>Ethical issues</strong> can arise if sensitive information is handled. </li>
+        </ul></td>
+    </tr>
+    <tr>
+        <td><keyword>Document Sampling</keyword></td>
+        <td> Collect copies of blank and completed documents. Analyse the document to determine <strong>inputs and outputs</strong> for each activity. </td>
+        <td>Can be used to gather <strong>quantitative data</strong>. Also used to estimate <strong>error rates</strong>.</td>
+        <td> Limited use if the system is going to change significantly. </td>
+    </tr>
+    <tr>
+        <td><keyword>Questionnaires</keyword></td>
+        <td> Series of written questions with limited range of possible answers. </td>
+        <td><ul>
+            <li> <strong>Economical method</strong> of gathering data from a large number of people. </li>
+            <li> Results can be <strong>analysed easily</strong>. </li>
+        </ul></td>
+        <td><ul>
+            <li> Good questionnaires are difficult to construct. </li>
+            <li> May be necessary to <strong>follow up</strong> the questionnaire by an interview. </li>
+            <li> May suffer from <strong>low response rates</strong>. </li>
+        </ul></td>
+    </tr>
+</table>
+
+<h3 id="reqcap4"> 8.4 &ndash; Requirements Checking </h3>
+<ul>
+    <li><keyword>Validity</keyword></li>
+    <li><keyword>Consistency</keyword></li>
+    <li><keyword>Completeness</keyword></li>
+    <li><keyword>Realism</keyword></li>
+    <li><keyword>Verifiability</keyword></li>
+</ul>
+
+<h3 id="reqcap5"> 8.5 &ndash; Requirements Validation </h3>
+<ul>
+    <li><keyword>Requirements Reviews</keyword><ul>
+        <li> Systematic <strong>manual analysis</strong> of the requirements. </li>
+    </ul></li>
+    
+    <li><keyword>Prototyping</keyword><ul>
+        <li> Using an <strong>executable model</strong> of the system to check requirements. </li>
+    </ul></li>
+    
+    <li><keyword>Test-case generation</keyword><ul>
+        <li> <strong>Developing tests</strong> for requirements to check testability. </li>
+    </ul></li>
+</ul>
+
+
+
+<hr/> <!----------------------------------------------------------------------------------->
 
 
 
