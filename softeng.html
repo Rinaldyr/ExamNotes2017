@@ -99,7 +99,29 @@ Table of contents
         <li><a href="#inception1"> Business Process Modelling </a></li>
         <li><a href="#inception2"> Activity Diagram </a></li>
     </ul></li>
-    <li><a href="#reqdoc"> Requirements Documentation </a></li>
+    <li><a href="#reqdoc"> Requirements Documentation </a><ul>
+        <li><a href="#reqdoc1"> Types of Requirements </a></li>
+        <li><a href="#reqdoc2"> Functional and Non-Functional Requirements </a></li>
+        <li><a href="#reqdoc3"> Sequence Diagrams </a></li>
+        <li><a href="#reqdoc4"> About Requirements Documents </a></li>
+    </ul></li>
+    <li><a href="#reqcap"> Requirements Capture </a><ul>
+        <li><a href="#reqcap1"> About Requirements Capture </a></li>
+        <li><a href="#reqcap2"> Viewpoints </a></li>
+        <li><a href="#reqcap3"> Fact-Finding Techniques </a></li>
+        <li><a href="#reqcap4"> Requirements Checking </a></li>
+        <li><a href="#reqcap5"> Requirements Validation </a></li>
+    </ul></li>
+    <li><a href="#reqana"> Requirements Analysis </a><ul>
+        <li><a href="#reqana1"> Goal Oriented Requirements Engineering (GORE) </a></li>
+        <li><a href="#reqana2"> KAOS </a></li>
+        <li><a href="#reqana3"> MoSCoW </a></li>
+    </ul></li>
+    <li><a href="#usecase"> UML Use Case </a><ul>
+        <li><a href="#usecase1"> Use Case Diagram </a></li>
+        <li><a href="#usecase2"> Use Case Description </a></li>
+    </ul></li>
+
 
 </ol>
 <hr/> <!----------------------------------------------------------------------------------->
@@ -818,7 +840,7 @@ Table of contents
     </ul> </li>
 </ul>
 
-<h3 id="reqdoc4"> About of Requirements Documents </h3>
+<h3 id="reqdoc4"> 7.4 &ndash; About Requirements Documents </h3>
 <h4> Users </h4>
 <ul>
     <li> System Customers </li>
@@ -965,11 +987,161 @@ Table of contents
     </ul></li>
 </ul>
 
+<hr/> <!----------------------------------------------------------------------------------->
 
+<h2 id="reqana"> 9 &ndash; Requirements Analysis </h2>
+<p> To describe requirements and introduce techniques for <keyword>requirements elicitation and analysis</keyword>. </p>
+
+<h4> Phases of RE </h4>
+<ul>
+    <li><keyword>Early/Inception</keyword><ul>
+        <li> Concentrates on the <strong>analysis and modelling</strong> of the environments. </li>
+        <li> About the system-to-be, stakeholders, objectives, relationships. </li>
+    </ul></li>
+    
+    <li><keyword>Late/Elaboration</keyword><ul>
+        <li> Models the system together with its environment. </li>
+        <li> System <strong>requirements and assumptions</strong> about environment are identified. </li>
+    </ul></li>
+</ul>
+
+<h3 id="reqana1"> 9.1 &ndash; Goal Oriented Requirements Engineering (GORE) </h3>
+<ul>
+    <li> Focuses on early phase of RE <ul>
+        <li> Goal <keyword>elicitation</keyword> </li>
+        <li> Goal <keyword>refinement</keyword> </li>
+        <li> <keyword>Assigning goals</keyword> to agents </li>
+    </ul></li>
+
+    <li> Push requirements to design level. </li>
+</ul>
+
+<h4> Benefits of GORE </h4>
+<ul>
+    <li> <keyword>Wider perspective</keyword> of the system and environment. </li>
+    <li> Goals provide a <keyword>rationale</keyword> for requirements. </li>
+    <li> Can show whether a requirement specification is <keyword>complete</keyword>. </li>
+    <li> Diagrams show <keyword>pertinence</keyword> or relevance fo goals.</li>
+    <li> Provides <keyword>traceability</keyword> from high level objectives to low level requirements. </li>
+    <li> Provides a natural <keyword>structure</keyword>. </li>
+    <li> Can help detect <keyword>conflicts</keyword> between goals of different viewpoints. </li>
+    <li> Goals tend to be more <keyword>stable</keyword> than requirements. </li>
+</ul>
+
+<h3 id="reqana2"> 9.2 &ndash; KAOS </h3>
+<p> Either Knowledge Acquisition in autOmated Specification, or Keep All Objects Satisfied. </p>
+<p> It is a GORE technique that <keyword>combines</keyword> different types of expression and reasoning. </p>
+
+<table>
+    <caption> <strong>KAOS Objects</strong> </caption>
+    <tr>
+        <th> Object </th>
+        <th> Description </th>
+    </tr>
+    <tr>
+        <td><keyword>Operations</keyword></td>
+        <td> <strong>Input-output relations</strong> over objects. Declared with signatures having pre-, post- and trigger conditions. </td>
+    </tr>
+    <tr>
+        <td><keyword>Agent</keyword></td>
+        <td> Acts as a <strong>processor</strong> for operations. Humans, devices, software, etc. </td>
+    </tr>
+    <tr>
+        <td><keyword>Goal</keyword></td>
+        <td> System's <strong>intent</strong>. </td>
+    </tr>
+</table>
+
+<h4> KAOS Specification </h4>
+<p> Consists of three core models: </p>
+<ul>
+    <li> <keyword>Goal</keyword> </li>
+    <li> <keyword>Object</keyword> </li>
+    <li> <keyword>Operation</keyword> </li>
+</ul>
+
+<h4> Key Ideas </h4>
+<ol>
+    <li> Build <keyword>requirements model</keyword> </li>
+    <li> <keyword>Link</keyword> them with stakeholder high-level goals </li>
+    <li> Build <keyword>responsibility model</keyword> </li>
+    <li> Build a complete and consistent <keyword>glossary</keyword></li>
+    <li> Describe how objects <keyword>behave</keyword> to achieve the goals </li>
+    <li> <keyword>Validate requirements</keyword> </li>
+    <li> Use a defensive approach by <keyword>identifying obstacles</keyword> </li>
+    <li> <keyword>Update model</keyword> as the system develops </li>
+</ol>
+
+<img src="images/softeng/reqana1.jpg"/>
+
+<p> This is meant to be a <keyword>directed graph</keyword>. </p>
+
+<img src="images/softeng/reqana2.jpg"/>
+
+<p> An <keyword>obstacle</keyword> is a situation when goal, requirement or expectation is <strong>violated</strong>. </p>
+
+<img src="images/softeng/reqana3.jpg"/>
+
+<h3 id="reqana3"> 9.3 &ndash; MoSCoW </h3>
+<ul>
+    <li><keyword>Must</keyword><ul>
+        <li> Features that <strong>have to be implemented</strong>. </li>
+    </ul></li>
+
+    <li><keyword>Should</keyword><ul>
+        <li> Features that are <strong>important but not musts</strong>. </li>
+    </ul></li>
+
+    <li><keyword>Could</keyword><ul>
+        <li> Features that are <strong>nice to have</strong> but not core. </li>
+    </ul></li>
+
+    <li><keyword>Won't</keyword><ul>
+        <li>Features that are <strong>not</strong> going to be implemented at this stage. </li>
+    </ul></li>
+</ul>
 
 <hr/> <!----------------------------------------------------------------------------------->
 
+<h2 id="usecase"> 10 &ndash; Use Case </h2>
+<h3 id="usecase1"> 10.1 &ndash; Use Case Diagram </h3>
+<ul>
+    <li><keyword>Actors</keyword><ul>
+        <li> People or things that <strong>uses</strong> a computer system. </li>
+    </ul></li>
+    
+    <li><keyword>Use cases</keyword><ul>
+        <li> Meaningful pieces of <strong>functionality</strong> provided by a computer system. </li>
+    </ul></li>
+    
+    <li><keyword>Relationships</keyword><ul>
+        <li> <strong>Links</strong> between actors and the use case. </li>
+        <li> Directed Relationships: <ul>
+            <li> Happens when there is a functionality that can be <strong>re-used</strong></li>
+            <li> Connecting line with an <strong>arrow</strong> </li>
+            <li> <code>&lt;&lt;include&gt;&gt;</code> &ndash; Second use case is <strong>always</strong> invoked by the first. </li>
+            <li> <code>&lt;&lt;extend&gt;&gt;</code> &ndash; Second use case is <strong>occasionally</strong> invoked by the first.  </li>
+        </ul> </li>
+    </ul></li>
+</ul>
+<img src="images/softeng/usecase1.JPG"/>
+<img src="images/softeng/usecase2.jpg"/>
 
+<h4> Finding Use Cases </h4>
+<ol>
+    <li> <keyword>Map out business process</keyword> using Process maps, Scenario Analysis, Process work flows, etc. </li>
+    <li> Ask 'is there a potential use of a computer system here'? </li>
+</ol>
+<p> The advantage is that the analyst will have to fully consider the <keyword>environment</keyword> before making decisions about system functionality. </p>
+
+<h3 id="usecase2"> 10.2 &ndash; Use Case Description </h3>
+<p> Captures <keyword>non-functional requirements</keyword>. </p>
+<p> Provides a <keyword>top level view</keyword>, which is for most stakeholders. </p>
+<img src="images/softeng/usecase3.jpg"/>
+<img src="images/softeng/usecase4.jpg"/>
+
+
+<hr/> <!----------------------------------------------------------------------------------->
 
 <!-- Utils -->
 <button onclick="topFunction()" id="topBtn" title="Go to top">Top</button>
