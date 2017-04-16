@@ -3,8 +3,8 @@
 <head>
     <!--[if lt IE 9]>
     <script> document.createElement("keyword"); </script>
-
     <![endif]-->
+
     <meta charset="UTF-8">
     <title> Software Engineering </title>
     <link href="images/icon.png" rel="icon"/>
@@ -12,6 +12,7 @@
         body {
             background-color: #b8e6e4;
             font-family: "Georgia", serif;
+            margin: 20px;
         }
 
         keyword {
@@ -94,6 +95,37 @@ Table of contents
         <li><a href="#agile2"> Agile Methods </a></li>
         <li><a href="#agile3"> Rapid Application Development </a></li>
     </ul></li>
+    <li><a href="#inception"> Inception Phase </a><ul>
+        <li><a href="#inception1"> Business Process Modelling </a></li>
+        <li><a href="#inception2"> Activity Diagram </a></li>
+    </ul></li>
+    <li><a href="#reqdoc"> Requirements Documentation </a><ul>
+        <li><a href="#reqdoc1"> Types of Requirements </a></li>
+        <li><a href="#reqdoc2"> Functional and Non-Functional Requirements </a></li>
+        <li><a href="#reqdoc3"> Sequence Diagrams </a></li>
+        <li><a href="#reqdoc4"> About Requirements Documents </a></li>
+    </ul></li>
+    <li><a href="#reqcap"> Requirements Capture </a><ul>
+        <li><a href="#reqcap1"> About Requirements Capture </a></li>
+        <li><a href="#reqcap2"> Viewpoints </a></li>
+        <li><a href="#reqcap3"> Fact-Finding Techniques </a></li>
+        <li><a href="#reqcap4"> Requirements Checking </a></li>
+        <li><a href="#reqcap5"> Requirements Validation </a></li>
+    </ul></li>
+    <li><a href="#reqana"> Requirements Analysis </a><ul>
+        <li><a href="#reqana1"> Goal Oriented Requirements Engineering (GORE) </a></li>
+        <li><a href="#reqana2"> KAOS </a></li>
+        <li><a href="#reqana3"> MoSCoW </a></li>
+    </ul></li>
+    <li><a href="#usecase"> UML Use Case </a><ul>
+        <li><a href="#usecase1"> Use Case Diagram </a></li>
+        <li><a href="#usecase2"> Use Case Description </a></li>
+    </ul></li>
+    <li><a href="#sysdgn"> System Architecture </a><ul>
+        <li><a href="#sysdgn1"> Major Activities </a></li>
+        <li><a href="#sysdgn2"> Software Architecture </a></li>
+    </ul></li>
+
 </ol>
 <hr/> <!----------------------------------------------------------------------------------->
 
@@ -643,9 +675,566 @@ Table of contents
 
 <hr/> <!----------------------------------------------------------------------------------->
 
+<h2 id="inception"> 6 &ndash; Inception Phase </h2>
+<p> The <keyword>Inception phase</keyword> focuses on the <keyword>business process modeling</keyword>, <keyword>requirements capture</keyword>, and the <keyword>start of analysis</keyword>. </p>
 
+<p> Analysis has three parts: </p>
+<ul>
+    <li> Business Modelling </li>
+    <li> Requirements Analysis </li>
+    <li> System Analysis </li>
+</ul>
 
+<h3 id="inception1"> 6.1 &ndash; Business Process Modelling </h3>
+<ol>
+    <li> Build a <keyword>business process map</keyword> </li>
+    <li> Develop <keyword>business scenarios</keyword> </li>
+    <li> Derive <keyword>business workflows</keyword> </li>
+    <li> Produce <keyword>business object models</keyword> </li>
+</ol>
+<h4> Business Process Map </h4>
+<img src="images/softeng/inception1.JPG"/>
 
+<h4> Business Scenario Analysis </h4>
+<p> Forms the basis of analysis process: </p>
+<ul>
+    <li> <keyword>Business</keyword> analysis </li>
+    <li> <keyword>Use case</keyword> analysis </li>
+</ul>
+<p> There are four parts to analysis is to describe and identify: </p>
+<ol>
+    <li> <keyword>Scenarios</keyword> &ndash; described by primary and alternative paths </li>
+    <li> <keyword>Primary Paths</keyword> </li>
+    <li> <keyword>Alternative Paths</keyword> </li>
+    <li> <keyword>Exceptions</keyword> &ndash; when alternative paths fails </li>
+</ol>
+
+<p> The <keyword>80/20 principle</keyword> states that 80% of <strong>effort</strong> goes into 20% of <strong>activity</strong>. </p>
+
+<h3 id="inception2"> 6.2 &ndash; Activity Diagrams </h3>
+<p> A branch of UML diagrams, made by merging scenario analysis' <keyword>primary</keyword> and <keyword>alternative paths</keyword>. Used to <keyword>model business processes</keyword>. </p>
+<img src="images/softeng/inception2.jpg"/>
+<p> Apart from these we also have <keyword>swimlanes</keyword> which are useful to separate actors. </p>
+<img src="images/softeng/inception5.JPG"/>
+<p> Some examples: </p>
+<div>
+<img src="images/softeng/inception3.JPG"/>
+<img src="images/softeng/inception4.JPG"/>
+</div>
+
+<h4> Stakeholder Involvement </h4>
+<p> Building business processes requires many discussions with clients and stakeholders. </p>
+<p> Record process in a <keyword>Process Catalogue</keyword>.</p>
+<ul>
+    <li> <keyword>Goals</keyword> of the process </li>
+    <li> Necessary <keyword>preconditions</keyword> before the process can run </li>
+    <li> <keyword>Criticality</keyword> of the process </li>
+    <li> <keyword>Business actors</keyword> involved in the process </li>
+</ul>
+
+<hr/> <!----------------------------------------------------------------------------------->
+
+<h2 id="reqdoc"> 7 &ndash; Requirements Documentation </h2>
+<p> A <keyword>requirement</keyword> may be the basis for a bid for a contract, or it may be the basis for the contract itself, or both. </p>
+
+<h3 id="reqdoc1"> 7.1 &ndash; Types of Requirements </h3>
+<ul>
+    <li> <keyword>User</keyword> <ul>
+        <li> Statements in <keyword>natural language</keyword> and diagrams of the services the system provides and its constraints. </li>
+        <li> Should describe <keyword>functional</keyword> and <keyword>non-functional</keyword> requirements. </li>
+        <li> Written for <keyword>clients</keyword> without technical knowledge. </li>
+    </ul></li>
+    
+    <li> <keyword>System</keyword> <ul>
+        <li> Descriptions of the system's functions, services and operational <keyword>constraints</keyword>. </li>
+        <li> Defines what should be <keyword>implemented</keyword>. </li>
+        <li> Part of the contract. </li>
+    </ul></li>
+</ul>
+
+<h3 id="reqdoc2"> 7.2 &ndash; Functional and Non-Functional Requirements </h3>
+<p> Brief definition of these two: Functional requirements describe <strong>what</strong> the system <keyword>should do</keyword> while non-functional requirements describe <strong>how</strong> the system <keyword>works</keyword> </p>
+<img src="images/softeng/reqdoc1.jpg"/>
+<p> Requirements have to be written properly without any <keyword>ambiguity</keyword> or developers may interpret it differently than what is asked for. </p>
+
+<p> Requirements have to be both complete and consistent: </p>
+<ul>
+    <li> Complete <ul>
+        <li> They should include <keyword>descriptions</keyword> of all facilities required. </li>
+    </ul></li>
+
+    <li> Consistent <ul>
+        <li> There should be <keyword>no conflicts or contradictions</keyword> in the descriptions of the system facilities. </li>
+    </ul></li>
+</ul>
+
+<h4> Types of Non-functional Requirements </h4>
+<ul>
+    <li> <keyword>Product</keyword> requirements <ul>
+        <li> Specify the way the delivered product must behave. </li>
+        <li> Performance, Reliability, Availability, etc. </li>
+    </ul> </li>
+
+    <li> <keyword>Organisational</keyword> requirements <ul>
+        <li> Consequence of organisational policies and procedures </li>
+        <li> Process standards used, implementation requirements, etc. </li>
+    </ul> </li>
+
+    <li> <keyword>External</keyword> requirements <ul>
+        <li> Factors which are external to the system and its development process </li>
+        <li> Legislative requirements, etc. </li>
+    </ul> </li>
+</ul>
+
+<p> A requirement is <keyword>verifiable</keyword> if it is possible to create and run a <keyword>test</keyword> of the final system that clearly demonstrates the requirement has been met. </p>
+
+<p> <keyword>Domain</keyword> requirements are derived from the application domain and describe <keyword>system characteristics</keyword> and features that reflect the domain. </p>
+
+<h4> Guidelines for Writing Requirements </h4>
+<p> Create a <keyword>standard format</keyword> and use it for all requirements. Use language in a constant way. Use <keyword>shall</keyword> for mandatory requirements, <keyword>should</keyword> for desirable requirements. Avoid computing <keyword>jargon</keyword>. </p>
+
+<h4> Problems with Natural Language </h4>
+<ul>
+    <li> <keyword>Ambiguous</keyword> &ndash; Different people may interpret it differently. </li>
+    <li> <keyword>Too flexible</keyword> &ndash; Many ways to describe the same thing. </li>
+    <li> <keyword>Lack of modularisation</keyword> &ndash; NL Structures are inadequate to structure system requirements. </li>
+</ul>
+
+<p> <strong>Alternatives to NL specification</strong> </p>
+<table>
+    <tr>
+        <th> Notation </th>
+        <th> Description </th>
+    </tr>
+    <tr>
+        <td> Structured natural language </td>
+        <td> Depends on defining standard forms to express the specification. </td>
+    </tr>
+    <tr>
+        <td> Design description languages </td>
+        <td> Uses a language like a programming language with more abstract features and models to specify the requirements . </td>
+    </tr>
+    <tr>
+        <td> Graphical notations </td>
+        <td> Graphics supplemented with text annotations. This includes use-case descriptions and sequence diagrams. </td>
+    </tr>
+    <tr>
+        <td> Mathematical specifications </td>
+        <td> Languages based on math concepts like finite state machines. </td>
+    </tr>
+</table>
+
+<h3 id="reqdoc3"> 7.3 &ndash; Sequence Diagrams </h3>
+<p> Shows the <keyword>sequence of events</keyword> that take place during some <keyword>user interaction</keyword> with a system. </p>
+<div>
+<img src="images/softeng/reqdoc2.JPG"/>
+<img src="images/softeng/reqdoc3.JPG"/>
+</div>
+<ul>
+    <li> <keyword>Synchronous</keyword> <ul>
+        <li> Method call and <keyword>wait for return</keyword>. </li>
+        <li> Represented as full solid arrow. </li>
+        <li> Dashed arrow indicated return. </li>
+    </ul> </li>
+
+    <li> <keyword>Asynchronous</keyword> <ul>
+        <li> Method call <keyword>without return</keyword>. </li>
+        <li> Represented as arrow without solid head. </li>
+    </ul> </li>
+</ul>
+
+<h3 id="reqdoc4"> 7.4 &ndash; About Requirements Documents </h3>
+<h4> Users </h4>
+<ul>
+    <li> System Customers </li>
+    <li> Software Managers </li>
+    <li> System Engineers </li>
+    <li> System Test Engineers </li>
+    <li> System Maintenance Engineers </li>
+</ul>
+
+<h4> IEEE Requirements Standard </h4>
+<p> A useful starting point for defining more detailed specific requirements standards. </p>
+<ul>
+    <li> Introduction </li>
+    <li> General Description </li>
+    <li> Specific Requirements </li>
+    <li> Appendix </li>
+    <li> Index </li>
+</ul>
+
+<hr/> <!----------------------------------------------------------------------------------->
+
+<h2 id="reqcap"> 8 &ndash; Requirements Capture </h2>
+<h3 id="reqcap1"> 8.1 &ndash; About Requirements Capture </h3>
+<p> Involves <keyword>analysts</keyword> working with clients to find out about the application domain, services that the system should provide and the system's operational constraints. May involve <keyword>stakeholders</keyword>. </p>
+
+<h4> Problems with Requirements </h4>
+<ul>
+    <li> Stakeholders <keyword>don't know what they really want</keyword>. </li>
+    <li> Stakeholders express requirements in their <keyword>own terms</keyword>. </li>
+    <li> Different stakeholders may have <keyword>conflicting requirements</keyword>. </li>
+    <li> Organisational and political factors may <keyword>influence</keyword> the system requirements. </li>
+    <li> Requirements <keyword>change</keyword> during the analysis process. </li>
+</ul>
+
+<h4> Process Activities </h4>
+<ul>
+    <li><keyword>Requirements Discovery</keyword><ul>
+        <li> <strong>Interacting with stakeholders</strong> to discover their requirements. </li>
+    </ul></li>
+
+    <li><keyword>Requirements Classification and Organisation</keyword><ul>
+        <li> <strong>Group related requirements</strong> and <strong>organises</strong> them into <strong>coherent clusters</strong>. </li>
+    </ul></li>
+
+    <li><keyword>Prioritisation and Negotiation</keyword><ul>
+        <li><strong>Prioritising requirements</strong> and <strong>resolving requirement conflicts</strong>.</li>
+    </ul></li>
+
+    <li><keyword>Requirements Documentation</keyword><ul>
+        <li> Requirements are <strong>documented</strong> and input into next iteration. </li>
+    </ul></li>
+</ul>
+
+<h3 id="reqcap2"> 8.2 &ndash; Viewpoints </h3>
+<p> A way of <keyword>structuring</keyword> the requirements to represent the <keyword>perspectives</keyword> of different stakeholders. Stakeholders may be classified under different viewpoints. </p>
+
+<h3 id="reqcap3"> 8.3 &ndash; Fact-Finding Techniques </h3>
+<table>
+    <tr>
+        <th> Technique </th>
+        <th> Definition </th>
+        <th> Pros </th>
+        <th> Cons</th>
+    </tr>
+    <tr>
+        <td><keyword>Background Reading</keyword></td>
+        <td> Company reports, organisation charts, policy manuals of existing systems. </td>
+        <td> Helps understand the organisation and prepare for other types of fact finding. </td>
+        <td> Written documents often do not match reality; out of date for example. </td>
+    </tr>
+    <tr>
+        <td><keyword>Interviewing</keyword></td>
+        <td> A <strong>structured meeting</strong> between the analyst and a stakeholder. </td>
+        <td><ul>
+            <li> Allows analyst to adapt to what the interviewee says. </li>
+            <li> Analyst can probe in <strong>greater depth</strong>.</li>
+            <li> Interview can be terminated early if interviewee has nothing to say. </li>
+        </ul></td>
+        <td><ul>
+            <li> Interviews are <strong>time-consuming</strong> and therefore <strong>costly</strong>. </li>
+            <li> Results have to be <strong>transcribed or written up</strong> after the interview. </li>
+            <li> Can be subject to <strong>bias</strong> if the analyst has a closed mind. </li>
+            <li> Different interviewees may provide <strong>conflicting information</strong>. </li>
+        </ul></td>
+    </tr>
+    <tr>
+        <td><keyword>Observation</keyword></td>
+        <td> Allows the analyst to identify social and organisational factors. </td>
+        <td><ul>
+            <li> Provides <strong>first-hand</strong> experience of how the current system operates. </li>
+            <li> Data collected in <strong>real time</strong> hence having high level of validity. </li>
+            <li> Baseline performance data can be collected. </li>
+            <li> Can be used to verify other sources of information. </li>
+        </ul></td>
+        <td><ul>
+            <li> Most people don't like being observed and may <strong>behave differently</strong>. </li>
+            <li> Required <strong>skilled and trained</strong> observer to be effective. </li>
+            <li> Can give rise to <strong>logistical problems</strong>. </li>
+            <li> <strong>Ethical issues</strong> can arise if sensitive information is handled. </li>
+        </ul></td>
+    </tr>
+    <tr>
+        <td><keyword>Document Sampling</keyword></td>
+        <td> Collect copies of blank and completed documents. Analyse the document to determine <strong>inputs and outputs</strong> for each activity. </td>
+        <td>Can be used to gather <strong>quantitative data</strong>. Also used to estimate <strong>error rates</strong>.</td>
+        <td> Limited use if the system is going to change significantly. </td>
+    </tr>
+    <tr>
+        <td><keyword>Questionnaires</keyword></td>
+        <td> Series of written questions with limited range of possible answers. </td>
+        <td><ul>
+            <li> <strong>Economical method</strong> of gathering data from a large number of people. </li>
+            <li> Results can be <strong>analysed easily</strong>. </li>
+        </ul></td>
+        <td><ul>
+            <li> Good questionnaires are difficult to construct. </li>
+            <li> May be necessary to <strong>follow up</strong> the questionnaire by an interview. </li>
+            <li> May suffer from <strong>low response rates</strong>. </li>
+        </ul></td>
+    </tr>
+</table>
+
+<h3 id="reqcap4"> 8.4 &ndash; Requirements Checking </h3>
+<ul>
+    <li><keyword>Validity</keyword></li>
+    <li><keyword>Consistency</keyword></li>
+    <li><keyword>Completeness</keyword></li>
+    <li><keyword>Realism</keyword></li>
+    <li><keyword>Verifiability</keyword></li>
+</ul>
+
+<h3 id="reqcap5"> 8.5 &ndash; Requirements Validation </h3>
+<ul>
+    <li><keyword>Requirements Reviews</keyword><ul>
+        <li> Systematic <strong>manual analysis</strong> of the requirements. </li>
+    </ul></li>
+    
+    <li><keyword>Prototyping</keyword><ul>
+        <li> Using an <strong>executable model</strong> of the system to check requirements. </li>
+    </ul></li>
+    
+    <li><keyword>Test-case generation</keyword><ul>
+        <li> <strong>Developing tests</strong> for requirements to check testability. </li>
+    </ul></li>
+</ul>
+
+<hr/> <!----------------------------------------------------------------------------------->
+
+<h2 id="reqana"> 9 &ndash; Requirements Analysis </h2>
+<p> To describe requirements and introduce techniques for <keyword>requirements elicitation and analysis</keyword>. </p>
+
+<h4> Phases of RE </h4>
+<ul>
+    <li><keyword>Early/Inception</keyword><ul>
+        <li> Concentrates on the <strong>analysis and modelling</strong> of the environments. </li>
+        <li> About the system-to-be, stakeholders, objectives, relationships. </li>
+    </ul></li>
+    
+    <li><keyword>Late/Elaboration</keyword><ul>
+        <li> Models the system together with its environment. </li>
+        <li> System <strong>requirements and assumptions</strong> about environment are identified. </li>
+    </ul></li>
+</ul>
+
+<h3 id="reqana1"> 9.1 &ndash; Goal Oriented Requirements Engineering (GORE) </h3>
+<ul>
+    <li> Focuses on early phase of RE <ul>
+        <li> Goal <keyword>elicitation</keyword> </li>
+        <li> Goal <keyword>refinement</keyword> </li>
+        <li> <keyword>Assigning goals</keyword> to agents </li>
+    </ul></li>
+
+    <li> Push requirements to design level. </li>
+</ul>
+
+<h4> Benefits of GORE </h4>
+<ul>
+    <li> <keyword>Wider perspective</keyword> of the system and environment. </li>
+    <li> Goals provide a <keyword>rationale</keyword> for requirements. </li>
+    <li> Can show whether a requirement specification is <keyword>complete</keyword>. </li>
+    <li> Diagrams show <keyword>pertinence</keyword> or relevance fo goals.</li>
+    <li> Provides <keyword>traceability</keyword> from high level objectives to low level requirements. </li>
+    <li> Provides a natural <keyword>structure</keyword>. </li>
+    <li> Can help detect <keyword>conflicts</keyword> between goals of different viewpoints. </li>
+    <li> Goals tend to be more <keyword>stable</keyword> than requirements. </li>
+</ul>
+
+<h3 id="reqana2"> 9.2 &ndash; KAOS </h3>
+<p> Either Knowledge Acquisition in autOmated Specification, or Keep All Objects Satisfied. </p>
+<p> It is a GORE technique that <keyword>combines</keyword> different types of expression and reasoning. </p>
+
+<table>
+    <caption> <strong>KAOS Objects</strong> </caption>
+    <tr>
+        <th> Object </th>
+        <th> Description </th>
+    </tr>
+    <tr>
+        <td><keyword>Operations</keyword></td>
+        <td> <strong>Input-output relations</strong> over objects. Declared with signatures having pre-, post- and trigger conditions. </td>
+    </tr>
+    <tr>
+        <td><keyword>Agent</keyword></td>
+        <td> Acts as a <strong>processor</strong> for operations. Humans, devices, software, etc. </td>
+    </tr>
+    <tr>
+        <td><keyword>Goal</keyword></td>
+        <td> System's <strong>intent</strong>. </td>
+    </tr>
+</table>
+
+<h4> KAOS Specification </h4>
+<p> Consists of three core models: </p>
+<ul>
+    <li> <keyword>Goal</keyword> </li>
+    <li> <keyword>Object</keyword> </li>
+    <li> <keyword>Operation</keyword> </li>
+</ul>
+
+<h4> Key Ideas </h4>
+<ol>
+    <li> Build <keyword>requirements model</keyword> </li>
+    <li> <keyword>Link</keyword> them with stakeholder high-level goals </li>
+    <li> Build <keyword>responsibility model</keyword> </li>
+    <li> Build a complete and consistent <keyword>glossary</keyword></li>
+    <li> Describe how objects <keyword>behave</keyword> to achieve the goals </li>
+    <li> <keyword>Validate requirements</keyword> </li>
+    <li> Use a defensive approach by <keyword>identifying obstacles</keyword> </li>
+    <li> <keyword>Update model</keyword> as the system develops </li>
+</ol>
+
+<img src="images/softeng/reqana1.jpg"/>
+
+<p> This is meant to be a <keyword>directed graph</keyword>. </p>
+
+<img src="images/softeng/reqana2.jpg"/>
+
+<p> An <keyword>obstacle</keyword> is a situation when goal, requirement or expectation is <strong>violated</strong>. </p>
+
+<img src="images/softeng/reqana3.jpg"/>
+
+<h3 id="reqana3"> 9.3 &ndash; MoSCoW </h3>
+<ul>
+    <li><keyword>Must</keyword><ul>
+        <li> Features that <strong>have to be implemented</strong>. </li>
+    </ul></li>
+
+    <li><keyword>Should</keyword><ul>
+        <li> Features that are <strong>important but not musts</strong>. </li>
+    </ul></li>
+
+    <li><keyword>Could</keyword><ul>
+        <li> Features that are <strong>nice to have</strong> but not core. </li>
+    </ul></li>
+
+    <li><keyword>Won't</keyword><ul>
+        <li>Features that are <strong>not</strong> going to be implemented at this stage. </li>
+    </ul></li>
+</ul>
+
+<hr/> <!----------------------------------------------------------------------------------->
+
+<h2 id="usecase"> 10 &ndash; Use Case </h2>
+<h3 id="usecase1"> 10.1 &ndash; Use Case Diagram </h3>
+<ul>
+    <li><keyword>Actors</keyword><ul>
+        <li> People or things that <strong>uses</strong> a computer system. </li>
+    </ul></li>
+    
+    <li><keyword>Use cases</keyword><ul>
+        <li> Meaningful pieces of <strong>functionality</strong> provided by a computer system. </li>
+    </ul></li>
+    
+    <li><keyword>Relationships</keyword><ul>
+        <li> <strong>Links</strong> between actors and the use case. </li>
+        <li> Directed Relationships: <ul>
+            <li> Happens when there is a functionality that can be <strong>re-used</strong></li>
+            <li> Connecting line with an <strong>arrow</strong> </li>
+            <li> <code>&lt;&lt;include&gt;&gt;</code> &ndash; Second use case is <strong>always</strong> invoked by the first. </li>
+            <li> <code>&lt;&lt;extend&gt;&gt;</code> &ndash; Second use case is <strong>occasionally</strong> invoked by the first. </li>
+        </ul> </li>
+    </ul></li>
+</ul>
+<img src="images/softeng/usecase1.JPG"/>
+<img width="600" src="images/softeng/usecase2.jpg"/>
+
+<h4> Finding Use Cases </h4>
+<ol>
+    <li> <keyword>Map out business process</keyword> using Process maps, Scenario Analysis, Process work flows, etc. </li>
+    <li> Ask 'is there a potential use of a computer system here'? </li>
+</ol>
+<p> The advantage is that the analyst will have to fully consider the <keyword>environment</keyword> before making decisions about system functionality. </p>
+
+<h3 id="usecase2"> 10.2 &ndash; Use Case Description </h3>
+<p> Captures <keyword>non-functional requirements</keyword>. </p>
+<p> Provides a <keyword>top level view</keyword>, which is for most stakeholders. </p>
+<img src="images/softeng/usecase3.jpg"/>
+<img src="images/softeng/usecase4.jpg"/>
+
+<hr/> <!----------------------------------------------------------------------------------->
+
+<h2 id="sysdgn"> 11 &ndash; System Design </h2>
+<p> <keyword>System Architecture</keyword> is concerned with the <strong>overall structure</strong> of the system and its <strong>interactions</strong> with other systems. System architecture is split between <keyword>software and hardware</keyword> architecture. </p>
+
+<h3 id="sysdgn1"> 11.1 &ndash; Major Activities </h3>
+<ol>
+    <li> Sub-systems and major <keyword>components</keyword> are identified. </li>
+    <li> Any <keyword>inherent concurrency</keyword> is identified. </li>
+    <li> Sub-systems are are <keyword>allocated to processors</keyword>. </li>
+    <li> <keyword>Data management strategy</keyword> is selected. </li>
+    <li> Standards for <keyword>Human Computer Interaction</keyword> is selected. </li>
+    <li> <keyword>Code development standards</keyword> are specified. </li>
+    <li> <keyword>Control aspects</keyword> of the application are planned. </li>
+    <li> <keyword>Test plans</keyword> are produced. </li>
+    <li> <keyword>Priorities</keyword> are set for design. </li>
+    <li> <keyword>Implementation requirements</keyword> are identified. </li>
+</ol>
+
+<h4> Application Types </h4>
+<ul>
+    <li><keyword>Data Processing Applications</keyword><ul>
+        <li> Process data in batches <strong>without explicit user intervention</strong> during the processing. </li>
+        <li> Has input-process-output structure. </li>
+        <li> E.g. Billing systems; payroll systems. </li>
+    </ul></li>
+
+    <li><keyword>Transaction Processing Applications</keyword><ul>
+        <li> Process user requests and <strong>update information</strong> in system database. </li>
+        <li> E.g. E-commerce; reservation systems. <br/> <img src="images/softeng/sysdgn1.jpg"/> </li>
+    </ul></li>
+
+    <li><keyword>Event Processing Systems</keyword><ul>
+        <li> System actions depend on <strong>interpreting events</strong> from the system's environment. </li>
+        <li> E.g. Word processors; real-time systems. </li>
+    </ul></li>
+
+    <li><keyword>Language Processing Systems</keyword><ul>
+        <li> User's intentions are specified in a <strong>formal language</strong> that is <strong>processed and interpreted</strong> by the system. </li>
+        <li> E.g. Compilers; command interpreters. </li>
+    </ul></li>
+</ul>
+
+<h3 id="sysdgn2"> 11.2 &ndash; Software Architecture </h3>
+<p> No fixed definition. Could be <keyword>class design</keyword> or description of <keyword>sub-systems</keyword> and their relationships. </p>
+
+<h4> Sub-systems </h4>
+<p> Collection of system elements that have <keyword>common properties</keyword>. </p>
+
+<h4> Advantages of sub-systems </h4>
+<ul>
+    <li> Produces <keyword>smaller units of development</keyword>. </li>
+    <li> Helps <keyword>maximise reuse</keyword> at a component level. </li>
+    <li> Helps developers <keyword>cope</keyword> with complexity. </li>
+    <li> Improves <keyword>maintainability</keyword>. </li>
+    <li> Aids <keyword>portability</keyword>. </li>
+</ul>
+
+<h4> Layering and Partitioning </h4>
+<p> There are two method to divide software systems into sub-systems: </p>
+<ul>
+    <li> Layering <ul>
+        <li> Different levels usually represent different levels of abstraction. <br/> <img src="images/softeng/sysdgn2.JPG"/> </li>
+        <li> OSI-7 Layer Model <br/> <img width="400" src="images/softeng/sysdgn3.jpg"/> </li>
+        <li> Issues: <ul>
+            <li> <keyword>Maintaining the stability</keyword> of the interfaces of each layer. </li>
+            <li> <keyword>Construction of other systems</keyword> using some of the lower layers.</li>
+            <li> Variations in the level of each sub-systems. </li>
+            <li> <keyword>Further sub-division</keyword> of complex layers. </li>
+            <li> <keyword>Performance reductions</keyword> due to a closed layered architecture. </li>
+        </ul></li>
+        
+        <li> Developing a Layered Architecture <ol>
+            <li> Define the <keyword>criteria</keyword>. </li>
+            <li> Determine the <keyword>number of layers</keyword>. </li>
+            <li> Name the layers and <keyword>assign functionality</keyword>. </li>
+            <li> Specify layer's <keyword>services</keyword> </li>
+            <li> Refine layering by <keyword>iterating back</keyword> from step 1. </li>
+            <li> <keyword>Specify interfaces</keyword> for each layer. </li>
+            <li> <keyword>Specify the structure</keyword> of each layer. </li>
+            <li> <keyword>Specify the communication</keyword> between layers. </li>
+            <li> <keyword>Reduce the coupling</keyword> between adjacent layers. </li>
+        </ol></li>
+    </ul></li>
+
+    <li> Partitioning <ul>
+        <li> Each sub-system focuses on a different aspect of the system functionality. <br/> <img width="600" src="images/softeng/sysdgn4.jpg"/> </li>
+        <li> This also depends on the system architect. </li>
+    </ul></li>
+</ul>
+
+<hr/> <!----------------------------------------------------------------------------------->
 
 <!-- Utils -->
 <button onclick="topFunction()" id="topBtn" title="Go to top">Top</button>
