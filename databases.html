@@ -15,6 +15,11 @@
             margin: 20px;
         }
 
+        pre {
+            font-family: Consolas, monospace;
+            color: #7a2a95;
+        }
+
         code {
             font-family: Consolas, monospace;
             color: #7a2a95;
@@ -47,6 +52,7 @@
 
         #topBtn:hover {
             background-color: #555;
+            opacity: 0.3;
         }
 
         #homeBtn {
@@ -66,6 +72,7 @@
 
         #homeBtn:hover {
             background-color: #555;
+            opacity: 0.3;
         }
     </style>
 </head>
@@ -95,13 +102,19 @@ Table of Contents
         <li><a href="#joins4"> Groups </a></li>
         <li><a href="#joins5"> Views </a></li>
     </ul></li>
-    <li><a href="#jdbc"> Java Database Connection </a></li>
-    <li><a href="#transaction"> Transaction </a></li>
-    <li><a href="#dbdesign"> Database Designs </a></li>
+    <li><a href="#jdbc"> Java Database Connection (JDBC) </a><ul>
+        <li><a href="#jdbc1"> Using JDBC </a></li>
+        <li><a href="#jdbc2"> Transactions </a></li>
+    </ul></li>
+    <li><a href="#design"> Database Designs </a><ul>
+        <li><a href="#design1"> Design with Entity Relationship (ER) </a></li>
+        <li><a href="#design2"> Mapping from ER to DB </a></li>
+    </ul></li>
     <li><a href="#webapps"> Web Applications </a></li>
     <li><a href="#jsp"> Java Server Pages (JSP) </a></li>
     <li><a href="#session"> Session Tracking </a></li>
     <li><a href="#normalisation"> Database Normalisation </a></li>
+    <li><a href="#papers"> Exam Paper </a></li>
 </ol>
 <hr/> <!------------------------------------------------------------------------------->
 
@@ -421,12 +434,12 @@ Table of Contents
     <li> [operation] ALL </li>
 </ul>
 <p> We can <keyword>reference</keyword> the <strong>outer row</strong> within the nested query by using its <a href="#name">names</a> we created for the tables. </p>
-<pre><code>
-    SELECT S1.id FROM Student S1 <br/>
-    WHERE S1.dob > ALL <br/>
-    &emsp; ( SELECT S2.dob FROM Student S2 <br/>
-    &emsp; &nbsp; WHERE S2.course='CS' );
-</code></pre>
+<pre>
+    SELECT S1.id FROM Student S1
+    WHERE S1.dob > ALL
+        ( SELECT S2.dob FROM Student S2
+          WHERE S2.course='CS' );
+</pre>
 
 <h3 id="joins4"> 6.4 &ndash; Groups </h3>
 <p> <code>GROUP BY</code> and <code>HAVING</code> allows operation over <keyword>groups of rows</keyword>. </p>
@@ -440,12 +453,12 @@ Table of Contents
     </ul></li>
 
 </ul>
-<pre><code>
-    SELECT customerName, SUM(orderQuantity) <br/>
-    FROM Sales <br/>
-    GROUP BY customerName <br/>
+<pre>
+    SELECT customerName, SUM(orderQuantity)
+    FROM Sales
+    GROUP BY customerName
     HAVING SUM(orderQuantity > 5);
-</code></pre>
+</pre>
 <p> This <keyword>joins</keyword> the tables, then <keyword>filter</keyword> rows using WHERE clause if any, then <keyword>group</keyword> the table using the <strong>attributes</strong> specified in the GROUP BY clause, returning one row per group. Finally, it <keyword>removes</keyword> rows where the HAVING clause <strong>does not</strong> return TRUE. </p>
 
 <p> <strong>Exercise</strong>: Return a table which lists each student registered on course 'CS' with their average mark over all modules: </p>
@@ -469,6 +482,280 @@ Table of Contents
     <li> <keyword>Base Tables </keyword> &ndash; A table that contains just stored records. </li>
 </ul>
 <p> This is for <keyword>convenience</keyword> and <keyword>security</keyword>. </p>
+
+<hr/> <!------------------------------------------------------------------------------->
+
+<h2 id="jdbc"> 7 &ndash; Java Database Connection </h2>
+<p> JDBC provides mechanism for <keyword>connection</keyword> to database systems. Interaction is in terms of <keyword>strings</keyword> and <keyword>resultsets</keyword>. </p>
+<h3 id="jdbc1"> 7.1 &ndash; Using JDBC </h3>
+<ol>
+    <li> Setup JDBC </li>
+    <li> Establish DB Connection - Can be slow at times </li>
+    <li> Repeat <ul>
+        <li> Execute Query </li>
+        <li> Process Result </li>
+    </ul> </li>
+    <li> Close the connection </li>
+</ol>
+
+<h4> Set Up </h4>
+<p> Packages </p>
+<pre>
+    import java.sql.*;
+    import javax.sql.*;
+</pre>
+<p> Drivers </p>
+<pre>
+    System.setProperty("jdbc.drivers","org.postgresql.Driver")
+</pre>
+
+<h4> Connect </h4>
+<p> Define location of server </p>
+<pre>
+    String dbName = "jdbc:postgresql://mod-intro-databases/&lt;dbname&gt;";
+</pre>
+
+<p> Establish connection </p>
+<pre>
+    Connection dbConn = null;
+    try {
+        Connection dbConn = DriverManager.getConnection(dbName, &lt;User&gt;, &lt;Password&gt;);
+
+        ...
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    } finally {
+        dbConn.close();
+    }
+</pre>
+<img src="images/database/jdbc1.JPG"/>
+
+<h4> Executing Statements </h4>
+<p>To execute a statement we need: </p>
+<ul>
+    <li> <em>Statement</em> object - Query is specified <keyword>when executed</keyword> </li>
+    <li> <em>PreparedStatement</em> object - Query is specified <keyword>when object is created</keyword> </li>
+    <li> <code>execute(String)</code> - Execute any SQL statement </li>
+    <li> <code>executeUpdate(String)</code> - For INSERT, UPDATE, DELETE, etc. </li>
+    <li> <code>executeQuery(String)</code> - For Query </li>
+</ul>
+
+<pre>
+    Statement stmt = dbConn.createStatement();
+
+    <span style="color: #9e9e9e;">// executeUpdate example</span>
+    String update = "INSERT INTO Students VALUES (1, 'John Doe')";
+    stmt.executeUpdate(update);
+
+    <span style="color: #9e9e9e;">// executeQuery example</span>
+    String query = "SELECT * FROM Students";
+    ResultSet r = stmt.executeQuery(query);
+    while (r.next()) {
+        <span style="color: #9e9e9e;">// Access field using position or name</span>
+        id = r.getInt(1); <span style="color: #9e9e9e;">// position starts from 1</span>
+        id = r.getInt("id");
+    }
+
+    <span style="color: #9e9e9e;">// PreparedStatement example</span>
+    PreparedStatement stmt2 = dbConn.prepareStatement(query); <span style="color: #9e9e9e;">// same thing, but SQL statement defined in constructor</span>
+    ResultSet r2 = stmt2.executeQuery();
+    while (r2.next()) { ... }
+</pre>
+
+<p> <em>PreparedStatements</em> are safe from <keyword>SQL Injection</keyword> because SQL statements are already prepared. If statements have to take user input, then there is no guarantee the user isn't going to DROP TABLES. </p>
+
+<h4> About ResultSets </h4>
+<p> The default ResultSets only allows forward movement though a static table. This may be inconvenient. </p>
+<p> So hence there are other ResultSets that will solve this issue. </p>
+<ul>
+    <li> <strong>Scrollable</strong> <ul>
+        <li> Move to any position </li>
+    </ul></li>
+
+    <li> <strong>Updateable</strong> <ul>
+        <li> Modify ResultSet and write changes back to DB. </li>
+    </ul></li>
+
+    <li> <strong>Dynamic</strong> <ul>
+        <li> Have ResultSet updated to reflect changes in DB. </li>
+    </ul></li>
+
+    <li> <strong>CachedRowSets</strong> <ul>
+        <li> Allows work offline. </li>
+    </ul></li>
+</ul>
+
+<h4> SQLException </h4>
+<p> Errors should be caught and handled appropriately. Should have multiple <keyword>catch</keyword> clauses for different exception classes. </p>
+
+<h4> Close </h4>
+<p> <em>ResultSets</em>, <em>Statements</em> and <em>Connections</em> should be <keyword>closed</keyword> when no longer needed. </p>
+<ul>
+    <li> Closing a <keyword>connection</keyword> closes <strong>all</strong> its <strong>statements</strong>. </li>
+    <li> Closing a <keyword>statement</keyword> closes <strong>all</strong> its <strong>resultSets</strong>. </li>
+</ul>
+
+<h3 id="jdbc2"> 7.2 &ndash; Transactions </h3>
+<p> Compound operations which <strong>must</strong> be performed in their entirety. Must maintain <a href="#database">ACID</a> </p>
+<p> E.g. Moving money from one account to another. </p>
+
+<h4> Importance of Transactions </h4>
+<p> This allows <keyword>concurrent access across multiple applications</keyword> and still <keyword>maintain correct behaviour</keyword>. It also is <keyword>robust against failure</keyword>. </p>
+
+<p> Transaction typically maintains it's <keyword>own copy</keyword> of the database. </p>
+<ul>
+    <li> If the transaction is <strong>successful</strong> <ul>
+        <li> <keyword>Commit the changes</keyword> in the permanent database. </li>
+    </ul></li>
+    
+    <li> If not <ul>
+        <li> <keyword>Changes are rolled back</keyword>. </li>
+        <li> This may be because of explicit or implicit <strong>failure</strong>, <strong>conflicts</strong> with other transactions or <strong>deadlock detection</strong>. </li>
+    </ul></li>
+</ul>
+
+<h4> Performance </h4>
+<p> Handling of transactions is divided as </p>
+<ul>
+    <li> <keyword>Optimistic</keyword> <ul>
+        <li> Assume no problems is we <strong>detect and fix</strong> it. </li>
+    </ul></li>
+    <li> <keyword>Pessimistic</keyword> <ul>
+        <li> Assume there is a likely conflict so we <strong>prevent it</strong>. </li>
+    </ul></li>
+</ul>
+
+<p> Transactions provide an <keyword>abstraction</keyword> from how the DBMS implement correct behaviour. </p>
+
+<hr/> <!------------------------------------------------------------------------------->
+
+<h2 id="design"> 8 &ndash; Database Design </h2>
+<h4> Background </h4>
+<p> DB are part of many information systems. It is necessary to describe databases as part of <keyword>design process</keyword>, to <keyword>document</keyword> an existing system, and as part of the <keyword>modification and extension</keyword> of existing systems. </p>
+<p> E.g. Requirements Analysis, Design, Coding, Testing, Maintenance, Documentation, Project Management. </p>
+
+<ul>
+    <li><strong>Methodologies</strong><ul>
+        <li> Approaches to the task of analysing the problem, creating solutions and testing the result. </li>
+        <li> Usually include some heuristics and metrics. </li>
+    </ul></li>
+
+    <li><strong>Notations</strong><ul>
+        <li> Means of describing the problem, solution, and process. </li>
+        <li> Also provide means to record and communicate. </li>
+    </ul></li>
+</ul>
+
+<h3 id="design1"> 8.1 &ndash; Design with Entity Relationship (ER) </h3>
+<p> DB is usually part of some larger system. To capture data requirements, constraints, etc. </p>
+<h4> Entity Relationship </h4>
+<p> A standard way to describe the <em>conceptual</em> structure of a database. </p>
+<p> Can be easily <keyword>mapped</keyword> to DB schema. May be partitioned for large complex designs. </p>
+
+<h4> Components of ER </h4>
+<ul>
+    <li><keyword>Oval</keyword> - Attributes</li>
+    <li><keyword>Rectangle</keyword> - Entity Set<ul>
+        <li> Double outlined boxes show <strong>weak</strong> entity set</li>
+    </ul></li>
+    <li><keyword>Diamond</keyword> - Relation Set</li>
+    <li><keyword>Lines</keyword> - Links<ul>
+        <li>Labels on line indicate role</li>
+    </ul></li>
+    <li> Cardinality </li>
+</ul>
+<img width="400" src="images/database/design1.JPG"/>
+
+<h4> Attributes and Entity </h4>
+<p> Attributes drawn in <keyword>ovals</keyword>. </p>
+<ul>
+    <li> Primary Key - <keyword>underlined</keyword> </li>
+    <li> Composite attributes e.g. address </li>
+    <li> Derived attributes e.g. age - <keyword>dashed oval</keyword></li>
+    <li> Multivalued - <keyword>double outline oval</keyword></li>
+</ul>
+<p> Entity drawn in <keyword>rectangles</keyword>. </p>
+<img src="images/database/design2.JPG"/>
+
+<h4> Relationships </h4>
+<p> Association between entities. </p>
+<ul>
+    <li> Names inside <keyword>diamond</keyword> </li>
+    <li> <keyword>Lines</keyword> can be labelled to define roles and can link to: <ul>
+        <li> Entity sets </li>
+        <li> Attributes </li>
+        <li> Relations </li>
+    </ul></li>
+</ul>
+
+<h4> Cardinality Restrictions </h4>
+<p> We can define <keyword>constraints</keyword> on the <keyword>participation</keyword> of entities in a relation. </p>
+<ul>
+    <li> Minimum - 0 or 1 </li>
+    <li> Maximum - 1 or many </li>
+</ul>
+<p> There are many ways to represent cardinality, but we will only use one here. </p>
+<img src="images/database/design3.JPG"/>
+<p> In this way, we specify the <keyword>minimum</keyword> and <keyword>maximum participation</keyword> in brackets. </p>
+<ul></ul>
+
+<h4> Weak Entity Set </h4>
+<p> A set where the entities cannot be distinguished - there is no key. They can only be identified uniquely in the context of an <em>owner</em>. </p>
+<p> Drawn using <keyword>double lined</keyword> boxes. </p>
+<p> E.g. Dependents of an employee. Emergency contacts for a student. </p>
+
+<h3 id="design2"> 8.2 &ndash; Mapping from ER to DB </h3>
+<p> The design is mapped to <strong>Tables</strong> and <strong>Constraints</strong>. </p>
+<p> Mappings: </p>
+<ul>
+    <li style="padding-bottom: 10px"><strong>Entity Set</strong> &equiv; <keyword>Tables</keyword><ul>
+        <li> Table name </li>
+        <li> Attributes </li>
+        <li> Primary Key </li>
+    </ul></li>
+
+    <li style="padding-bottom: 10px"><strong>Weak Entity Sets</strong> &equiv; <keyword>Tables</keyword><ul>
+        <li> Include the <keyword>key of the <em>owner</em></keyword> entity. </li>
+        <li> <keyword>Cannot exist without the <em>owner</em></keyword>, so bind <code>ON DELETE CASCADE</code>. </li>
+    </ul></li>
+
+    <li style="padding-bottom: 10px"><strong>Relationship Sets</strong> &equiv; <keyword>Tables</keyword> but avoid where possible<ul>
+        <li style="padding-bottom: 7px"> 1 : 1 - Add key of <keyword>one entity</keyword> as <strong>foreign key</strong> of other. Move attributes of the relationship to that entity. </li>
+        <li style="padding-bottom: 7px"> 1 : N - Add key of <keyword>N side entity</keyword> as <strong>foreign key</strong> of the other. Move attributes of the relationship to that entity. </li>
+        <li style="padding-bottom: 7px"> M : N - Add <keyword>new relation</keyword> containing the keys of the participating entities as <strong>foreign keys</strong> and the attributes of the relationship. The key of the new relation is the <strong>combination</strong> of the foreign keys. </li>
+        <li style="padding-bottom: 7px"> N-ary - For each relationship, do as M : N relationship. The key is all <strong>foreign keys</strong>. </li>
+        <li style="padding-bottom: 7px"> Multi-valued attributes - Add <keyword>new table</keyword> containing an attribute representing the attribute itself, and containing the entity's primary key as a <strong>foreign key</strong>. The key is the foreign key and one or more of the attributes. </li>
+    </ul></li>
+</ul>
+
+<hr/> <!------------------------------------------------------------------------------->
+
+<h2 id="webapps"> 9 &ndash; Web Applications </h2>
+
+<hr/> <!------------------------------------------------------------------------------->
+
+<h2 id="papers"> Exam Paper </h2>
+<blockquote>
+    It's a new course so there are no past papers.
+    There is an example paper on the module web page.
+    <cite>-Bob</cite>
+</blockquote>
+
+<p> <a href="http://www.cs.bham.ac.uk/~rjh/courses/IntroToDBs/2016-17/Example%20Paper.pdf">Example Paper</a> </p>
+<h4> Click each boxes to reveal answers for Example Paper </h4>
+<ul>
+    <li style="padding-bottom: 10px;"> Q1 a) <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='<pre>SELECT city, sum(duration) FROM Calls\nJOIN Subscribers ON Calls.caller=Subscribers.phoneno\nGROUP BY City;</pre>'; this.style.border='none'"> Show </span></li>
+
+    <li style="padding-bottom: 10px;"> Q1 b) <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='<pre>SELECT name FROM Subscribers\nJOIN Calls C1 ON C1.receiver=Subscribers.phoneno\nJOIN Calls C2 ON C2.caller=Subscribers.phoneno\nWHERE C1.duration >= 600 OR C2.duration >= 600\nGROUP BY name;</pre>'; this.style.border='none'"> Show </span></li>
+
+    <li style="padding-bottom: 10px;"> Q1 c) <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='<pre>' +
+     'SELECT name FROM Subscribers\nJOIN Calls ON receiver=Subscribers.phoneno\nWHERE city=London\nGROUP BY name\nORDER BY name;</pre>'; this.style.border='none'"> Show </span></li>
+
+    <li style="padding-bottom: 10px;"> Q1 d) <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='<pre>SELECT name, sum(duration) FROM Subscribers\nJOIN Calls ON caller=phoneno\nGROUP BY name HAVING sum(duration) > 500;</pre>'; this.style.border='none'"> Show </span></li>
+
+    <li style="padding-bottom: 10px;"> Q6 <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='<pre>CREATE TABLE Member (memberid INT, name VARCHAR, address VARCHAR, age INT, sex VARCHAR(1), homebranch INT, PRIMARY KEY (memberid), FOREIGN KEY (homebranch) REFERENCES Branch(branchid)); <br/>CREATE TABLE Branch (branchid INT, branchname VARCHAR,branchcity VARCHAR, PRIMARY KEY (branchid)); <br/>CREATE TABLE Visit (memberid INT, branchid INT, FOREIGN KEY memberid REFERENCES Member(memberid), FOREIGN KEY branchid REFERENCES Branch(branchid));</pre>'; this.style.border='none'"> Show </span></li>
+</ul>
 
 <hr/> <!------------------------------------------------------------------------------->
 
