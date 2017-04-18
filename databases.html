@@ -15,6 +15,23 @@
             margin: 20px;
         }
 
+        ul > li {
+            padding-bottom: 10px;
+        }
+
+        ul > li > ul > li {
+            padding-bottom: 5px;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+        }
+
         pre {
             font-family: Consolas, monospace;
             color: #7a2a95;
@@ -52,7 +69,7 @@
 
         #topBtn:hover {
             background-color: #555;
-            opacity: 0.3;
+            opacity: 0.5;
         }
 
         #homeBtn {
@@ -72,7 +89,7 @@
 
         #homeBtn:hover {
             background-color: #555;
-            opacity: 0.3;
+            opacity: 0.5;
         }
     </style>
 </head>
@@ -83,37 +100,45 @@
 Table of Contents
 <ol>
     <li><a href="#intro"> Introduction </a></li>
-    <li><a href="#database"> Database </a><ul>
+    <li><a href="#database"> Database </a><ol>
         <li><a href="#database1"> Relational Database </a></li>
-    </ul></li>
-    <li><a href="#basics"> Basics </a><ul>
+    </ol></li>
+    <li><a href="#basics"> Basics </a><ol>
         <li><a href="#basics1"> Sets </a></li>
         <li><a href="#basics2"> Keys </a></li>
         <li><a href="#basics3"> SQL </a></li>
-    </ul></li>
-    <li><a href="#constraints"> Constraints </a><ul>
+    </ol></li>
+    <li><a href="#constraints"> Constraints </a><ol>
         <li><a href="#constraints1"> Primary Key </a></li>
         <li><a href="#constraints2"> Foreign Key </a></li>
-    </ul></li>
-    <li><a href="#joins"> Joins </a><ul>
+    </ol></li>
+    <li><a href="#joins"> Joins </a><ol>
         <li><a href="#joins1"> Join Variations </a></li>
         <li><a href="#joins2"> Set Operations </a></li>
         <li><a href="#joins3"> Subqueries </a></li>
         <li><a href="#joins4"> Groups </a></li>
         <li><a href="#joins5"> Views </a></li>
-    </ul></li>
-    <li><a href="#jdbc"> Java Database Connection (JDBC) </a><ul>
+    </ol></li>
+    <li><a href="#jdbc"> Java Database Connection (JDBC) </a><ol>
         <li><a href="#jdbc1"> Using JDBC </a></li>
         <li><a href="#jdbc2"> Transactions </a></li>
-    </ul></li>
-    <li><a href="#design"> Database Designs </a><ul>
+    </ol></li>
+    <li><a href="#design"> Database Designs </a><ol>
         <li><a href="#design1"> Design with Entity Relationship (ER) </a></li>
         <li><a href="#design2"> Mapping from ER to DB </a></li>
+    </ol></li>
+    <li><a href="#webapps"> Web Applications </a><ol>
+        <li><a href="#webapps1"> Introduction to Web Services </a></li>
+        <li><a href="#webapps2"> Server Side Processing </a></li>
+        <li><a href="#webapps3"> HttpServlet </a></li>
+        <li><a href="#webapps4"> JSP </a></li>
+    </ol></li>
+    <li><a href="#session"> Session Tracking </a><ol>
+        <li><a href="#session1"> Ways to Track </a></li>
+    </ol></li>
+    <li><a href="#normalisation"> Database Normalisation </a><ul>
+        <li><a href="#normalisation1"> Conclusion </a></li>
     </ul></li>
-    <li><a href="#webapps"> Web Applications </a></li>
-    <li><a href="#jsp"> Java Server Pages (JSP) </a></li>
-    <li><a href="#session"> Session Tracking </a></li>
-    <li><a href="#normalisation"> Database Normalisation </a></li>
     <li><a href="#papers"> Exam Paper </a></li>
 </ol>
 <hr/> <!------------------------------------------------------------------------------->
@@ -364,12 +389,12 @@ Table of Contents
     <li> <keyword>Select rows</keyword> that meet any WHERE condition. </li>
 </ul>
 <ul>
-    <li style="padding-bottom: 20px"> INNER JOIN <ul>
+    <li> INNER JOIN <ul>
         <li> Produces only the set of records that <keyword>match in both tables</keyword>. </li>
         <li><code> SELECT * FROM TableA <br/> <strong>INNER JOIN</strong> TableB <br/> ON TableA.field=TableB.field; </code> <br/> <img src="images/database/joins2.png"/>
     </ul></li>
 
-    <li style="padding-bottom: 20px"> FULL OUTER JOIN <ul>
+    <li> FULL OUTER JOIN <ul>
         <li> Produces the set of <keyword>all records</keyword> in TableA and TableB , matching records from both sides where available. </li>
         <li> If there is <keyword>no match</keyword>, the missing side wil contain <strong>null</strong>. </li>
         <li><code> SELECT * FROM TableA <br/> <strong>FULL OUTER JOIN</strong> TableB <br/> ON TableA.field=TableB.field; </code> <br/> <img src="images/database/joins3.png"/>
@@ -380,7 +405,7 @@ Table of Contents
         <li><code> SELECT * FROM TableA <br/> FULL OUTER JOIN <br/> TableB <br/> ON TableA.field=TableB.field <br/> <strong> WHERE TableA.id IS null <br/> OR TableB.id IS null</strong>; </code> <br/> <img src="images/database/joins6.png"/>
     </ul></li>
 
-    <li style="padding-bottom: 20px"> LEFT JOIN <ul>
+    <li> LEFT JOIN <ul>
         <li> Just like INNER JOIN but: <ul>
             <li> Includes rows in the <keyword>left table</keyword> that are not matched. </li>
             <li> <strong>null</strong>s are added. </li>
@@ -388,25 +413,25 @@ Table of Contents
         <li><code> SELECT * FROM TableA <br/> <strong>LEFT JOIN</strong> TableB <br/> ON TableA.field=TableB.field; </code> <br/> <img src="images/database/joins4.png"/>
     </ul></li>
 
-    <li style="padding-bottom: 20px"> LEFT OUTER JOIN<em>*</em> <ul>
+    <li> LEFT OUTER JOIN<em>*</em> <ul>
         <li> Produces a complete set of records from TableA but not in TableB. </li>
         <li><code> SELECT * FROM TableA <br/> LEFT OUTER JOIN TableB <br/> ON TableA.field = TableB.field <br/> <strong>WHERE TableA.id IS null</strong>;</code> <br/> <img src="images/database/joins5.png"/>
     </ul></li>
 
-    <li style="padding-bottom: 20px"> RIGHT JOIN <ul>
+    <li> RIGHT JOIN <ul>
         <li> Just the same like LEFT JOIN, but focuses on the <keyword>right table</keyword>. </li>
     </ul></li>
 
-    <li style="padding-bottom: 20px"> EQUI JOIN <ul>
+    <li> EQUI JOIN <ul>
         <li> Just INNER Join where the condition only includes <keyword>equality</keyword>. </li>
     </ul></li>
 
-    <li style="padding-bottom: 20px"> NATURAL JOIN <ul>
+    <li> NATURAL JOIN <ul>
         <li> Equality test is implicit based on the names of attributes. </li>
         <li> <keyword> Don't use this! </keyword></li>
     </ul></li>
 
-    <li style="padding-bottom: 20px"> CROSS JOIN <ul>
+    <li> CROSS JOIN <ul>
         <li> Default without any selection. </li>
         <li> Gives every <keyword>permutation</keyword> of rows in each table. </li>
     </ul></li>
@@ -597,7 +622,7 @@ Table of Contents
 </ul>
 
 <h3 id="jdbc2"> 7.2 &ndash; Transactions </h3>
-<p> Compound operations which <strong>must</strong> be performed in their entirety. Must maintain <a href="#database">ACID</a> </p>
+<p> Compound operations which <strong>must</strong> be performed in their entirety. Must maintain <a href="#database">ACID</a>. </p>
 <p> E.g. Moving money from one account to another. </p>
 
 <h4> Importance of Transactions </h4>
@@ -608,7 +633,7 @@ Table of Contents
     <li> If the transaction is <strong>successful</strong> <ul>
         <li> <keyword>Commit the changes</keyword> in the permanent database. </li>
     </ul></li>
-    
+
     <li> If not <ul>
         <li> <keyword>Changes are rolled back</keyword>. </li>
         <li> This may be because of explicit or implicit <strong>failure</strong>, <strong>conflicts</strong> with other transactions or <strong>deadlock detection</strong>. </li>
@@ -709,55 +734,508 @@ Table of Contents
 <p> The design is mapped to <strong>Tables</strong> and <strong>Constraints</strong>. </p>
 <p> Mappings: </p>
 <ul>
-    <li style="padding-bottom: 10px"><strong>Entity Set</strong> &equiv; <keyword>Tables</keyword><ul>
+    <li><strong>Entity Set</strong> &equiv; <keyword>Tables</keyword><ul>
         <li> Table name </li>
         <li> Attributes </li>
         <li> Primary Key </li>
     </ul></li>
 
-    <li style="padding-bottom: 10px"><strong>Weak Entity Sets</strong> &equiv; <keyword>Tables</keyword><ul>
+    <li><strong>Weak Entity Sets</strong> &equiv; <keyword>Tables</keyword><ul>
         <li> Include the <keyword>key of the <em>owner</em></keyword> entity. </li>
         <li> <keyword>Cannot exist without the <em>owner</em></keyword>, so bind <code>ON DELETE CASCADE</code>. </li>
     </ul></li>
 
-    <li style="padding-bottom: 10px"><strong>Relationship Sets</strong> &equiv; <keyword>Tables</keyword> but avoid where possible<ul>
-        <li style="padding-bottom: 7px"> 1 : 1 - Add key of <keyword>one entity</keyword> as <strong>foreign key</strong> of other. Move attributes of the relationship to that entity. </li>
-        <li style="padding-bottom: 7px"> 1 : N - Add key of <keyword>N side entity</keyword> as <strong>foreign key</strong> of the other. Move attributes of the relationship to that entity. </li>
-        <li style="padding-bottom: 7px"> M : N - Add <keyword>new relation</keyword> containing the keys of the participating entities as <strong>foreign keys</strong> and the attributes of the relationship. The key of the new relation is the <strong>combination</strong> of the foreign keys. </li>
-        <li style="padding-bottom: 7px"> N-ary - For each relationship, do as M : N relationship. The key is all <strong>foreign keys</strong>. </li>
-        <li style="padding-bottom: 7px"> Multi-valued attributes - Add <keyword>new table</keyword> containing an attribute representing the attribute itself, and containing the entity's primary key as a <strong>foreign key</strong>. The key is the foreign key and one or more of the attributes. </li>
+    <li><strong>Relationship Sets</strong> &equiv; <keyword>Tables</keyword> but avoid where possible<ul>
+        <li> 1 : 1 - Add key of <keyword>one entity</keyword> as <strong>foreign key</strong> of other. Move attributes of the relationship to that entity. </li>
+        <li> 1 : N - Add key of <keyword>N side entity</keyword> as <strong>foreign key</strong> of the other. Move attributes of the relationship to that entity. </li>
+        <li> M : N - Add <keyword>new relation</keyword> containing the keys of the participating entities as <strong>foreign keys</strong> and the attributes of the relationship. The key of the new relation is the <strong>combination</strong> of the foreign keys. </li>
+        <li> N-ary - For each relationship, do as M : N relationship. The key is all <strong>foreign keys</strong>. </li>
+        <li> Multi-valued attributes - Add <keyword>new table</keyword> containing an attribute representing the attribute itself, and containing the entity's primary key as a <strong>foreign key</strong>. The key is the foreign key and one or more of the attributes. </li>
     </ul></li>
 </ul>
 
 <hr/> <!------------------------------------------------------------------------------->
 
 <h2 id="webapps"> 9 &ndash; Web Applications </h2>
+<p> A Java Program may be any of the below: </p>
+<ul>
+    <li> <keyword>Application</keyword> <ul>
+        <li> Installed on <strong>local machine</strong> </li>
+        <li> Runs on local machine </li>
+        <li> Access resources on local machine </li>
+    </ul> </li>
+
+    <li> <keyword>Applet</keyword> <ul>
+        <li> Runs in <strong>Browser</strong> </li>
+        <li> Runs on local machine </li>
+        <li> Downloaded from server </li>
+        <li> Accesses remote (and possibly local) resources </li>
+    </ul> </li>
+    <li> <keyword>Client-Server Model</keyword> <ul>
+        <li> <strong>Client</strong> are the users of service. </li>
+        <li> <strong>Server</strong> is the provider of service. </li>
+        <li> E.g. Web server, Mail server, DB Server, etc. </li>
+    </ul> </li>
+</ul>
+
+<h3 id="webapps1"> 9.1 &ndash; Introduction to Web Services </h3>
+<img src="images/database/webapps1.JPG"/>
+<p> Usually it is way more complex than this. E.g. Firewalls, JDBC, etc. </p>
+
+<h4> HTTP </h4>
+<p> Protocol is the following: </p>
+<ul>
+    <li><keyword>Requests</keyword><ul>
+        <li><em>GET</em></li>
+        <li><em>POST</em></li>
+        <li><em>PUT</em></li>
+        <li><em>HEAD</em></li>
+        <li><em>DELETE</em></li>
+        <li><em>TRACE</em></li>
+        <li><em>OPTIONS</em></li>
+        <li><em>CONNECT</em></li>
+        <li><strong>URL</strong></li>
+        <li>Parameters</li>
+    </ul></li>
+    <li><keyword>Deliver resources</keyword><ul>
+        <li>Text(HTML)</li>
+        <li>Images</li>
+        <li>Javascript</li>
+    </ul></li>
+</ul>
+
+<h4> Webserver </h4>
+<p> A <keyword>webserver</keyword> can either <strong>receive requests</strong> or <strong>return responses</strong>. </p>
+<ul>
+    <li><keyword>Receive Requests</keyword><ul>
+        <li> <strong>Parse</strong> Requests </li>
+        <li> <strong>Process</strong> Requests </li>
+    </ul></li>
+
+    <li><keyword>Returns Response</keyword><ul>
+        <li> <strong>Deliver</strong> local resources </li>
+        <li> <strong>Re-direct</strong> </li>
+        <li> <strong>Error</strong> </li>
+        <li> Complex processing </li>
+    </ul></li>
+</ul>
+
+<p> It is an initially delivered <em>static</em> resource. Need to be able to generate <em>dynamic</em> content for efficiency. Also needs to <em>process input</em>. </p>
+
+<h3 id="webapps2"> 9.2 &ndash; Server Side Processing </h3>
+<p> Before it was <keyword>expensive</keyword> to perform these requests because it needs to <strong>load and start</strong> application for every request. </p>
+<p> Now we have Java that can help us do server side processing. There are two mechanisms: </p>
+<ul>
+    <li><keyword>Servlets</keyword></li>
+    <li><keyword>JSP</keyword></li>
+</ul>
+<p> These are efficient for <em>light weight</em> processing. </p>
+
+<h3 id="webapps3"> 9.3 &ndash; Servlets </h3>
+<p> <keyword>Servlets</keyword> are Java code that implements <strong>server side functions</strong>, invoked by web server to <strong>handle requests</strong> that are <strong>specified by URL</strong>. </p>
+<p> It has <strong>access to parameters</strong> of HTTP requests, then <strong>processes</strong> it, and responds by <strong>generating a page</strong>. </p>
+
+<p> The lifecycle when servlet is invoked: </p>
+<ul>
+    <li><keyword>Initialise</keyword><ul>
+        <li> <strong>Called once</strong> to initialise the servlet. </li>
+        <li><code>init(ServletConfig config)</code></li>
+    </ul></li>
+
+    <li><keyword>Call servlet</keyword> to service request<ul>
+        <li> Typically runs in a <strong>new thread</strong>. </li>
+        <li> Code should be <strong>thread safe</strong>. </li>
+        <li><code>service(ServletRequest request, ServletResponse response)</code></li>
+    </ul></li>
+
+    <li><keyword>Cleanup and Close</keyword><ul>
+        <li><code>destroy()</code></li>
+        <li> When servlet is <strong>no longer required</strong>. </li>
+    </ul></li>
+</ul>
+<p> These methods are in an interface called <code>Servlet</code>. </p>
+<h4> Using Servlets </h4>
+<ol>
+    <li> Create a class that <keyword>extend</keyword> either <ul>
+        <li><code>GenericServlet</code></li>
+        <li><code>HttpServlet</code></li>
+    </ul></li>
+    <li> They both <keyword>implements</keyword> <code>Servlet</code>. </li>
+    <li> <keyword>Override</keyword> the definition to implement required function. </li>
+</ol>
+
+<h4> HttpServlet </h4>
+<p> Provides default implementation of methods to <keyword>handle requests</keyword>. <keyword>Override</keyword> these implementations: </p>
+<ul>
+    <li><code>void doGet(HttpServletRequest request, HttpServletResponse response)</code></li>
+    <li><code>void doPut(HttpServletRequest request, HttpServletResponse response)</code></li>
+</ul>
+
+<p> <code>HttpServletRequest</code> interface has many methods to <keyword>obtain parameters</keyword> like <code>String getParameter(String name)</code>. </p>
+
+<p> <code>HttpServletResponse</code> interface provides many methods to <keyword>handle responses</keyword> from the servlet like <code>PrintWriter getWriter()</code>.</p>
+
+<p> Below shows the skeleton for servlet </p>
+<pre>
+    import javax.servlet.*
+    import javax.servlet.http.*
+    import java.io.*
+
+    public class myServlet extends HttpServlet {
+        void doGet (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            response.setContentType (“text/html”);
+            PrintWriter out = response.getWriter();
+            .
+            .
+            out.close()
+        }
+    }
+</pre>
+
+<h4> Request-Response Cycle </h4>
+<ol>
+    <li> User <keyword>calls URL</keyword> </li>
+    <li> <keyword>Web page is delivered</keyword> including a HTML Form </li>
+    <li> User fills and submits form to <keyword>servlet address</keyword> </li>
+    <li> Servlet processes request and <keyword>generates web page</keyword> as a response </li>
+</ol>
+<p> Sample HTML Form </p>
+<img src="images/database/webapps2.JPG"/>
+
+<h3 id="webapps4"> 9.4 &ndash; JSP </h3>
+<p> Or <keyword>JavaServer Pages</keyword> is a technology that helps <strong>create dynamically generated web pages</strong> based on HTML, XML or other document types. </p>
+
+<p> JSP is <keyword>translated into a servlet</keyword> before execution. Oriented towards <keyword>output</keyword> rather than algorithms. </p>
+
+<h4> Using JSP </h4>
+<ol>
+    <li> <keyword>Translate</keyword> into servlet</li>
+    <li> <keyword>Initialise</keyword> <ul>
+        <li><code> jspInit </code></li>
+    </ul></li>
+    <li> <keyword>Call servlet</keyword> to service request <ul>
+        <li><code>_jspService</code></li>
+    </ul></li>
+    <li> <keyword>Cleanup and close</keyword> <ul>
+        <li><code>jspDestroy</code></li>
+    </ul></li>
+</ol>
+
+<h4> JSP Components </h4>
+<ul>
+    <li><keyword>Scriplets</keyword><ul>
+        <li> Provides mechanism to <strong>execute Java code</strong>. </li>
+        <li><code>&lt;&percnt;= ... &percnt;&gt;</code><ul>
+            <li>Encloses a <strong>Java expression</strong> that is <strong>evaluated at execution time</strong> and its <strong>string representation</strong> is output. </li>
+            <li>E.g. <code>&lt;&percnt;= new java.util.Date() &percnt;&gt;</code><br/><br/><img src="images/database/webapps3.JPG"/>
+        </ul></li>
+
+        <li><code>&lt;&percnt; ... &percnt;&gt;</code><ul>
+            <li> Encloses a fragment of <strong>correct arbitrary Java Code</strong>. </li>
+            <li> Code is copied into the <code>_jspService</code> method. </li>
+        </ul></li>
+
+        <li><code>&lt;&percnt;! ... &percnt;&gt;</code><ul>
+            <li> Encloses a <strong>Java declaration</strong>. </li>
+            <li> Variables are <strong>instances</strong> of servlet class. </li>
+            <li> Methods belong to the servlet class. </li>
+        </ul></li>
+
+        <li><code>&lt;&percnt;-- ... --&percnt;&gt;</code><ul>
+            <li> JSP Comments </li>
+        </ul></li>
+    </ul></li>
+
+    <li><keyword>Directives</keyword><ul>
+        <li> Instruct JSP container to <strong>perform actions</strong>. </li>
+        <li> Like compiler directives that <strong>control translation time options</strong>. </li>
+        <li><code>&lt;&percnt;@ _ ... &percnt;&gt;</code> where _ can be: <ul>
+            <li><code>page</code><ul>
+                <li> <strong>Set attributes</strong> of this JSP </li>
+            </ul></li>
+            <li><code>include</code><ul>
+                <li> <strong>Substitute</strong> the contents of the file </li>
+                <li> E.g. <code>&lt;&percnt;@ include file = "foo.html" &percnt;&gt;</code></li>
+            </ul></li>
+            <li><code>taglib</code><ul>
+                <li> Specifies additional <strong>tag libraries</strong> to use. </li>
+            </ul></li>
+        </ul></li>
+    </ul></li>
+
+    <li><keyword>Tags</keyword><ul>
+        <li> Provide a higher level mechanism to <strong>access common Java functionality</strong>. </li>
+        <li> There are standard tag libraries to support <strong>standard actions</strong>. </li>
+        <li> Custom can be made like <code>&lt;jsp:action&gt; ... &lt;/jsp:action&gt;</code></li>
+        <li><keyword>Tag Library</keyword><ul>
+            <li><code>jsp:include</code><ul>
+                <li> Includes <strong>dynamic content</strong> at execution time. </li>
+                <li> <code>&lt;jsp:include page=URL flush=true/&gt;</code> </li>
+                <li> This will <strong>include the content returned</strong> from the resource. E.g. a servlet </li>
+            </ul></li>
+
+            <li><code>jsp:forward</code><ul>
+                <li> <strong>Forwards request</strong> to the specified URL. </li>
+                <li> <code>&lt;jsp:forward page=URL/&gt;</code> </li>
+                <li> <strong>Terminates the current JSP</strong> and <strong>transfers</strong> the request to the specified resource. </li>
+            </ul></li>
+
+            <li><code>jsp:param</code><ul>
+                <li> Supplies <strong>parameters</strong> to the tag </li>
+                <li> <code>&lt;jsp:param name="ParamName" value="ParamValue"/&gt;</code></li>
+            </ul></li>
+        </ul></li>
+    </ul></li>
+</ul>
+
+<p> There are <keyword>implicit objects</keyword> that can be created, which the jsp can access. </p>
+<ul>
+    <li><em>application</em></li>
+    <li><em>config, exception, out, response</em></li>
+    <li><em>request</em></li>
+    <li><em>session</em></li>
+</ul>
+
+<h4> JSP vs Servlet </h4>
+<table>
+    <tr>
+        <th><keyword>JSP</keyword></th>
+        <th><keyword>Servlet</keyword></th>
+    </tr>
+    <tr>
+        <td>Good for <strong>generating output</strong></td>
+        <td>Good for <strong>writing algorithms</strong></td>
+    </tr>
+</table>
+<p> A typical application will utilise <strong>both </strong>Servlets and JSP. </p>
 
 <hr/> <!------------------------------------------------------------------------------->
+
+<h2 id="session"> 10 &ndash; Session Tracking </h2>
+<p> <keyword>HTTP</keyword> is a <keyword>stateless protocol</keyword>, meaning it has <keyword>no session</keyword> - each request is <strong>independent</strong>. </p>
+<p> It is appropriate for just <keyword>retrieving resources</keyword>: <strong>request</strong> and <strong>response</strong></p>
+<p> It is <keyword>efficient</keyword> because the server do not need to manage connections. </p>
+
+<p> But what if we need to <keyword>track</keyword> a user? </p>
+
+<ul>
+    <li><keyword>Within</keyword> a session<ul>
+        <li> Transaction requires <strong>multiple requests</strong>. </li>
+        <li> Need to <strong>pass state</strong> between requests. </li>
+        <li> E.g. <ul>
+            <li> User login </li>
+            <li> Shopping basket </li>
+        </ul></li>
+    </ul></li>
+
+    <li><keyword>Across</keyword> sessions<ul>
+        <li> Personalise </li>
+        <li> Track usage </li>
+    </ul></li>
+</ul>
+
+<p> How do we do this? There are four ways </p>
+<ul>
+    <li> <keyword>URL Rewriting</keyword> </li>
+    <li> <keyword>Hidden forms</keyword> </li>
+    <li> <keyword>Cookies</keyword> </li>
+    <li> <keyword>Sessions</keyword> </li>
+</ul>
+<p> The first two is <em>guaranteed</em> to work. </p>
+
+<h3 id="session1"> 10.1 &ndash; Ways to Track </h3>
+<ul>
+    <li><keyword>URL Rewriting</keyword><ul>
+        <li> <strong>Embed state information</strong> in the URL of links of the response. </li>
+        <li> <strong>Reliable</strong> - doesn't rely on protocol or browser. </li>
+        <li> Session only. </li>
+        <li> Cumbersome, may have problems with e.g. <em>back</em>. </li>
+    </ul></li>
+
+    <li><keyword>Hidden Forms</keyword><ul>
+        <li> <strong>Embed state</strong> in hidden form in response <ul>
+            <li> which is submitted with next request. </li>
+        </ul> </li>
+        <li> <strong>Reliable</strong> - should always work</li>
+        <li> Session only. </li>
+        <li> Cumbersome, may have problems with e.g. <em>back</em>. </li>
+    </ul></li>
+
+    <li><keyword>Cookies</keyword><ul>
+        <li> <strong>Embedded in HTTP request and response</strong>. </li>
+        <li> <strong>Stored</strong> on the client with: <ul>
+            <li> <keyword>Domain</keyword> that set the cookie. </li>
+            <li> <keyword>Path</keyword> that set the cookie. </li>
+        </ul> </li>
+        <li> <strong>Transmitted with each request</strong> from the client. <ul>
+            <li> Requests <keyword>match its domain and path</keyword>. </li>
+        </ul> </li>
+        <li> <em>Can</em> work <strong>across sessions</strong>. </li>
+        <li> <strong>Name Value</strong> pairs, and the Value is a string. </li>
+        <li> Convenient. </li>
+        <li> May <strong>not</strong> always work: <ul>
+            <li><keyword>Security reasons</keyword> like proxy and firewall. </li>
+            <li><keyword>Stored locally</keyword>.</li>
+            <li>Requires <keyword>cookie support</keyword>.</li>
+        </ul> </li>
+        <li> <strong>Supportable by Java</strong> <ul>
+            <li><code>HTTPServletRequest</code><ul>
+                <li> To <keyword>get</keyword> cookies. </li>
+                <li> <code> Cookie[] c = request.getCookies(); </code> </li>
+            </ul></li>
+
+            <li><code>HTTPServletResponse</code><ul>
+                <li> To <keyword>set</keyword> cookies. </li>
+                <li> <code> response.addCookie( new Cookie("Name","Value") );</code> </li>
+            </ul></li>
+        </ul> </li>
+    </ul></li>
+
+    <li><keyword>Session</keyword><ul>
+        <li> Provide <strong>reliable abstraction</strong> to support session tracking <ul>
+            <li> Implemented <keyword>through cookies</keyword>. </li>
+            <li> Fallback to <keyword>URL rewriting</keyword>. </li>
+        </ul> </li>
+        <li> Session is identified by <strong>session ID</strong>. </li>
+        <li> <strong>Supportable by Java</strong> <ul>
+            <li><code>HttpSession</code><ul>
+                <li><code>HttpSession mySession = request.getSession(true);</code></li>
+                <li> Attributes can be objects and not just strings. </li>
+            </ul></li>
+        </ul> </li>
+        <li> Sessions have a <strong>finite life</strong>. </li>
+    </ul></li>
+</ul>
+
+<hr/> <!------------------------------------------------------------------------------->
+
+<h2 id="normalisation"> 11 &ndash; Database Normalisation </h2>
+<p> <keyword>Normalisation</keyword> is the process of <strong>organising</strong> the columns and tables of a relational database to <strong>reduce data redundancy</strong> and <strong>improve data integrity</strong>. </p>
+
+<p> We want to <keyword>remove functional dependencies</keyword> from a table by <strong>creating new tables</strong> and <strong>unpacking data</strong>. </p>
+
+<h4> Problems without Normalisation </h4>
+<ul>
+    <li><keyword>Insertion Anomalies</keyword><ul>
+        <li> May happen when a data to be inserted <strong>doesn't have a value</strong> for an attribute. </li>
+        <li> <code>NULL</code>s </li>
+    </ul></li>
+    <li><keyword>Update Anomalies</keyword><ul>
+        <li> May happen when a data is <strong>changed</strong> to some other value. </li>
+    </ul></li>
+    <li><keyword>Deletion Anomalies</keyword><ul>
+        <li> May happen when a data is <strong>deleted</strong>. </li>
+    </ul></li>
+</ul>
+
+<p> Normal forms are <code>1NF, 2NF, 3NF, BCNF, </code>etc. </p>
+<h4> Analysing Normalisation </h4>
+<table>
+    <tr>
+        <th> <keyword>Pros</keyword> </th>
+        <th> <keyword>Cons</keyword> </th>
+    </tr>
+    <tr>
+        <td> Data is only <strong>represented once</strong>. </td>
+        <td> It <strong>slows down</strong> everything. E.g. need more joins </td>
+    </tr>
+    <tr>
+        <td> Improved <strong>consistency</strong> </td>
+        <td> More complex <strong>data modelling</strong> </td>
+    </tr>
+    <tr>
+        <td> Easier <strong>maintenance</strong> </td>
+        <td> May <strong>not</strong> be necessary </td>
+    </tr>
+    <tr>
+        <td> ... </td>
+        <td> ... </td>
+    </tr>
+</table>
+
+<p> For large systems, normalisation may be necessary. But for small systems, we should consider its cost and benefits, see which is better to save. </p>
+
+<h4> Efficiency </h4>
+<p> We can <keyword>optimise</keyword> a query based on </p>
+<ul>
+    <li> <strong>Analysis</strong> </li>
+    <li> <strong>Query Planning</strong> <ul>
+        <li> Static analysis </li>
+        <li> Estimate cost </li>
+    </ul></li>
+    <li> <strong>Optimisation</strong> <ul>
+        <li> Minimise computation </li>
+    </ul></li>
+    <li> <strong>Execution</strong> </li>
+</ul>
+
+<p> Note that <keyword>Optimisation</keyword> comes with <strong>several costs</strong>. </p>
+
+<h4> Performance </h4>
+<p> <keyword>Performance</keyword> of a query depends on: </p>
+<ul>
+    <li><strong>DBMS Implementation</strong></li>
+    <li><strong>Size</strong> of tables</li>
+    <li><strong>Constraints</strong></li>
+    <li><strong>Transactions</strong></li>
+</ul>
+<p> Improving performance is <keyword>DBMS dependent</keyword>. A query may be faster in one system, but slower in another.  </p>
+
+<h4> Technology </h4>
+<p> For <keyword>corporate</keyword> databases, we can use Oracle, SQL Server, PostgreSQL, and any other which usually have the <strong>best performance</strong>, <strong>correctness </strong>and <strong>robustness</strong>. </p>
+
+<p> But depending on the technology required, other databases may suit better. </p>
+
+<h3 id="normalisation1"> Conclusion </h3>
+<p> <keyword>Good design</keyword> is key, but this depends on </p>
+<ul>
+    <li> <keyword>Requirements</keyword> <ul>
+        <li> Fast </li>
+        <li> Consistent </li>
+        <li> Reliable </li>
+        <li> Scalable </li>
+        <li> ... </li>
+    </ul> </li>
+    <li> <keyword>Environment</keyword> </li>
+</ul>
+
+<hr/> <!------------------------------------------------------------------------------->
+
 
 <h2 id="papers"> Exam Paper </h2>
 <blockquote>
     It's a new course so there are no past papers.
-    There is an example paper on the module web page.
     <cite>-Bob</cite>
 </blockquote>
 
 <p> <a href="http://www.cs.bham.ac.uk/~rjh/courses/IntroToDBs/2016-17/Example%20Paper.pdf">Example Paper</a> </p>
-<h4> Click each boxes to reveal answers for Example Paper </h4>
-<ul>
-    <li style="padding-bottom: 10px;"> Q1 a) <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='<pre>SELECT city, sum(duration) FROM Calls\nJOIN Subscribers ON Calls.caller=Subscribers.phoneno\nGROUP BY City;</pre>'; this.style.border='none'"> Show </span></li>
 
-    <li style="padding-bottom: 10px;"> Q1 b) <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='<pre>SELECT name FROM Subscribers\nJOIN Calls C1 ON C1.receiver=Subscribers.phoneno\nJOIN Calls C2 ON C2.caller=Subscribers.phoneno\nWHERE C1.duration >= 600 OR C2.duration >= 600\nGROUP BY name;</pre>'; this.style.border='none'"> Show </span></li>
+<div style="display: inline-block;"><iframe width="700" height="800" src="http://www.cs.bham.ac.uk/~rjh/courses/IntroToDBs/2016-17/Example%20Paper.pdf" allowfullscreen>Your browser does not support iFrames.</iframe></div>
 
-    <li style="padding-bottom: 10px;"> Q1 c) <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='<pre>' +
-     'SELECT name FROM Subscribers\nJOIN Calls ON receiver=Subscribers.phoneno\nWHERE city=London\nGROUP BY name\nORDER BY name;</pre>'; this.style.border='none'"> Show </span></li>
+<div style="display: inline-block; background-color: #f7ffe4; width: 700px; height: 800px; overflow: auto;">
+    <h4> You may practice, then click each boxes to reveal answers for Example Paper </h4>
+    <ul>
+        <li> Q1 a) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='<pre>SELECT city, sum(duration) FROM Calls\nJOIN Subscribers ON Calls.caller=Subscribers.phoneno\nGROUP BY City;</pre>'; this.style.border='none'"> Show </span></li>
 
-    <li style="padding-bottom: 10px;"> Q1 d) <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='<pre>SELECT name, sum(duration) FROM Subscribers\nJOIN Calls ON caller=phoneno\nGROUP BY name HAVING sum(duration) > 500;</pre>'; this.style.border='none'"> Show </span></li>
+        <li> Q1 b) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='<pre>SELECT name FROM Subscribers\nJOIN Calls C1 ON C1.receiver=Subscribers.phoneno\nJOIN Calls C2 ON C2.caller=Subscribers.phoneno\nWHERE C1.duration >= 600 OR C2.duration >= 600\nGROUP BY name;</pre>'; this.style.border='none'"> Show </span></li>
 
-    <li style="padding-bottom: 10px;"> Q6 <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='<pre>CREATE TABLE Member (memberid INT, name VARCHAR, address VARCHAR, age INT, sex VARCHAR(1), homebranch INT, PRIMARY KEY (memberid), FOREIGN KEY (homebranch) REFERENCES Branch(branchid)); <br/>CREATE TABLE Branch (branchid INT, branchname VARCHAR,branchcity VARCHAR, PRIMARY KEY (branchid)); <br/>CREATE TABLE Visit (memberid INT, branchid INT, FOREIGN KEY memberid REFERENCES Member(memberid), FOREIGN KEY branchid REFERENCES Branch(branchid));</pre>'; this.style.border='none'"> Show </span></li>
-</ul>
+        <li> Q1 c) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick='this.innerHTML="<pre>" +
+     "SELECT name FROM Subscribers\nJOIN Calls ON receiver=Subscribers.phoneno\nWHERE city=&apos;London&apos;\nGROUP BY name\nORDER BY name;</pre>"; this.style.border="none"'> Show </span></li>
+
+        <li> Q1 d) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='<pre>SELECT name, sum(duration) FROM Subscribers\nJOIN Calls ON caller=phoneno\nGROUP BY name HAVING sum(duration) > 500;</pre>'; this.style.border='none'"> Show </span></li>
+
+        <li> Q3 ) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='Add an answer'; this.style.border='none'"> Show (NO ANS YET) </span></li>
+
+        <li> Q4 ) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='Add an answer'; this.style.border='none'"> Show (NO ANS YET) </span></li>
+
+        <li> Q5 ) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='Add an answer'; this.style.border='none'"> Show (NO ANS YET) </span></li>
+
+        <li> Q6 ) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='<pre>CREATE TABLE Member (memberid INT, name VARCHAR, address VARCHAR, age INT, sex VARCHAR(1), homebranch INT, PRIMARY KEY (memberid), FOREIGN KEY (homebranch) REFERENCES Branch(branchid)); <br/>CREATE TABLE Branch (branchid INT, branchname VARCHAR,branchcity VARCHAR, PRIMARY KEY (branchid)); <br/>CREATE TABLE Visit (memberid INT, branchid INT, FOREIGN KEY memberid REFERENCES Member(memberid), FOREIGN KEY branchid REFERENCES Branch(branchid));</pre>'; this.style.border='none'"> Show </span></li>
+    </ul>
+</div>
 
 <hr/> <!------------------------------------------------------------------------------->
+<p> Good Luck for exams! </p>
 
 <!-- Utils -->
 <button onclick="topFunction()" id="topBtn" title="Go to top">Top</button>

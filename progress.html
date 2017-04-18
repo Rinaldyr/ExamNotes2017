@@ -63,7 +63,7 @@ Models of Computation (<a href="#" onclick="if(document.getElementById('modelsto
 <div id="modelstopics" style="display: none;"> <img src="images/models/topiclist.JPG"/> </div>
 
 Introductory Databases <br>
-<progress id="db" value="8" max="12"></progress> <span id="dbs"></span><br><br>
+<progress id="db" value="11" max="11"></progress> <span id="dbs"></span><br><br>
 
 Professional Computing <br>
 <progress id="pc" value="55" max="100"></progress> <span id="pcs"></span><br><br>
@@ -112,22 +112,22 @@ Natural Language Processing <br>
     // Writes the progress for Software Engineering
     var seValue = document.getElementById('se').getAttribute('value');
     var seMax = document.getElementById('se').getAttribute('max');
-    document.getElementById('ses').innerHTML = seValue + "/" + seMax;
+    document.getElementById('ses').innerHTML = getStatus(seValue,seMax);
 
     // Writes the progress for Database
     var dbValue = document.getElementById('db').getAttribute('value');
     var dbMax = document.getElementById('db').getAttribute('max');
-    document.getElementById('dbs').innerHTML = dbValue + "/" + dbMax;
+    document.getElementById('dbs').innerHTML = getStatus(dbValue,dbMax);
 
     // Writes the progress for Professional Computing
     var pcValue = document.getElementById('pc').getAttribute('value');
     var pcMax = document.getElementById('pc').getAttribute('max');
-    document.getElementById('pcs').innerHTML = pcValue + "/" + pcMax;
+    document.getElementById('pcs').innerHTML = getStatus(pcValue,pcMax);
     //document.getElementById('pcs').innerHTML = getPercentage(pcValue, pcMax) + "%";
 
-    // Function to return the percentage value as integers
-    function getPercentage(numerator, denominator) {
-        return parseInt((numerator/denominator) * 100);
+    // Function to return the status value. Prints DONE when completed, else the fraction.
+    function getStatus(top, bottom) {
+        return (top===bottom ? "DONE" : top + "/" + bottom);
     }
 
     // When the user scrolls down 20px from the top of the document, show the button
