@@ -64,6 +64,32 @@ Table of Contents
         <li> <a href="#fsa3"> Finite State Automaton</a> </li>
         <li> <a href="#fsa4"> Bisimulation </a> </li>
     </ul> </li>
+    <li> <a href="#dec"> Decidability </a> <ul>
+        <li> <a href="#dec1"> Decision Problems </a> </li>
+        <li> <a href="#dec2"> The Halting Theorem </a> </li>
+        <li> <a href="#dec3"> Properties of Code </a> </li>
+    </ul></li>
+    <li> <a href="#tm"> Turing Machines </a> <ul>
+        <li> <a href="#tm1"> Executing TMs </a> </li>
+        <li> <a href="#tm2"> Designing TMs </a> </li>
+        <li> <a href="#tm3"> Extensions of TMs </a> </li>
+        <li> <a href="#tm4"> Church's Thesis </a> </li>
+    </ul></li>
+    <li> <a href="#comp"> Complexity </a> <ul>
+        <li> <a href="#comp1"> Complexity of Algorithms </a> </li>
+        <li> <a href="#comp2"> Complexity of Problems </a> </li>
+        <li> <a href="#comp3"> O notation </a> </li>
+        <li> <a href="#comp4"> NP Problems </a> </li>
+        <li> <a href="#comp5"> NP-complete Problems </a> </li>
+        <li> <a href="#comp6"> Satisfiability </a> </li>
+    </ul></li>
+    <li> <a href="#lambda"> Lambda Calculus </a> <ul>
+        <li> <a href="#lambda1"> Lambda Application </a> </li>
+        <li> <a href="#lambda2"> Evaluating Expressions </a> </li>
+        <li> <a href="#lambda3"> Typed Lambda Calculus </a> </li>
+        <li> <a href="#lambda4"> Typed vs Untyped </a> </li>
+    </ul></li>
+    <li> <a href="#papers"> Past Papers </a> </li>
 </ol>
 
 <hr/>
@@ -164,7 +190,7 @@ A language is a set of words, which means that it is a subset of &Sigma;*. <br/>
 
 <p> <span style="font-weight: bold;"> Proving a language is not regular </span> <br/> We can prove this by finding an L-distinguishing suffix for words. Suppose we have a DFA that recognises the language L. And if we have words that have an L-distinguishing suffix, then each word must take us from the initial state to different states. <br/>
     If there is a countable sequence of distinctive words, then the minimum states of the DFA will be equal to the size of the set. <br/>
-    However, if it is an infinite sequence of distinctive words, then there will be no DFA, and by Kleene's theorem the language is not regular. <br/> </p>
+    However, if it is an infinite sequence of distinctive words, then there will be no DFA, and by Kleene's theorem the language is not regular. (<em>Myhill-Nerode Theorem</em>)<br/> </p>
 <p> Also by the use of <strong> pumping lemma</strong>, which says that for any regular language L there exists a constant p such that any word w in L with length at least p can eb split into three substrings, w = xyz, where the middle portion of y must not be empty, such that the words xz, xyz, xyyz, xyyyz, ... constructed by repeating y zero or more times are still in L. The repetition process is called "pumping". Moreover, the pumping lemma guarantees that the length of xy will be at most p, imposing a limit on the way in which w may be split. Finite languages trivially satisfy the pumping lemma by having p equal to the maximum string length in L plus one. </p>
 
 <h4 id="fsa4"> Bisimulation </h4>
@@ -181,6 +207,26 @@ A language is a set of words, which means that it is a subset of &Sigma;*. <br/>
     <li> If there are any unmarked pairs (P,Q) such that transitions [&sigma;(P,x), &sigma;(Q,x)] is marked, then mark [P,Q] where 'x' is an input symbol. Repeat this until no more markings can be made. </li>
     <li> Combine all the unmarked pairs and make them a single state in the minimised DFA </li>
 </ol>
+
+<hr/>
+
+<h3 id="dec"> Decidability </h3>
+
+<hr/>
+
+<h3 id="tm"> Turing Machines </h3>
+
+<hr/>
+
+<h3 id="comp"> Complexity </h3>
+
+<hr/>
+
+<h3 id="lambda"> Lambda Calculus </h3>
+
+<hr/>
+
+<h3 id="papers"> Past Papers </h3>
 
 <hr/>
 <!-- Utils -->
