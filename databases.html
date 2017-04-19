@@ -1208,12 +1208,12 @@ Table of Contents
     <cite>-Bob</cite>
 </blockquote>
 
-<p> <a href="images/database/paper.pdf">Example Paper</a> </p>
+<p> <a href="images/database/paper.pdf" download>Download Example Paper</a> </p>
 
-<div style="display: inline-block;"><iframe width="700" height="800" src="images/database/paper.pdf" allowfullscreen>Your browser does not support iFrames.</iframe></div>
+<div id="paper" style="display: inline-block; width: 700px; height: 800px; border: 1px solid black;" onclick="openPaper();"><p style="width: 700px; height: 800px; display: table-cell;vertical-align: middle; text-align: center"> Click here to load Example Paper </p></div>
 
 <div style="display: inline-block; background-color: #f7ffe4; width: 700px; height: 800px; overflow: auto;">
-    <h4> You may practice, then click each boxes to reveal answers for Example Paper </h4>
+    <h4> You may practice, then click each <span style="border: dotted 1px;" onclick="style.color='red'; this.innerHTML='OoohhH CONGRATULATIONS! You Sir, Found an EASTER EGG';">boxes</span> to reveal answers for Example Paper </h4>
     <ul>
         <li> Q1 a) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='<pre>SELECT city, sum(duration) FROM Calls\nJOIN Subscribers ON Calls.caller=Subscribers.phoneno\nGROUP BY City;</pre>'; this.style.border='none'"> Show </span></li>
 
@@ -1240,6 +1240,12 @@ Table of Contents
 <!-- Utils -->
 <button onclick="topFunction()" id="topBtn" title="Go to top">Top</button>
 <script>
+
+    var opened = false;
+    function openPaper() {
+        if (!opened) { document.getElementById("paper").innerHTML='<iframe width="700" height="800" src="images/database/paper.pdf" allowfullscreen>Your browser does not support iFrames.</iframe>'; opened = true; }
+    }
+
     // When the user scrolls down 20px from the top of the document, show the button
     window.onscroll = function () {
         scrollFunction()
