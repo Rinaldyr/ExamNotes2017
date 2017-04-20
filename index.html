@@ -37,12 +37,70 @@
             border: 1px solid #000000;
             border-collapse: collapse;
         }
-
     </style>
+    <script>
+        function setCookie(name, value, expire) {
+            var date = new Date();
+            date.setTime(date.getTime() + (expire*24*60*60*1000));
+            var expires = "expires="+ date.toUTCString();
+            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+        }
+
+        function getCookie(name) {
+            var n = name + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0)===' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(n)===0) {
+                    return c.substring(n.length,c.length);
+                }
+            }
+            return "";
+        }
+
+        function checkCookie() {
+            var username = getCookie("username");
+            if (username !== "") {
+                document.getElementById("name").addEventListener("load", change(username,false));
+            } else {
+                username = prompt("Hai thar, how may I address you? (e.g. Rinaldy)", "");
+                if (username !== "" && username !== null) {
+                    setCookie("username", username, 365);
+                }
+                document.getElementById("name").addEventListener("load", change(username,true));
+            }
+        }
+
+        function change(name, firstTime) {
+            if (name!==null) {
+                var username = (name.toLowerCase().indexOf("rinaldy") !== -1 ? "rr" : name.toLowerCase().indexOf("sivarjuen") !== -1 ? "sr" : name.toLowerCase().indexOf("karanvir") !== -1 ? "kk" : name.toLowerCase().indexOf("rhys") !== -1 ? "rb" : name.toLowerCase().indexOf("ahmed") !== -1 ? "ab" : name.toLowerCase().indexOf("harvey") !== -1 ? "hh" : name.toLowerCase().indexOf("nancy") !== -1 ? "na" : "wtf");
+
+                var message = "";
+                if (firstTime) {
+                    message = "Welcome, <strong>" + name + "</strong>!";
+                } else message = "Welcome back, <strong>" + name + "</strong>!";
+
+                // Oops
+                if (username === "na") {
+                    if (!firstTime) document.getElementById("name").innerHTML = "I love you so much more, <strong>" + name + "</strong>!"; else document.getElementById("name").innerHTML = "I love you, <strong>" + name + "</strong>!";
+                } else document.getElementById("name").innerHTML = message;
+
+                var seats = document.getElementsByClassName(username);
+                for (var i = 0; i < seats.length; i++) {
+                    seats[i].style.display = '';
+                }
+            }
+        }
+    </script>
 </head>
-<body>
+<body onload="checkCookie()">
     <h1> Exam Notes May/June 2017 </h1>
-    <a href="progress.html"> Progress</a>
+    <p id="name"> Welcome! </p>
+    <a href="progress.html"> Progress </a>
     <table>
         <caption> Exam Schedule </caption>
         <tr style="font-weight: bold;">
@@ -51,11 +109,12 @@
             <th> Start Time </th>
             <th> Exam Title </th>
             <th> Room </th>
-            <th> Seat RR </th>
-            <th> Seat SR </th>
-            <th> Seat KK </th>
-            <th> Seat RB </th>
-            <th> Seat HH </th>
+            <th class="rr" style="display: none"> Seat RR </th>
+            <th class="sr" style="display: none"> Seat SR </th>
+            <th class="kk" style="display: none"> Seat KK </th>
+            <th class="rb" style="display: none"> Seat RB </th>
+            <th class="ab" style="display: none"> Seat AB </th>
+            <th class="hh" style="display: none"> Seat HH </th>
             <th> Duration </th>
             <th> Days left </th>
         </tr>
@@ -65,11 +124,12 @@
             <td align="center"> 09:30 </td>
             <td> <a href="softeng.html"> LI Software Engineering 1 </a> </td>
             <td> Muirhead 121 </td>
-            <td align="center"> 37 </td>
-            <td align="center"> - </td>
-            <td align="center"> - </td>
-            <td align="center"> - </td>
-            <td align="center"> N/A </td>
+            <td class="rr" style="display: none" align="center"> 37 </td>
+            <td class="sr" style="display: none" align="center"> - </td>
+            <td class="kk" style="display: none" align="center"> - </td>
+            <td class="rb" style="display: none" align="center"> - </td>
+            <td class="ab" style="display: none" align="center"> N/A </td>
+            <td class="hh" style="display: none" align="center"> N/A </td>
             <td align="center"> 1:30hrs </td>
             <td> <p align="center" style ="font-size: 18px; font-family: Consolas, serif" id="softEng"></p> </td>
         </tr>
@@ -79,11 +139,12 @@
             <td align="center"> 09:30 </td>
             <td> <a href="vision.html">LI Computational Vision </a></td>
             <td> Chemical Engineering 112 </td>
-            <td align="center"> - </td>
-            <td align="center"> 5 </td>
-            <td align="center"> - </td>
-            <td align="center"> - </td>
-            <td align="center"> N/A </td>
+            <td class="rr" style="display: none" align="center"> - </td>
+            <td class="sr" style="display: none" align="center"> 5 </td>
+            <td class="kk" style="display: none" align="center"> - </td>
+            <td class="rb" style="display: none" align="center"> - </td>
+            <td class="ab" style="display: none" align="center"> N/A </td>
+            <td class="hh" style="display: none" align="center"> N/A </td>
             <td align="center"> 1:30hrs </td>
             <td> <p align="center" style ="font-size: 18px; font-family: Consolas, serif" id="vision"></p> </td>
         </tr>
@@ -93,11 +154,12 @@
             <td align="center"> 09:30 </td>
             <td> <a href="models.html"> LI Models of Computation </a> </td>
             <td> New Gym </td>
-            <td align="center"> 137 </td>
-            <td align="center"> 21 </td>
-            <td align="center"> 84 </td>
-            <td align="center"> 28 </td>
-            <td align="center"> N/A </td>
+            <td class="rr" style="display: none" align="center"> 137 </td>
+            <td class="sr" style="display: none" align="center"> 21 </td>
+            <td class="kk" style="display: none" align="center"> 84 </td>
+            <td class="rb" style="display: none" align="center"> 28 </td>
+            <td class="ab" style="display: none" align="center"> N/A </td>
+            <td class="hh" style="display: none" align="center"> N/A </td>
             <td align="center"> 1:30hrs </td>
             <td> <p align="center" style ="font-size: 18px; font-family: Consolas, serif" id="models"></p> </td>
         </tr>
@@ -107,11 +169,12 @@
             <td align="center"> 09:30 </td>
             <td> <a href="databases.html"> LI Introductory Databases </a> </td>
             <td> Avon Room </td>
-            <td align="center"> 210 </td>
-            <td align="center"> 90 </td>
-            <td align="center"> 156 </td>
-            <td align="center"> 97 </td>
-            <td align="center"> N/A </td>
+            <td class="rr" style="display: none" align="center"> 210 </td>
+            <td class="sr" style="display: none" align="center"> 90 </td>
+            <td class="kk" style="display: none" align="center"> 156 </td>
+            <td class="rb" style="display: none" align="center"> 97 </td>
+            <td class="ab" style="display: none" align="center"> N/A </td>
+            <td class="hh" style="display: none" align="center"> N/A </td>
             <td align="center"> 1:30hrs </td>
             <td> <p align="center" style ="font-size: 18px; font-family: Consolas, serif" id="databases"></p> </td>
         </tr>
@@ -125,11 +188,12 @@
             	<a href="ProfComp-CourseNotes.pdf"> LI Professional Computing (PDF) </a> 
             </td>
             <td> Great Hall </td>
-            <td align="center"> 141 </td>
-            <td align="center"> 21 </td>
-            <td align="center"> 87 </td>
-            <td align="center"> 28 </td>
-            <td align="center"> N/A </td>
+            <td class="rr" style="display: none" align="center"> 141 </td>
+            <td class="sr" style="display: none" align="center"> 21 </td>
+            <td class="kk" style="display: none" align="center"> 87 </td>
+            <td class="rb" style="display: none" align="center"> 28 </td>
+            <td class="ab" style="display: none" align="center"> N/A </td>
+            <td class="hh" style="display: none" align="center"> N/A </td>
             <td align="center"> 1:30hrs </td>
             <td> <p align="center" style ="font-size: 18px; font-family: Consolas, serif" id="profComp"></p> </td>
         </tr>
@@ -139,11 +203,12 @@
             <td align="center"> 09:30 </td>
             <td> <a href="csa.html"> LI Computer Systems and Architecture </a> </td>
             <td> Sports Hall </td>
-            <td align="center"> 332 </td>
-            <td align="center"> 216 </td>
-            <td align="center"> 279 </td>
-            <td align="center"> 223 </td>
-            <td align="center"> N/A </td>
+            <td class="rr" style="display: none" align="center"> 332 </td>
+            <td class="sr" style="display: none" align="center"> 216 </td>
+            <td class="kk" style="display: none" align="center"> 279 </td>
+            <td class="rb" style="display: none" align="center"> 223 </td>
+            <td class="ab" style="display: none" align="center"> N/A </td>
+            <td class="hh" style="display: none" align="center"> N/A </td>
             <td align="center"> 1:30hrs </td>
             <td> <p align="center" style ="font-size: 18px; font-family: Consolas, serif" id="csa"></p> </td>
         </tr>
@@ -153,11 +218,12 @@
             <td align="center"> 14:00 </td>
             <td> <a href="cplusplus.html"> LI C/C++ </a> </td>
             <td> Arts Lecture Room 2 </td>
-            <td align="center"> 39 </td>
-            <td align="center"> 10 </td>
-            <td align="center"> 22 </td>
-            <td align="center"> 11 </td>
-            <td align="center"> N/A </td>
+            <td class="rr" style="display: none" align="center"> 39 </td>
+            <td class="sr" style="display: none" align="center"> 10 </td>
+            <td class="kk" style="display: none" align="center"> 22 </td>
+            <td class="rb" style="display: none" align="center"> 11 </td>
+            <td class="ab" style="display: none" align="center"> N/A </td>
+            <td class="hh" style="display: none" align="center"> N/A </td>
             <td align="center"> 1:30hrs </td>
             <td> <p align="center" style ="font-size: 18px; font-family: Consolas, serif" id="ccpp"></p> </td>
         </tr>
@@ -167,11 +233,12 @@
             <td align="center"> 09:30 </td>
             <td> <a href="graphics.html">LI Graphics </a> </td>
             <td> Muirhead 121 </td>
-            <td align="center"> 42 </td>
-            <td align="center"> 11 </td>
-            <td align="center"> 32 </td>
-            <td align="center"> 12 </td>
-            <td align="center"> N/A </td>
+            <td class="rr" style="display: none" align="center"> 42 </td>
+            <td class="sr" style="display: none" align="center"> 11 </td>
+            <td class="kk" style="display: none" align="center"> 32 </td>
+            <td class="rb" style="display: none" align="center"> 12 </td>
+            <td class="ab" style="display: none" align="center"> N/A </td>
+            <td class="hh" style="display: none" align="center"> N/A </td>
             <td align="center"> 1:30hrs </td>
             <td> <p align="center" style ="font-size: 18px; font-family: Consolas, serif" id="graphics"></p> </td>
         </tr>
@@ -181,11 +248,12 @@
             <td align="center"> 09:30 </td>
             <td> <a href="maths.html"> LI Math Techniques for Comp Sc </a> </td>
             <td> New Gym </td>
-            <td align="center"> 197 </td>
-            <td align="center"> 92 </td>
-            <td align="center"> 152 </td>
-            <td align="center"> 98 </td>
-            <td align="center"> N/A </td>
+            <td class="rr" style="display: none" align="center"> 197 </td>
+            <td class="sr" style="display: none" align="center"> 92 </td>
+            <td class="kk" style="display: none" align="center"> 152 </td>
+            <td class="rb" style="display: none" align="center"> 98 </td>
+            <td class="ab" style="display: none" align="center"> N/A </td>
+            <td class="hh" style="display: none" align="center"> N/A </td>
             <td align="center"> 1:30hrs </td>
             <td> <p align="center" style ="font-size: 18px; font-family: Consolas, serif" id="maths"></p> </td>
         </tr>
@@ -195,11 +263,12 @@
             <td align="center"> 14:00 </td>
             <td> <a href="CompSec-CourseNotes.pdf"> LI Intro to Computer Security </a> </td>
             <td> Avon Room </td>
-            <td align="center"> 209 </td>
-            <td align="center"> 114 </td>
-            <td align="center"> 168 </td>
-            <td align="center"> 119 </td>
-            <td align="center"> N/A </td>
+            <td class="rr" style="display: none" align="center"> 209 </td>
+            <td class="sr" style="display: none" align="center"> 114 </td>
+            <td class="kk" style="display: none" align="center"> 168 </td>
+            <td class="rb" style="display: none" align="center"> 119 </td>
+            <td class="ab" style="display: none" align="center"> N/A </td>
+            <td class="hh" style="display: none" align="center"> N/A </td>
             <td align="center"> 1:30hrs </td>
             <td> <p align="center" style ="font-size: 18px; font-family: Consolas, serif" id="security"></p> </td>
         </tr>
@@ -209,11 +278,12 @@
             <td align="center"> 09:30 </td>
             <td> <a href="nlp.html"> LI Natural Language Processing </a> </td>
             <td> New Gym </td>
-            <td align="center"> - </td>
-            <td align="center"> - </td>
-            <td align="center"> 41 </td>
-            <td align="center"> 14 </td>
-            <td align="center"> N/A </td>
+            <td class="rr" style="display: none" align="center"> - </td>
+            <td class="sr" style="display: none" align="center"> - </td>
+            <td class="kk" style="display: none" align="center"> 41 </td>
+            <td class="rb" style="display: none" align="center"> 14 </td>
+            <td class="ab" style="display: none" align="center"> N/A </td>
+            <td class="hh" style="display: none" align="center"> N/A </td>
             <td align="center"> 1:30hrs </td>
             <td> <p align="center" style ="font-size: 18px; font-family: Consolas, serif" id="nlp"></p> </td>
         </tr>
