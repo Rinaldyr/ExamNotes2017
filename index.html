@@ -77,17 +77,13 @@
 
         function change(name, firstTime) {
             if (name!==null) {
-                var username = (name.toLowerCase().indexOf("rinaldy") !== -1 ? "rr" : name.toLowerCase().indexOf("sivarjuen") !== -1 ? "sr" : name.toLowerCase().indexOf("karanvir") !== -1 ? "kk" : name.toLowerCase().indexOf("rhys") !== -1 ? "rb" : name.toLowerCase().indexOf("ahmed") !== -1 ? "ab" : name.toLowerCase().indexOf("harvey") !== -1 ? "hh" : name.toLowerCase().indexOf("nancy") !== -1 ? "na" : "wtf");
+                var username = (name.toLowerCase().indexOf("rinaldy") !== -1 ? "rr" : name.toLowerCase().indexOf("sivarjuen") !== -1 ? "sr" : name.toLowerCase().indexOf("karanvir") !== -1 ? "kk" : name.toLowerCase().indexOf("rhys") !== -1 ? "rb" : name.toLowerCase().indexOf("ahmed") !== -1 ? "ab" : name.toLowerCase().indexOf("harvey") !== -1 ? "hh" : "wtf");
 
                 var message = "";
                 if (firstTime) {
                     message = "Welcome, <strong>" + name + "</strong>!";
                 } else message = "Welcome back, <strong>" + name + "</strong>!";
-
-                // Oops
-                if (username === "na") {
-                    if (!firstTime) document.getElementById("name").innerHTML = "I love you so much more, <strong>" + name + "</strong>!"; else document.getElementById("name").innerHTML = "I love you, <strong>" + name + "</strong>!";
-                } else document.getElementById("name").innerHTML = message;
+                document.getElementById("name").innerHTML = message;
 
                 var seats = document.getElementsByClassName(username);
                 for (var i = 0; i < seats.length; i++) {
