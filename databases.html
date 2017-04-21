@@ -1215,16 +1215,29 @@ Table of Contents
 <div style="display: inline-block; background-color: #f7ffe4; width: 700px; height: 800px; overflow: auto;">
     <h4> You may practice, then click each <span style="border: dotted 1px;" onclick="style.color='red'; this.innerHTML='OoohhH CONGRATULATIONS! You Sir, Found an EASTER EGG';">boxes</span> to reveal answers for Example Paper </h4>
     <ul>
-        <li> Q1 a) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='<pre>SELECT city, sum(duration) FROM Calls\nJOIN Subscribers ON Calls.caller=Subscribers.phoneno\nGROUP BY City;</pre>'; this.style.border='none'"> Show </span></li>
+        <li> Q1 a) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='<pre>SELECT city, sum(duration) FROM Calls\nJOIN Subscribers ON Calls.receiver=Subscribers.phoneno\nGROUP BY City;</pre>'; this.style.border='none'"> Show </span></li>
 
         <li> Q1 b) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='<pre>SELECT name FROM Subscribers\nJOIN Calls C1 ON C1.receiver=Subscribers.phoneno\nJOIN Calls C2 ON C2.caller=Subscribers.phoneno\nWHERE C1.duration >= 600 OR C2.duration >= 600\nGROUP BY name;</pre>'; this.style.border='none'"> Show </span></li>
 
         <li> Q1 c) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick='this.innerHTML="<pre>" +
      "SELECT name FROM Subscribers\nJOIN Calls ON receiver=Subscribers.phoneno\nWHERE city=&apos;London&apos;\nGROUP BY name\nORDER BY name;</pre>"; this.style.border="none"'> Show </span></li>
 
-        <li> Q1 d) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='<pre>SELECT name, sum(duration) FROM Subscribers\nJOIN Calls ON caller=phoneno\nGROUP BY name HAVING sum(duration) > 500;</pre>'; this.style.border='none'"> Show </span></li>
+        <li> Q1 d) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='<pre>SELECT DISTINCT name
+FROM Subscribers
+WHERE phoneno NOT IN (
+    SELECT DISTINCT caller 
+    FROM Calls
+    JOIN Subscribers
+    ON caller == phoneno
+    WHERE receiver IN (SELECT phoneno
+    FROM Subscribers
+    WHERE city LIKE 'London')
+ORDER BY name;</pre>'; this.style.border='none'"> Show </span></li>
 
-        <li> Q3 ) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='Add an answer'; this.style.border='none'"> Show (NO ANS YET) </span></li>
+        <li> Q3 ) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='<pre>E1(A1, A2)
+E2(A4, A5)
+E3(A6, A4, A7)
+R1(A1, A4, A6, A3)</pre>'; this.style.border='none'"> Show </span></li>
 
         <li> Q4 ) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='Add an answer'; this.style.border='none'"> Show (NO ANS YET) </span></li>
 
