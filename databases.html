@@ -1220,9 +1220,7 @@ Table of Contents
         <li> Q1 b) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='<pre>SELECT name FROM Subscribers\nJOIN Calls C1 ON C1.receiver=Subscribers.phoneno\nJOIN Calls C2 ON C2.caller=Subscribers.phoneno\nWHERE C1.duration >= 600 OR C2.duration >= 600\nGROUP BY name;</pre>'; this.style.border='none'"> Show </span></li>
 
         <li> Q1 c) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick='this.innerHTML="<pre>" +
-     "SELECT name FROM Subscribers\nJOIN Calls ON receiver=Subscribers.phoneno\nWHERE city=&apos;London&apos;\nGROUP BY name\nORDER BY name;</pre>"; this.style.border="none"'> Show </span></li>
-
-        <li> Q1 d) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='<pre>SELECT DISTINCT name
+     "SELECT DISTINCT name
 FROM Subscribers
 WHERE phoneno NOT IN (
     SELECT DISTINCT caller 
@@ -1231,13 +1229,16 @@ WHERE phoneno NOT IN (
     ON caller == phoneno
     WHERE receiver IN (SELECT phoneno
     FROM Subscribers
-    WHERE city LIKE 'London')
-ORDER BY name;</pre>'; this.style.border='none'"> Show </span></li>
+    WHERE city LIKE &apos;London&apos;)
+)
+ORDER BY name;</pre>"; this.style.border="none"'> Show </span></li>
 
-        <li> Q3 ) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='<pre>E1(A1, A2)
+        <li> Q1 d) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='<pre>SELECT name, sum(duration) FROM Subscribers\nJOIN Calls ON caller=phoneno\nGROUP BY name HAVING sum(duration) > 500;</pre>'; this.style.border='none'"> Show </span></li>
+
+        <li> Q3 ) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='E1(A1, A2)
 E2(A4, A5)
 E3(A6, A4, A7)
-R1(A1, A4, A6, A3)</pre>'; this.style.border='none'"> Show </span></li>
+R1(A1, A4, A6, A3)'; this.style.border='none'"> Show </span></li>
 
         <li> Q4 ) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='Add an answer'; this.style.border='none'"> Show (NO ANS YET) </span></li>
 
