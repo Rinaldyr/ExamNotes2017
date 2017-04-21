@@ -45,3 +45,5 @@ E2(A4, A5)
 E3(A6, A4, A7)
 R1(A1, A4, A6, A3)
 ```
+# Question 3
+![](https://i.gyazo.com/f9ba03c1791c66134aba827296070afc.png)
