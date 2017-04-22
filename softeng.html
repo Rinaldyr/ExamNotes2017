@@ -46,6 +46,7 @@
 
         #topBtn:hover {
             background-color: #555;
+            opacity: 0.5;
         }
 
         #homeBtn {
@@ -65,72 +66,99 @@
 
         #homeBtn:hover {
             background-color: #555;
+            opacity: 0.5;
         }
     </style>
 </head>
 <body>
 <hr/> <!----------------------------------------------------------------------------------->
 <h1> LI Software Engineering Extended 1 </h1>
+<h4> Click <a href="https://github.com/Rinaldyr/ExamNotes2017/blob/master/Softeng1.md">here</a> for Ahmed's Notes! </h4>
 <hr/> <!----------------------------------------------------------------------------------->
-Table of contents
+Table of contents (<a href="#" onclick="var expanded=this.innerHTML==='expand'; var subtopics=document.getElementsByClassName('subtopic'); for (var i = 0; i < subtopics.length; i++) { subtopics[i].style.display=(expanded ? '' : 'none'); } this.innerHTML=(expanded ? 'collapse' : 'expand');">expand</a>)
 <ol>
     <li><a href="#intro"> Introduction </a></li>
-    <li><a href="#models"> Software Process Models </a><ul>
+    <li><a href="#models"> Software Process Models </a><ul class="subtopic" style="display: none">
         <li><a href="#models1"> Waterfall Model </a></li>
         <li><a href="#models2"> Evolutionary Development </a></li>
         <li><a href="#models3"> Component-based Software Engineering </a></li>
         <li><a href="#models4"> Incremental Delivery </a></li>
         <li><a href="#models5"> Spiral Development </a></li>
+        <li><a href="#models6"> Rational Unified Process </a></li>
     </ul></li>
-    <li><a href="#reqeng"> Requirements Engineering </a><ul>
+    <li><a href="#reqeng"> Requirements Engineering </a><ul class="subtopic" style="display: none">
         <li><a href="#reqeng1"> Software Development Lifecycle </a></li>
     </ul></li>
-    <li><a href="#system"> System </a><ul>
+    <li><a href="#system"> System </a><ul class="subtopic" style="display: none">
         <li><a href="#system1"> Critical System </a></li>
         <li><a href="#system2"> Dependability </a></li>
         <li><a href="#system3"> Faults and Failures </a></li>
     </ul></li>
-    <li><a href="#agile"> Rapid and Extreme Programming </a><ul>
+    <li><a href="#agile"> Rapid and Extreme Programming </a><ul class="subtopic" style="display: none">
         <li><a href="#agile1"> Rapid Software Development </a></li>
         <li><a href="#agile2"> Agile Methods </a></li>
         <li><a href="#agile3"> Rapid Application Development </a></li>
     </ul></li>
-    <li><a href="#inception"> Inception Phase </a><ul>
+    <li><a href="#inception"> Inception Phase </a><ul class="subtopic" style="display: none">
         <li><a href="#inception1"> Business Process Modelling </a></li>
         <li><a href="#inception2"> Activity Diagram </a></li>
     </ul></li>
-    <li><a href="#reqdoc"> Requirements Documentation </a><ul>
+    <li><a href="#reqdoc"> Requirements Documentation </a><ul class="subtopic" style="display: none">
         <li><a href="#reqdoc1"> Types of Requirements </a></li>
         <li><a href="#reqdoc2"> Functional and Non-Functional Requirements </a></li>
         <li><a href="#reqdoc3"> Sequence Diagrams </a></li>
         <li><a href="#reqdoc4"> About Requirements Documents </a></li>
     </ul></li>
-    <li><a href="#reqcap"> Requirements Capture </a><ul>
+    <li><a href="#reqcap"> Requirements Capture </a><ul class="subtopic" style="display: none">
         <li><a href="#reqcap1"> About Requirements Capture </a></li>
         <li><a href="#reqcap2"> Viewpoints </a></li>
         <li><a href="#reqcap3"> Fact-Finding Techniques </a></li>
         <li><a href="#reqcap4"> Requirements Checking </a></li>
         <li><a href="#reqcap5"> Requirements Validation </a></li>
     </ul></li>
-    <li><a href="#reqana"> Requirements Analysis </a><ul>
+    <li><a href="#reqana"> Requirements Analysis </a><ul class="subtopic" style="display: none">
         <li><a href="#reqana1"> Goal Oriented Requirements Engineering (GORE) </a></li>
         <li><a href="#reqana2"> KAOS </a></li>
         <li><a href="#reqana3"> MoSCoW </a></li>
     </ul></li>
-    <li><a href="#usecase"> UML Use Case </a><ul>
+    <li><a href="#usecase"> UML Use Case </a><ul class="subtopic" style="display: none">
         <li><a href="#usecase1"> Use Case Diagram </a></li>
         <li><a href="#usecase2"> Use Case Description </a></li>
     </ul></li>
-    <li><a href="#sysdgn"> System Architecture </a><ul>
+    <li><a href="#sysdgn"> System Architecture </a><ul class="subtopic" style="display: none">
         <li><a href="#sysdgn1"> Major Activities </a></li>
         <li><a href="#sysdgn2"> Software Architecture </a></li>
     </ul></li>
-    <li><a href="#pm"> Software Project Management Overview </a></li>
-    <li><a href="#risks"> Project Risk Management </a></li>
-    <li><a href="#quality"> Software Quality Management </a></li>
-    <li><a href="#config"> Software Configuration Management </a></li>
-    <li><a href="#interface"> User Interface Design </a></li>
-    <li><a href="#distribute"> Distributed Systems Architecture </a></li>
+    <li><a href="#pm"> Software Project Management Overview </a><ul class="subtopic" style="display: none">
+        <li><a href="#pm1"> Software Project Management </a></li>
+        <li><a href="#pm2"> Project Planning Process </a></li>
+        <li><a href="#pm3"> Gantt Charts and Activity Networks </a></li>
+        <li><a href="#pm4"> SMART Criteria </a></li>
+    </ul></li>
+    <li><a href="#risks"> Project Risk Management </a><ul class="subtopic" style="display: none">
+        <li><a href="#risks1"> RM Process </a></li>
+    </ul></li>
+    <li><a href="#quality"> Software Quality Management </a><ul class="subtopic" style="display: none">
+        <li><a href="#quality1"> Quality Management Activities </a></li>
+        <li><a href="#quality2"> Standards </a></li>
+        <li><a href="#quality3"> Quality Plans </a></li>
+        <li><a href="#quality4"> Software Measurements and Metrics </a></li>
+    </ul></li>
+    <li><a href="#config"> Software Configuration Management </a><ul class="subtopic" style="display: none">
+        <li><a href="#config1"> Configuration Management Planning </a></li>
+        <li><a href="#config2"> Change Management </a></li>
+        <li><a href="#config3"> Version Management </a></li>
+        <li><a href="#config4"> Release Management </a></li>
+        <li><a href="#config4"> System Building </a></li>
+    </ul></li>
+    <li><a href="#interface"> User Interface Design </a><ul class="subtopic" style="display: none">
+        <li><a href="#interface1"> Design Principles </a></li>
+        <li><a href="#interface2"> UI Design Process </a></li>
+    </ul></li>
+    <li><a href="#distribute"> Distributed Systems Architecture </a><ul class="subtopic" style="display: none">
+        <li><a href="#distribute1"> Architecture Categorisation </a></li>
+        <li><a href="#distribute2"> Implementation Diagrams </a></li>
+    </ul></li>
     <li><a href="#semanticweb"> Semantic Web Introduction </a></li>
 </ol>
 <hr/> <!----------------------------------------------------------------------------------->
@@ -147,20 +175,20 @@ Table of contents
 
 <p><strong> Problems in system development </strong> may come from either the End-user's perspective, the Client's
     perspective, or the Developer's perspective. </p>
-<p> Problems: End-user </p>
+<p> Problems: <keyword>End-user</keyword> </p>
 <ul>
     <li> System is not finished</li>
     <li> System has poor design, hard to use, poor interface, useless 'help'</li>
     <li> System is pretty but not useful</li>
 </ul>
-<p> Problems: Client </p>
+<p> Problems: <keyword>Client</keyword> </p>
 <ul>
     <li> Project is overbudget</li>
     <li> Project is delivered late</li>
     <li> Project is no longer needed</li>
     <li> System is not trustworthy or safe to use</li>
 </ul>
-<p> Problems: Developer </p>
+<p> Problems: <keyword>Developer</keyword> </p>
 <ul>
     <li> Clients changed their minds</li>
     <li> There is not enough time to complete the project</li>
@@ -169,9 +197,9 @@ Table of contents
     <li> And sometimes, the system works fine but it's just the user with the problems</li>
 </ul>
 
-<p> Things go wrong because of two reasons: Quality and Productivity </p>
+<p> Things go wrong because of two reasons: <keyword>Quality</keyword> and <keyword>Productivity</keyword> </p>
 <ul>
-    <li> Quality <ul>
+    <li> <keyword>Quality</keyword> <ul>
         <li> The wrong problem is addressed so the system conflicts with business strategy</li>
         <li> The context is neglected</li>
         <li> The project has poor software engineering &ndash; incorrect analysis or design, or the team simply lack
@@ -180,7 +208,7 @@ Table of contents
         <li> The project is carried out for the wrong reason</li>
     </ul> </li>
 
-    <li> Productivity <ul>
+    <li> <keyword>Productivity</keyword> <ul>
         <li> The client needs change over time, so there is always a requirements drift</li>
         <li> External event changes the environment, e.g. legislation, change in technology</li>
         <li> Poor project management</li>
@@ -1290,7 +1318,7 @@ Table of contents
     <li> The results of the project met its <keyword>main objective</keyword>. </li>
 </ul>
 
-<h3 id="pm1"> Software Project Management </h3>
+<h3 id="pm1"> 12.1 &ndash; Software Project Management </h3>
 <p> Concerned with activities involving in ensuring that software is <keyword>delivered on time</keyword> in accordance with the requirements of the organisations developing the software. It is needed because software development is always subject to <keyword>budget and schedule constraints</keyword>. </p>
 
 <h4> Management Activities </h4>
@@ -1336,7 +1364,7 @@ Table of contents
     </tr>
 </table>
 
-<h4> Project Planning Process </h4>
+<h3 id="pm2"> 12.2 &ndash; Project Planning Process </h3>
 <img src="images/softeng/pm1.JPG"/>
 
 <p> The project plan sets out the resources available to the project, the work breakdown, and a schedule for the work. </p>
@@ -1372,7 +1400,7 @@ Table of contents
     <li> The unexpected things always happens. </li>
 </ul>
 
-<h3 id="pm3"> Gantt Charts and Activity Networks </h3>
+<h3 id="pm3"> 12.3 &ndash; Gantt Charts and Activity Networks </h3>
 <p> These are graphical notations used to illustrate the project schedule which shows the project breakdown into tasks. </p>
 
 <ul>
@@ -1380,7 +1408,7 @@ Table of contents
     <li> Activity charts show <keyword>task dependencies</keyword> and the <keyword>critical path</keyword>. <br/> <img src="images/softeng/pm4.JPG"/> </li>
 </ul>
 
-<h4> SMART Criteria </h4>
+<h3 id="pm4"> 12.4 &ndash; SMART Criteria </h3>
 <p> Milestones should be: </p>
 <ul>
     <li> <keyword>S</keyword>pecific </li>
@@ -1530,7 +1558,7 @@ Table of contents
 <p> <keyword>Quality</keyword> means that a product should <strong>meet its specification</strong>. </p>
 <p> For large systems, the quality documentation is a record of progress and supports <keyword>continuity of development</keyword>. For smaller systems, quality management needs less documentation and should focus on establishing a <keyword>quality culture</keyword>. </p>
 
-<h4> Quality Management (QM) Activities </h4>
+<h3 id="quality1"> 14.1 &ndash; Quality Management (QM) Activities </h3>
 <ul>
     <li><keyword>Quality Assurance</keyword><ul>
         <li> <strong>Establish</strong> organisational procedures and standards for quality. </li>
@@ -1555,7 +1583,7 @@ Table of contents
 </ul>
 <img src="images/softeng/quality1.JPG"/>
 
-<h4> Standards </h4>
+<h3 id="quality2"> 14.2 &ndash; Standards </h3>
 <p> Define process standards such as how reviews should be conducted, configuration, management, etc. </p>
 <p> Standards are the key to effective quality management. </p>
 <ul>
@@ -1626,7 +1654,7 @@ Table of contents
     </ul></li>
 </ul>
 
-<h4> Quality Plans </h4>
+<h3 id="quality3"> 14.3 &ndash; Quality Plans </h3>
 <p> Defines the quality assessment process. </p>
 <p> The quality plan structure includes: </p>
 <ul>
@@ -1657,7 +1685,7 @@ Table of contents
     <li> Automated software <keyword>assessment</keyword> and <keyword>measurement</keyword> </li>
 </ul>
 
-<h4> Software Measurement and Metrics </h4>
+<h3 id="quality4"> 14.4 &ndash; Software Measurement and Metrics </h3>
 <p> <keyword>Software Measurement</keyword> is concerned with deriving a numeric value for an attribute of a software product or process. This allows objective comparisons between techniques and processes. E.g. lines of code, fog index. </p>
 
 <p> <keyword>Software Metric</keyword> is any type of measurement which relates to a software system, process or documentation. </p>
@@ -1756,7 +1784,7 @@ Table of contents
 <h4> Derivation History </h4>
 <p> This is a <keyword>record of changes</keyword> applied to a document or code component. </p>
 
-<h3 id="config3"> Version Management </h3>
+<h3 id="config3"> 15.3 &ndash; Version Management </h3>
 <ul>
     <li> An <keyword>identification scheme</keyword> for system versions is required. </li>
     <li> Plan when a <keyword>new system version</keyword> is to be produced. </li>
@@ -1807,7 +1835,7 @@ Table of contents
     </ul></li>
 </ul>
 
-<h4> Release Management </h4>
+<h3 id="config4"> 15.4 &ndash; Release Management </h3>
 <p> Releases <keyword>must incorporate changes</keyword> forced on the system by errors discovered and hardware changes. Also must incorporate <keyword>new system functionality</keyword>. </p>
 
 <p> <keyword>System release</keyword> is not just a set of executable programs, and may include any other relevant things about the system. E.g. installation program or script. </p>
@@ -1826,7 +1854,7 @@ Table of contents
 <img src="images/softeng/config3.JPG"/>
 <p> The <keyword>release criterion</keyword> involves collecting all files and documentation required to create a system release. </p>
 
-<h3 id="config4"> System Building </h3>
+<h3 id="config5"> 15.5 &ndash; System Building </h3>
 <p> The process of <strong>compiling and linking</strong> software components into an <keyword>executable system</keyword>. Different systems are built from different combinations of components. </p>
 
 <p> Factors to be considered <keyword>when building a system</keyword>: </p>
@@ -1881,7 +1909,7 @@ Table of contents
     <li> People have different interaction preferences </li>
 </ul>
 
-<h4> Design Principles </h4>
+<h3 id="interface1"> 16.1 &ndash; Design Principles </h3>
 <ul>
     <li><keyword>User Familiarity</keyword><ul>
         <li> Interface should be based on user-oriented terms and concepts rather than computer concepts. </li>
@@ -1951,7 +1979,7 @@ Table of contents
     </tr>
 </table>
 
-<h4> UI Design Process </h4>
+<h3 id="interface2"> 16.2 &ndash; UI Design Process </h3>
 <p> Designing is an <keyword>iterative process</keyword> involving close liaisons between <strong>users</strong> and <strong>designers</strong>. </p>
 <p> There are three core activities in this process: </p>
 <ul>
@@ -2067,9 +2095,22 @@ Table of contents
     </tr>
 </table>
 
-<h4> Architecture Categorisation </h4>
+<h3 id="distribute1"> 17.1 &ndash; Architecture Categorisation </h3>
 <ul>
-    <li><keyword>Client-server</keyword> - Distributed services which are <strong>called on by clients</strong>. Servers that provide services are treated differently from clients that use services. </li>
+    <li><keyword>Client-server</keyword><ul>
+        <li> Distributed services which are <strong>called on by clients</strong>. Servers that provide services are treated differently from clients that use services. </li>
+        <li><keyword>Thin-Client Model</keyword><ul>
+            <li> All the application processing and data management is <strong>carried out on the server</strong>. The client is simply responsible for running the presentation software. </li>
+            <li>  Used when <strong>legacy</strong> (old) systems are migrated to client-server architectures. The legacy system acts as a server on its own. </li>
+            <li> A major disadvantage is that it places a <strong>heavy processing load</strong> on both the <strong>server</strong> and the <strong>network</strong>. </li>
+        </ul></li>
+        <li><keyword>Fat-Client Model</keyword><ul>
+            <li> More processing is delegated to the <strong>client</strong> as the application processing is <strong>locally executed</strong>. Most suitable for new client-server systems where the capabilities of the client system are known in advance. </li>
+            <li> It is more complex and hence <strong>harder to manage</strong> than thin-client models. </li>
+            <li> It will have security issues and are more <strong>vulnerable to attacks</strong>. </li>
+        </ul></li>
+    </ul></li>
+
     <li><keyword>Distributed object</keyword><ul>
         <li> <strong>No distinction</strong> between clients and servers. </li>
         <li> Any objects on the system may provide and use services from other objects. Communication is through a <strong>middleware system</strong>, called an object request broker. </li>
@@ -2095,19 +2136,8 @@ Table of contents
 <p> Distribution of process to processors may be pre-ordered or may be under the control of a dispatcher. </p>
 <p> E.g. Multiprocessor Traffic Control System. </p>
 
-<h4> Thin-Client Model </h4>
-<p> All the application processing and data management is <keyword>carried out on the server</keyword>. The client is simply responsible for running the presentation software</p>
-<p> Used when legacy (old) systems are migrated to client-server architectures. The legacy system acts as a server on its own. </p>
-<p> A major disadvantage is that it places a heavy processing load on both the server and the network. </p>
-
-<h4> Fat-Client Model </h4>
-<p> More processing is delegated to the <keyword>client</keyword> as the application processing is <keyword>locally executed</keyword>. Most suitable for new client-server systems where the capabilities of the client system are known in advance. </p>
-<p> It is more complex and hence harder to manage than thin-client models. </p>
-<p> It will have security issues and are more <keyword>vulnerable to attacks</keyword>. </p>
-
 <h4> Inter-organisational Computing </h4>
 <p> For security and inter-operability reasons, most distributed computing has been implemented at enterprise level. Local standards, management and operational processes apply. </p>
-
 
 <h4> Peer-to-Peer (p2p) Architectures </h4>
 <p> Are <keyword>decentralised systems</keyword> where computations may be carried out by <keyword>any node</keyword> in the network. </p>
@@ -2126,7 +2156,7 @@ Table of contents
     <li> <keyword>UDDI</keyword> - Universal Description, Discovery and Integration </li>
 </ul>
 
-<h4> Implementation Diagrams </h4>
+<h3 id="distribute2"> 17.2 &ndash; Implementation Diagrams </h3>
 <ul>
     <li> UML <keyword>Component Diagrams</keyword> <ul>
         <li> Used to document dependencies between components, typically files, either compilation dependencies or run-time dependencies. </li>
