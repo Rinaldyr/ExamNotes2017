@@ -67,7 +67,7 @@
             if (username !== "") {
                 document.getElementById("name").addEventListener("load", change(username,false));
             } else {
-                username = prompt("Hai thar, how may I address you? (e.g. Rinaldy)", "");
+                username = prompt("O hai thar, how may I address you? (e.g. Rinaldy)", "");
                 if (username !== "" && username !== null) {
                     setCookie("username", username, 365);
                 }
@@ -77,7 +77,7 @@
 
         function change(name, firstTime) {
             if (name!==null) {
-                var username = (name.toLowerCase().indexOf("rinaldy") !== -1 ? "rr" : name.toLowerCase().indexOf("sivarjuen") !== -1 ? "sr" : name.toLowerCase().indexOf("karanvir") !== -1 ? "kk" : name.toLowerCase().indexOf("rhys") !== -1 ? "rb" : name.toLowerCase().indexOf("ahmed") !== -1 ? "ab" : name.toLowerCase().indexOf("harvey") !== -1 ? "hh" : "wtf");
+                var username = (name.toLowerCase().indexOf("rinaldy") !== -1 ? "rr" : name.toLowerCase().indexOf("siv") !== -1 ? "sr" : name.toLowerCase().indexOf("karanvir") !== -1 ? "kk" : name.toLowerCase().indexOf("rhys") !== -1 ? "rb" : name.toLowerCase().indexOf("ahmed") !== -1 ? "ab" : name.toLowerCase().indexOf("harvey") !== -1 ? "hh" : "wtf");
 
                 var message = "";
                 if (firstTime) {
@@ -116,8 +116,8 @@
         </tr>
         <tr> <!-- Software Engineering 1 -->
             <td> Tuesday </td>
-            <td> 02/05/2017 </td>
-            <td align="center"> 09:30 </td>
+            <td class="date"> 02/05/2017 </td>
+            <td class="time" align="center"> 09:30 </td>
             <td> <a href="softeng.html"> LI Software Engineering 1 </a> </td>
             <td> Muirhead 121 </td>
             <td class="rr" style="display: none" align="center"> 37 </td>
@@ -131,8 +131,8 @@
         </tr>
         <tr> <!-- Computational Vision -->
             <td> Thursday </td>
-            <td> 04/05/2017 </td>
-            <td align="center"> 09:30 </td>
+            <td class="date"> 04/05/2017 </td>
+            <td class="time" align="center"> 09:30 </td>
             <td> <a href="vision.html">LI Computational Vision </a></td>
             <td> Chemical Engineering 112 </td>
             <td class="rr" style="display: none" align="center"> - </td>
@@ -146,8 +146,8 @@
         </tr>
         <tr> <!-- Models of Computation -->
             <td> Friday </td>
-            <td> 05/05/2017 </td>
-            <td align="center"> 09:30 </td>
+            <td class="date"> 05/05/2017 </td>
+            <td class="time" align="center"> 09:30 </td>
             <td> <a href="models.html"> LI Models of Computation </a> </td>
             <td> New Gym </td>
             <td class="rr" style="display: none" align="center"> 137 </td>
@@ -161,8 +161,8 @@
         </tr>
         <tr> <!-- Introductory Databases -->
             <td> Thursday </td>
-            <td> 11/05/2017 </td>
-            <td align="center"> 09:30 </td>
+            <td class="date"> 11/05/2017 </td>
+            <td class="time" align="center"> 09:30 </td>
             <td> <a href="databases.html"> LI Introductory Databases </a> </td>
             <td> Avon Room </td>
             <td class="rr" style="display: none" align="center"> 210 </td>
@@ -176,8 +176,8 @@
         </tr>
         <tr> <!-- Professional Computing -->
             <td> Friday </td>
-            <td> 12/05/2017 </td>
-            <td align="center"> 09:30 </td>
+            <td class="date"> 12/05/2017 </td>
+            <td class="time" align="center"> 09:30 </td>
             <td> 
             	<a href="professionalcomputing.html"> LI Professional Computing </a>
             	<br>
@@ -195,8 +195,8 @@
         </tr>
         <tr> <!-- Computer Systems and Architecture -->
             <td> Monday </td>
-            <td> 15/05/2017 </td>
-            <td align="center"> 09:30 </td>
+            <td class="date"> 15/05/2017 </td>
+            <td class="time" align="center"> 09:30 </td>
             <td> <a href="CSA-CourseNotes.pdf"> LI Computer Systems and Architecture </a> </td>
             <td> Sports Hall </td>
             <td class="rr" style="display: none" align="center"> 332 </td>
@@ -210,8 +210,8 @@
         </tr>
         <tr> <!-- C/C++ -->
             <td> Thursday </td>
-            <td> 18/05/2017 </td>
-            <td align="center"> 14:00 </td>
+            <td class="date"> 18/05/2017 </td>
+            <td class="time" align="center"> 14:00 </td>
             <td> <a href="cplusplus.html"> LI C/C++ </a> </td>
             <td> Arts Lecture Room 2 </td>
             <td class="rr" style="display: none" align="center"> 39 </td>
@@ -225,8 +225,8 @@
         </tr>
         <tr> <!-- Graphics -->
             <td> Tuesday </td>
-            <td> 23/05/2017 </td>
-            <td align="center"> 09:30 </td>
+            <td class="date"> 23/05/2017 </td>
+            <td class="time" align="center"> 09:30 </td>
             <td> <a href="graphics.html">LI Graphics </a> </td>
             <td> Muirhead 121 </td>
             <td class="rr" style="display: none" align="center"> 42 </td>
@@ -240,8 +240,8 @@
         </tr>
         <tr> <!-- Maths -->
             <td> Wednesday </td>
-            <td> 24/05/2017 </td>
-            <td align="center"> 09:30 </td>
+            <td class="date"> 24/05/2017 </td>
+            <td class="time" align="center"> 09:30 </td>
             <td> <a href="Maths-CourseNotes.pdf"> LI Math Techniques for Comp Sc (PDF) </a> </td>
             <td> New Gym </td>
             <td class="rr" style="display: none" align="center"> 197 </td>
@@ -255,8 +255,8 @@
         </tr>
         <tr> <!-- Intro to Computer Security -->
             <td> Friday </td>
-            <td> 26/05/2017 </td>
-            <td align="center"> 14:00 </td>
+            <td class="date"> 26/05/2017 </td>
+            <td class="time" align="center"> 14:00 </td>
             <td> <a href="CompSec-CourseNotes.pdf"> LI Intro to Computer Security </a> </td>
             <td> Avon Room </td>
             <td class="rr" style="display: none" align="center"> 209 </td>
@@ -270,8 +270,8 @@
         </tr>
 		<tr> <!-- Natural Language Processing -->
             <td> Wednesday </td>
-            <td> 31/05/2017 </td>
-            <td align="center"> 09:30 </td>
+            <td class="date"> 31/05/2017 </td>
+            <td class="time" align="center"> 09:30 </td>
             <td> <a href="nlp.html"> LI Natural Language Processing </a> </td>
             <td> New Gym </td>
             <td class="rr" style="display: none" align="center"> - </td>
@@ -288,6 +288,17 @@
     <script>
         // Get todays date and time
         var now = new Date().getTime();
+        /*
+        var examDates = document.getElementsByClassName('date').innerHTML;
+        var examTimes = document.getElementsByClassName('time').innerHTML;
+        for (var i = 0; i < examDates.length; i++) {
+            var examDate = examDates[i].split("/");
+            var day = examDate[0];
+            var month = examDate[1];
+            var year = examDate[2];
+            var time = examTimes[i]
+        }
+        */
 
         // First exam
         var softEngDate = new Date("May 2, 2017 09:30:00").getTime();

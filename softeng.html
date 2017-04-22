@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <!--[if lt IE 9]>
     <script> document.createElement("keyword"); </script>
@@ -10,7 +10,7 @@
     <link href="images/icon.png" rel="icon"/>
     <style type="text/css">
         body {
-            background-color: #b8e6e4;
+            background-color: #cbe6e6;
             font-family: "Georgia", serif;
             margin: 20px;
         }
@@ -125,7 +125,13 @@ Table of contents
         <li><a href="#sysdgn1"> Major Activities </a></li>
         <li><a href="#sysdgn2"> Software Architecture </a></li>
     </ul></li>
-
+    <li><a href="#pm"> Software Project Management Overview </a></li>
+    <li><a href="#risks"> Project Risk Management </a></li>
+    <li><a href="#quality"> Software Quality Management </a></li>
+    <li><a href="#config"> Software Configuration Management </a></li>
+    <li><a href="#interface"> User Interface Design </a></li>
+    <li><a href="#distribute"> Distributed Systems Architecture </a></li>
+    <li><a href="#semanticweb"> Semantic Web Introduction </a></li>
 </ol>
 <hr/> <!----------------------------------------------------------------------------------->
 
@@ -1235,6 +1241,930 @@ Table of contents
 </ul>
 
 <hr/> <!----------------------------------------------------------------------------------->
+
+<h2 id="pm"> 12 &ndash; Software Project Management Overview </h2>
+
+<h4> <keyword>Project Attributes</keyword> </h4>
+<ul>
+    <li> Has a unique purpose </li>
+    <li> Temporary </li>
+    <li> Developed using progressive elaboration </li>
+    <li> Requires resources </li>
+    <li> Involves uncertainty </li>
+</ul>
+
+<h4> <keyword>Triple Constraint</keyword> </h4>
+<ul>
+    <li> Scope Goal </li>
+    <li> Time Goal </li>
+    <li> Cost Goal </li>
+</ul>
+
+<h4> Project Management <keyword>Knowledge Areas</keyword></h4>
+<p> Describe the <keyword>key competencies</keyword> that project managers must develop. </p>
+<ul>
+    <li> <keyword>Core</keyword> knowledge areas leading to Project Objectives <ul>
+        <li> Scope </li>
+        <li> Time </li>
+        <li> Cost </li>
+        <li> Quality </li>
+    </ul></li>
+
+    <li> <keyword>Facilitating</keyword> knowledge areas, the means through which the project objectives are achieved <ul>
+        <li> Human Resources </li>
+        <li> Communication </li>
+        <li> Risk </li>
+        <li> Procurement Management </li>
+    </ul></li>
+
+    <li> <keyword>Affects and is affected</keyword> by all the other knowledge areas <ul>
+        <li> Project Integration Management </li>
+    </ul></li>
+</ul>
+
+<h4> Project Success </h4>
+<p> There are several ways to define project success </p>
+<ul>
+    <li> Meets the <keyword>scope, time and cost goals</keyword>. </li>
+    <li> The project <keyword>satisfies the customer</keyword>. </li>
+    <li> The results of the project met its <keyword>main objective</keyword>. </li>
+</ul>
+
+<h3 id="pm1"> Software Project Management </h3>
+<p> Concerned with activities involving in ensuring that software is <keyword>delivered on time</keyword> in accordance with the requirements of the organisations developing the software. It is needed because software development is always subject to <keyword>budget and schedule constraints</keyword>. </p>
+
+<h4> Management Activities </h4>
+<ul>
+    <li> Proposal writing </li>
+    <li> Project planning and scheduling </li>
+    <li> Project costing </li>
+    <li> Project monitoring and reviews </li>
+    <li> Personnel selection and evaluation </li>
+    <li> Report writing and presentations </li>
+</ul>
+
+<p> Sometimes it may not be possible to appoint the ideal people to work on a project. It is because the staff could either be <strong>too expensive</strong>, <strong>lack of required skills</strong>, or the organisation just wants to <strong>develop other employees</strong>. </p>
+
+<h4> Project Planning </h4>
+<p> It is a <keyword>continuous activity</keyword> from <strong>initial concept</strong> to <strong>system delivery</strong>. Plans must be regularly revised as new information becomes available. </p>
+
+<h4> Types of Project Plan </h4>
+<table>
+    <tr>
+        <th> Plan </th>
+        <th> Description </th>
+    </tr>
+    <tr>
+        <td><keyword>Quality Plan</keyword></td>
+        <td> Describes quality procedures and standards that will be used in a project. </td>
+    </tr>
+    <tr>
+        <td><keyword>Validation Plan</keyword></td>
+        <td> Describes the approach, resources and schedule used for system validation. </td>
+    </tr>
+    <tr>
+        <td><keyword>Configuration Management Plan</keyword></td>
+        <td> Describes the configuration management procedures and structures to be used. </td>
+    </tr>
+    <tr>
+        <td><keyword>Maintenance Plan</keyword></td>
+        <td> Predicts the maintenance requirements of the system, maintenance costs and effort required. </td>
+    </tr>
+    <tr>
+        <td><keyword>Staff Development Plan</keyword></td>
+        <td> Describes how the skills and experience of the project team members will be developed. <br/> <img src="images/softeng/pm6.JPG"/> </td>
+    </tr>
+</table>
+
+<h4> Project Planning Process </h4>
+<img src="images/softeng/pm1.JPG"/>
+
+<p> The project plan sets out the resources available to the project, the work breakdown, and a schedule for the work. </p>
+
+<h4> Activity Organisation </h4>
+<p> Activities should be organised to produce tangible outputs management to judge progress. </p>
+<ul>
+    <li><keyword>Milestones</keyword><ul>
+        <li> End-point of a process activity. </li>
+    </ul></li>
+
+    <li><keyword>Deliverables</keyword><ul>
+        <li> Project results delivered to customers. </li>
+    </ul></li>
+</ul>
+<p> The waterfall shows the most obvious definition of progress milestones. </p>
+<img src="images/softeng/pm2.JPG"/>
+
+<h4> Project Scheduling </h4>
+<ul>
+    <li> <keyword>Splitting project</keyword> to tasks and estimate time and resources to complete each task. </li>
+    <li> <keyword>Organise tasks concurrently</keyword>. </li>
+    <li> <keyword>Minimise task dependencies</keyword> to avoid delays. </li>
+    <li> Dependent on project managers intuition and experience. </li>
+</ul>
+<img src="images/softeng/pm3.JPG"/>
+
+<h4> Scheduling Problems </h4>
+<ul>
+    <li> It is <keyword>difficult</keyword> to estimate. </li>
+    <li> Productivity is <keyword>not proportional</keyword> to the number of people working on a task. </li>
+    <li> <keyword>Brook's law</keyword> - Adding people to a late project makes it later because of <keyword>communication overheads</keyword>. </li>
+    <li> The unexpected things always happens. </li>
+</ul>
+
+<h3 id="pm3"> Gantt Charts and Activity Networks </h3>
+<p> These are graphical notations used to illustrate the project schedule which shows the project breakdown into tasks. </p>
+
+<ul>
+    <li> Gantt (bar) charts show <keyword>schedule against calendar time</keyword>. <br/> <img src="images/softeng/pm4.JPG"/> <br/> Milestones can be added to this chart by entering task with zero duration. </li>
+    <li> Activity charts show <keyword>task dependencies</keyword> and the <keyword>critical path</keyword>. <br/> <img src="images/softeng/pm4.JPG"/> </li>
+</ul>
+
+<h4> SMART Criteria </h4>
+<p> Milestones should be: </p>
+<ul>
+    <li> <keyword>S</keyword>pecific </li>
+    <li> <keyword>M</keyword>easurable </li>
+    <li> <keyword>A</keyword>ssignable </li>
+    <li> <keyword>R</keyword>ealistic </li>
+    <li> <keyword>T</keyword>ime-framed </li>
+</ul>
+    
+<hr/> <!----------------------------------------------------------------------------------->
+
+<h2 id="risks"> 13 &ndash; Project Risk Management (RM) </h2>
+<p> This is about <keyword>identifying</keyword>, <keyword>analysing</keyword> and <keyword>responding</keyword> to risk throughout the life of a project. </p>
+<p> It is an <keyword>uncertainty</keyword> that can have a <strong>negative</strong> or <strong>positive</strong> effect on meeting project objectives. </p>
+
+<h4> Negative Risk </h4>
+<p> Dictionary definition: <em>Possibility of loss or injury.</em></p>
+
+<p> It involves understanding the <keyword>potential problem</keyword> that might occur in a project and how they might <keyword>impede success</keyword>.</p>
+
+<h4> Positive Risk </h4>
+<p> In other words, <keyword>opportunities</keyword> that results in good things happening. </p>
+
+<h4> Risk Utility </h4>
+<p> Or risk tolerance, is the amount of <keyword>satisfaction</keyword> received from a potential payoff. </p>
+
+<h3 id="risks1"> 13.1 &ndash; RM Process </h3>
+<ol>
+    <li><keyword>RM Planning</keyword><ul>
+        <li> Deciding how to approach and plan the risk management activities. </li>
+        <li> Outputs a <keyword>Risk management plan</keyword> - documents the procedures for managing risk. Topics may include: <ul>
+            <li> Methodology </li>
+            <li> Roles and responsibilities </li>
+            <li> Budget and schedule </li>
+            <li> Risk categories </li>
+            <li> Risk probability and impact </li>
+            <li> Risk documentation </li>
+        </ul></li>
+    </ul></li>
+
+    <li><keyword>Risk Identification</keyword><ul>
+        <li> Determining and documenting possible positive or negative risks. Tools and techniques: <br/>
+            <table>
+                <tr>
+                    <th>Technique</th>
+                    <th>Description</th>
+                    <th>Pros</th>
+                    <th>Cons</th>
+                </tr>
+                <tr>
+                    <td><keyword>Brainstorming</keyword></td>
+                    <td> A group attempts to generate ideas by <strong>amassing ideas spontaneously</strong>. </td>
+                    <td> Easier, faster and cheaper to conduct. </td>
+                    <td> Not anonymous, can be biased, group effect may inhibit idea generation. </td>
+                </tr>
+                <tr>
+                    <td><keyword>Delphi Technique</keyword></td>
+                    <td> Used to derive a <strong>consensus</strong> among a those who predicts about future developments by using repeated rounds of <strong>questioning</strong> and <strong>written responses</strong>. </td>
+                    <td> Keep inputs anonymous, avoids bias and political problems. </td>
+                    <td> May be slow and more expensive as this requires a moderator. </td>
+                </tr>
+                <tr>
+                    <td><keyword>Interviewing</keyword></td>
+                    <td> To <strong>collect information</strong> in face-to-face, phone, or other communication services. </td>
+                    <td> Quick to receive information by phone or in person. Effective when interviewing person who has experience related to the project. </td>
+                    <td> People may refuse to participate, prone to bias. </td>
+                </tr>
+                <tr>
+                    <td><keyword>SWOT Analysis</keyword></td>
+                    <td> <strong>Strengths</strong>, <strong>Weaknesses</strong>, <strong>Opportunities</strong> and <strong>Threats</strong> analysis. Helps identify the broad negative and positive risks. </td>
+                    <td> It is simple and anybody can do it quickly. </td>
+                    <td> No weighting factors, prone to ambiguity, prone to bias. </td>
+                </tr>
+            </table>
+        </li>
+        <li> Outputs a <strong>Risk Register</strong> which is a document that contains a list of identified risk and other information. For each risk events, it has: <ul>
+            <li> ID no. and name </li>
+            <li> Rank and priority </li>
+            <li> Description </li>
+            <li> Category </li>
+            <li> Root cause </li>
+            <li> Triggers </li>
+            <li> Potential responses </li>
+            <li> Person who will be responsible to handle risk </li>
+            <li> Probability and impact </li>
+            <li> Status </li>
+        </ul></li>
+    </ul></li>
+
+    <li><keyword>Qualitative Risk Analysis</keyword><ul>
+        <li> Prioritising risks based on its probability and impact. </li>
+        <li> Techniques: <ul>
+            <li> Probability/Impact matrices <ul>
+                <li><img src="images/softeng/risks1.JPG"/></li>
+            </ul></li>
+            <li> The Top Ten Risk Item Tracking <ul>
+                <li><img src="images/softeng/risks2.JPG"/></li>
+            </ul></li>
+            <li> Expert Judgement </li>
+        </ul></li>
+    </ul></li>
+
+    <li><keyword>Quantitative Risk Analysis</keyword><ul>
+        <li> Numerically estimating the effects of risks. </li>
+        <li> Techniques: <ul>
+            <li> Decision Tree Analysis <ul>
+                <li> A <strong>decision tree</strong> is a diagram analysis technique to help select the best course of action in situations where outcomes are uncertain. </li>
+                <li> <strong>Estimated Monetary Value (EMV)</strong> is the product of a risk event probability and the risk event's monetary value. </li>
+                <li><img src="images/softeng/risks3.JPG"/></li>
+            </ul></li>
+            <li> Simulation </li>
+            <li> Sensitivity Analysis </li>
+        </ul></li>
+    </ul></li>
+
+    <li><keyword>Risk Response Planning</keyword><ul>
+        <li> How to respond to risks. Work on enhancing opportunities and reduce threats. </li>
+        <li> Strategies for Negative Risks <ul>
+            <li> Risk avoidance </li>
+            <li> Risk acceptance </li>
+            <li> Risk transference </li>
+            <li> Risk mitigation </li>
+        </ul></li>
+        <li> Strategies for Positive Risks <ul>
+            <li> Risk exploitation: Make sure positive risk happens </li>
+            <li> Risk sharing: Allocate ownership of risk to others </li>
+            <li> Risk enhancement: Maximise key drivers of positive risk </li>
+            <li> Risk acceptance </li>
+        </ul></li>
+    </ul></li>
+
+    <li><keyword>Risk Monitoring and Control</keyword><ul>
+        <li> Monitoring risks </li>
+        <li> Identifying new risks </li>
+        <li> Carry out risk response plans </li>
+        <li> Evaluate risk strategy </li>
+    </ul></li>
+</ol>
+
+<p> A <strong>Risk Breakdown Structure</strong> is a hierarchy of potential risk categories. </p>
+
+<hr/> <!----------------------------------------------------------------------------------->
+
+<h2 id="quality"> 14 &ndash; Software Quality Management </h2>
+<p> Concerned with ensuring that the <keyword>required level of quality is achieved</keyword> in a software product. It involves defining appropriate <strong>quality standards</strong> and <strong>procedures</strong> to follow. </p>
+
+<p> <keyword>Quality</keyword> means that a product should <strong>meet its specification</strong>. </p>
+<p> For large systems, the quality documentation is a record of progress and supports <keyword>continuity of development</keyword>. For smaller systems, quality management needs less documentation and should focus on establishing a <keyword>quality culture</keyword>. </p>
+
+<h4> Quality Management (QM) Activities </h4>
+<ul>
+    <li><keyword>Quality Assurance</keyword><ul>
+        <li> <strong>Establish</strong> organisational procedures and standards for quality. </li>
+    </ul></li>
+    
+    <li><keyword>Quality Planning</keyword><ul>
+        <li> <strong>Select</strong> applicable procedures and standards, then <strong>modify</strong> as required. </li>
+    </ul></li>
+    
+    <li><keyword>Quality Control</keyword><ul>
+        <li> Ensure that procedures and standards are <strong>followed</strong>. </li>
+    </ul></li>
+</ul>
+<p> The quality management should be <strong>separate</strong> from project management to ensure <strong>independence</strong>. </p>
+
+<h4> Process based quality </h4>
+<ul>
+    <li> The quality of a developed product is influenced by the quality of the production process. </li>
+    <li> There is a link between process and product. </li>
+    <li> For software development, the application of individual skills and experience makes a significant difference. </li>
+    <li> External factors like the need to rush development may impair product quality. </li>
+</ul>
+<img src="images/softeng/quality1.JPG"/>
+
+<h4> Standards </h4>
+<p> Define process standards such as how reviews should be conducted, configuration, management, etc. </p>
+<p> Standards are the key to effective quality management. </p>
+<ul>
+    <li><keyword>Product standards</keyword> &ndash; characteristics that all components should exhibit. e.g. a programming style. </li>
+    <li><keyword>Process standards</keyword> &ndash; how the software process should be enacted. </li>
+</ul>
+
+<h4> The Importance of Standards </h4>
+<ul>
+    <li> <strong>Avoids repetition</strong> of past mistakes. </li>
+    <li> Acts as a <strong>framework</strong> for quality assurance process. </li>
+    <li> Provides <strong>continuity</strong> for new staff. </li>
+</ul>
+
+<h4> Product and Process Standards example </h4>
+<table>
+    <tr>
+        <td><keyword>Product Standards</keyword></td>
+        <td><keyword>Process Standards</keyword></td>
+    </tr>
+    <tr>
+        <td> Design review form </td>
+        <td> Design review conduct </td>
+    </tr>
+    <tr>
+        <td> Requirements document structure </td>
+        <td> Submission of documents </td>
+    </tr>
+    <tr>
+        <td> Method header format </td>
+        <td> Version release process </td>
+    </tr>
+    <tr>
+        <td> Java programming style </td>
+        <td> Project plan approval process </td>
+    </tr>
+    <tr>
+        <td> Project plan format </td>
+        <td> Change control process </td>
+    </tr>
+    <tr>
+        <td> Change request form </td>
+        <td> Test recording process </td>
+    </tr>
+</table>
+
+<h4> Problems with Standards </h4>
+<p> These days, it may not seem that relevant and updated by software engineers. It involves too much tedious form filling. Even worse if there are no supporting tools to help this form creating or filling. </p>
+
+<h4> Documentation Standards </h4>
+<p> There are three types of standards: </p>
+<ul>
+    <li> Documentation <keyword>process standards</keyword><ul>
+        <li> How documents should be developed, validated and maintained. </li>
+        <li> <img src="images/softeng/quality2.JPG"/> </li>
+    </ul></li>
+    <li> Documentation <keyword>standards</keyword><ul>
+        <li> Document <strong>Identification standards</strong>: The unique identification. </li>
+        <li> Document <strong>structure standards</strong>: Standard structure for project documents. </li>
+        <li> Document <strong>presentation standards</strong>: Fonts, styles, logos, etc. </li>
+        <li> Document <strong>update standards</strong>: How changes from previous versions are reflected. </li>
+    </ul></li>
+    <li> Documentation <keyword>interchange standards</keyword><ul>
+        <li> Compatibility of electronic documents. </li>
+        <li> This allows electronic documents to be exchanged, mailed, etc. </li>
+        <li> Need to define conventions for use. </li>
+        <li> Need for archiving for future access. </li>
+    </ul></li>
+</ul>
+
+<h4> Quality Plans </h4>
+<p> Defines the quality assessment process. </p>
+<p> The quality plan structure includes: </p>
+<ul>
+    <li> Product intro </li>
+    <li> Product plans </li>
+    <li> Process descriptions </li>
+    <li> Quality goals </li>
+    <li> Risks and risk management </li>
+</ul>
+<p> Should be short and succinct or else nobody will read them. </p>
+
+<h4> Quality Control </h4>
+<p> Involves checking the software development process to ensure they are being followed. </p>
+<ul>
+    <li> <keyword>Quality reviews</keyword><ul>
+        <li> Principle method of <strong>validating product</strong> or <strong>process quality</strong>. </li>
+        <li> Types of reviews: <ul>
+            <li> Inspections for <keyword>defect removal</keyword> for product </li>
+            <li> Reviews for <keyword>progress assessment</keyword> for product and process </li>
+            <li> <keyword>Quality reviews</keyword> for product and standards <ul>
+                <li> A group of people examines a part of the software system and its documentation. </li>
+            </ul></li>
+            <li> Design inspections </li>
+            <li> Progress reviews </li>
+        </ul></li>
+        <li> Review results </li>
+    </ul></li>
+    <li> Automated software <keyword>assessment</keyword> and <keyword>measurement</keyword> </li>
+</ul>
+
+<h4> Software Measurement and Metrics </h4>
+<p> <keyword>Software Measurement</keyword> is concerned with deriving a numeric value for an attribute of a software product or process. This allows objective comparisons between techniques and processes. E.g. lines of code, fog index. </p>
+
+<p> <keyword>Software Metric</keyword> is any type of measurement which relates to a software system, process or documentation. </p>
+<p> There are two types of software metrics </p>
+<ul>
+    <li><keyword>Process metrics</keyword><ul>
+        <li> Attributes of the <strong>process</strong> such as time taken to complete a task. </li>
+        <li> Used to control software process. </li>
+    </ul></li>
+    <li><keyword>Product metrics</keyword><ul>
+        <li> Attributes of the <strong>software</strong> such as its complexity. </li>
+        <li> USed for general predictions or to identify anomalous components. </li>
+        <li> Consists of classes: <ul>
+            <li><keyword>Dynamic metrics</keyword><ul>
+                <li> Collected measurements in execution. </li>
+                <li> Help assess efficiency and reliability. </li>
+                <li> Closely related to software quality attributes. </li>
+                <li> E.g. it is relatively easy to measure the response time of a system (performance attribute). </li>
+            </ul></li>
+            <li><keyword>Static metrics</keyword><ul>
+                <li> Collected measurements by system representations. </li>
+                <li> Help assess complexity and maintainability. </li>
+                <li> Have an indirect relationship with quality attributes. </li>
+            </ul></li>
+        </ul></li>
+    </ul></li>
+</ul>
+
+<h4> Metric Assumptions </h4>
+<p> This metric assumes that a software property can be <keyword>measured</keyword>. It also assumes that a <keyword>relationship exists</keyword> between what we can measure and what we want to know. This relationship is assumed to have been <keyword>formalised</keyword> and <keyword>validated</keyword>. </p>
+
+<h4> Measurement Process </h4>
+<p> Software measurement process may be part of a quality control process. Data collected during this process should be maintained as an organisational resource. Once a measurement database has been established, comparisons across projects become possible.</p>
+<ul>
+    <li><keyword>Goal</keyword><ul>
+        <li> What the organisation is trying to achieve. </li>
+    </ul></li>
+
+    <li><keyword>Question</keyword><ul>
+        <li> Questions about areas of uncertainty related to the goals. </li>
+    </ul></li>
+
+    <li><keyword>Metric</keyword><ul>
+        <li> Measurements to be collected to answer the questions. </li>
+    </ul></li>
+</ul>
+
+<p> A metrics program should be based ona set of product and process data. Data should be collected immediately with any of these three types of automatic data collection: </p>
+<ul>
+    <li><keyword>Static product analysis</keyword></li>
+    <li><keyword>Dynamic product analysis</keyword></li>
+    <li><keyword>Process data collation</keyword></li>
+</ul>
+
+<hr/> <!----------------------------------------------------------------------------------->
+
+<h2 id="config"> 15 &ndash; Software Configuration Management </h2>
+<p> <keyword>Configuration management</keyword> (CM) is concerned with <strong>managing evolving software systems</strong>. It involves the development and application of procedures and standards to manage an evolving software product. Should always be based on a <strong>set of standards</strong> which are applied within an organisation. </p>
+
+<p> CM maybe seen as part of a more general quality management process. When released to CM, software systems are called <em>baselines</em> as they are a starting point for further development. </p>
+
+<h3 id="config1"> 15.1 &ndash; Configuration Management Planning </h3>
+<p> All products of the software process (specifications, designs, programs, test data, user manuals) may have to be managed along with its documentations. </p>
+<p> <keyword>CM plan</keyword> defines: </p>
+<ul>
+    <li> Types of documents to be <keyword>managed</keyword> and <keyword>named</keyword>. </li>
+    <li> Who takes responsibility for the CM procedures and creation of baselines. </li>
+    <li> Policies for <keyword>change control</keyword> and <keyword>version management</keyword>. </li>
+    <li> The CM records which must be maintained. </li>
+    <li> The tools to be used. </li>
+    <li> The process of tool use. </li>
+    <li> The CM <keyword>database</keyword> used to record configuration information. </li>
+    <li> Other relevant information. </li>
+</ul>
+
+<h4> Configuration Item Identification </h4>
+<p> Large project typically produce large numbers of documents which must be uniquely identified. Document naming scheme should be defined so related documents have related names. </p>
+
+<p> Hence a hierarchical scheme with multi-level names is the most flexible solution. <br> E.g. <code>PCL-TOOLS/EDIT/FORMS/DISPLAY/AST-INTERFACE/CODE</code></p>
+
+<h3 id="config2"> 15.2 &ndash; Change Management </h3>
+<p> Software systems are subject to continual <keyword>change requests</keyword> from <strong>users</strong>, <strong>developers</strong> and <strong>market forces</strong>. </p>
+<p> Change management is concerned with keeping track of these changes and ensuring that they are implemented in the most cost-effective way. </p>
+
+<h4> Change Management Process </h4>
+<img src="images/softeng/config1.JPG"/>
+
+<h4> Change Request Form </h4>
+<p> This is also part of the CM planning process. It records the <strong>change proposed</strong>, <strong>requestor</strong> of change, the <strong>change reason</strong>, and the <strong>urgency</strong> of change. Also has other things. </p>
+<img src="images/softeng/config2.JPG"/>
+<p> Since managing and <keyword>tracking change</keyword> is a big problem, <strong>tools</strong> that can help resolve this is often used. </p>
+
+<h4> Change Control Board </h4>
+<p> Changes should be review by an <keyword>external group</keyword> who decide whether or not they are <strong>cost-effective</strong> from a strategic viewpoint. This group should be independent of project and responsible for the system. </p>
+
+<h4> Derivation History </h4>
+<p> This is a <keyword>record of changes</keyword> applied to a document or code component. </p>
+
+<h3 id="config3"> Version Management </h3>
+<ul>
+    <li> An <keyword>identification scheme</keyword> for system versions is required. </li>
+    <li> Plan when a <keyword>new system version</keyword> is to be produced. </li>
+    <li> Ensure that version management procedures and tools are properly applied. </li>
+    <li> Plan and distribute <keyword>system release</keyword>. </li>
+</ul>
+
+<ul>
+    <li><keyword>Version</keyword><ul>
+        <li> An instance of a system which is <strong>functionally distinct</strong> in some way from other system instances. </li>
+    </ul></li>
+
+    <li><keyword>Variant</keyword><ul>
+        <li> An instance of a system which is functionally identical but <strong>non-functionally distinct</strong> from other instances of a system. </li>
+    </ul></li>
+
+    <li><keyword>Release</keyword><ul>
+        <li> An instance of a system which is <strong>distributed to users</strong> outside the development team. </li>
+    </ul></li>
+</ul>
+
+<h4> Component Identification Techniques: </h4>
+<ul>
+    <li><keyword>Version Numbering</keyword><ul>
+        <li> Simple naming scheme uses a <strong>linear derivation</strong>. E.g. V1, V1.1, V1.2, V2.1, ... </li>
+        <li> Limitations: <ul>
+            <li> Actual derivation becomes a tree rather than a sequence. </li>
+            <li> Names are not meaningful. </li>
+        </ul></li>
+    </ul></li>
+
+    <li><keyword>Attribute-based Identification</keyword><ul>
+        <li> <strong>Attributes</strong> can be <strong>associated</strong> with a version with the combination of attributes identifying that version. E.g. Date, Creator, Programming Language, etc. </li>
+        <li> Advantages: <ul>
+            <li> This is <keyword>more flexible</keyword> than an explicit naming scheme. </li>
+            <li> Can <keyword>support queries</keyword>, so its easy to search and sort versions. </li>
+        </ul></li>
+        <li> Limitation: <ul>
+            <li> May have problems with <keyword>uniqueness</keyword>. </li>
+        </ul></li>
+    </ul></li>
+
+    <li><keyword>Change-oriented Identification</keyword><ul>
+        <li> <keyword>Integrates</keyword> versions and the changes made to create these versions. </li>
+        <li> This is <keyword>used for systems</keyword> rather than components. </li>
+        <li> Each proposed change has a <keyword>change set</keyword> that describes changes made to implement that change. </li>
+        <li> Change sets are <keyword>applied in sequence</keyword>. </li>
+    </ul></li>
+</ul>
+
+<h4> Release Management </h4>
+<p> Releases <keyword>must incorporate changes</keyword> forced on the system by errors discovered and hardware changes. Also must incorporate <keyword>new system functionality</keyword>. </p>
+
+<p> <keyword>System release</keyword> is not just a set of executable programs, and may include any other relevant things about the system. E.g. installation program or script. </p>
+
+<p> Customers, however, may not want new releases of the system because they are already happy with their current system. </p>
+
+<p> When <keyword>making decision</keyword> to release a system, there are some factors to consider: </p>
+<ul>
+    <li> Preparing and distributing a system release is <strong>expensive</strong> </li>
+    <li> Competition, marketing requirements </li>
+    <li> Technical quality of the system </li>
+    <li> Customer change request </li>
+</ul>
+
+<h4> System Release Strategy </h4>
+<img src="images/softeng/config3.JPG"/>
+<p> The <keyword>release criterion</keyword> involves collecting all files and documentation required to create a system release. </p>
+
+<h3 id="config4"> System Building </h3>
+<p> The process of <strong>compiling and linking</strong> software components into an <keyword>executable system</keyword>. Different systems are built from different combinations of components. </p>
+
+<p> Factors to be considered <keyword>when building a system</keyword>: </p>
+<ul>
+    <li> Do the build instructions include all required components? </li>
+    <li> Is the appropriate component version specified? </li>
+    <li> Are all data files available? </li>
+</ul>
+
+<p> System building problems to be considered: </p>
+<ul>
+    <li> Are data file references within components correct? </li>
+    <li> Is the system being built for the right platform? </li>
+    <li> Is the right version of the compiler and other software tools specified? </li>
+</ul>
+
+<p> <keyword>CASE Tools</keyword> aid all configuration management activities. </p>
+<ul>
+    <li><keyword>Change Management</keyword> Tools<ul>
+        <li> Form editor </li>
+        <li> Workflow system - to define responsibilities. </li>
+        <li> Change database tool </li>
+        <li> Change reporting system </li>
+    </ul></li>
+
+    <li><keyword>Version Management</keyword> Tools<ul>
+        <li> Version and release identification </li>
+        <li> Storage management - stores differences between versions, <em>delta</em>s. </li>
+        <li> Change history recording </li>
+        <li> Independent development - change only one version at a time. </li>
+        <li> Project support - Can manage groups of files associated with a project. </li>
+    </ul></li>
+
+    <li><keyword>System Building</keyword> Tools may provide: <ul>
+        <li> Dependency specification language and interpreter </li>
+        <li> Tool selection and instantiation support </li>
+        <li> Distributed compilation </li>
+        <li> Derived object management </li>
+    </ul></li>
+</ul>
+
+<hr/> <!----------------------------------------------------------------------------------->
+
+<h2 id="interface"> 16 &ndash; User Interface Design </h2>
+<h4> User Interface </h4>
+<p> Should be designed to <keyword>match</keyword> the skills, experience and expectations of anticipated users. </p>
+<p> Human factors should be considered when designing interfaces. Some include: </p>
+<ul>
+    <li> Limited short-term memory </li>
+    <li> People make mistakes </li>
+    <li> People are different and have different capabilities </li>
+    <li> People have different interaction preferences </li>
+</ul>
+
+<h4> Design Principles </h4>
+<ul>
+    <li><keyword>User Familiarity</keyword><ul>
+        <li> Interface should be based on user-oriented terms and concepts rather than computer concepts. </li>
+    </ul></li>
+
+    <li><keyword>Consistency</keyword><ul>
+        <li> The system should display an appropriate level of consistency in the format of menus, commands, language, etc. </li>
+    </ul></li>
+
+    <li><keyword>Minimal Surprise</keyword><ul>
+        <li> The user should be able to predict the operation of comparable commands. </li>
+    </ul></li>
+
+    <li><keyword>Recoverability</keyword><ul>
+        <li> The system should provide some resilience to user errors and allow them to recover from errors. </li>
+    </ul></li>
+
+    <li><keyword>User Guidance</keyword><ul>
+        <li> Some user guidance like help systems, manuals or tutorials should be supplied. </li>
+    </ul></li>
+
+    <li><keyword>User Diversity</keyword><ul>
+        <li> Interaction facilities for different types of user (including disabled) should be supported. </li>
+    </ul></li>
+</ul>
+
+<p> There are two <keyword>design issues in UI</keyword>s that must be addressed. The designer must know how will information from the user be fed to the computer system, and how should information from the computer system be presented to the user. </p>
+<p> This can be solved using a coherent framework such as a user interface <keyword>metaphor</keyword>, which incldues <strong>dialogue between user and system</strong>, and <strong>direct manipulation</strong>. </p>
+
+<h4> Interaction Styles </h4>
+<table>
+    <tr>
+        <th>Interaction style</th>
+        <th>Pros</th>
+        <th>Cons</th>
+        <th>Application Examples</th>
+    </tr>
+    <tr>
+        <td><keyword>Direct Manipulation</keyword></td>
+        <td>Fast and intuitive interaction which is easy to learn.</td>
+        <td>May be hard to implement.<br>Only suitable in cases that have visual metaphor for tasks and objects.</td>
+        <td>Video games, CAD Systems</td>
+    </tr>
+    <tr>
+        <td><keyword>Menu Selection</keyword></td>
+        <td>Avoids user error.<br>Little typing required.</td>
+        <td>Slow for experienced users.<br>Can be complex if there are many menu options.</td>
+        <td>Most general-purpose systems</td>
+    </tr>
+    <tr>
+        <td><keyword>Form fill-in</keyword></td>
+        <td>Simple data entry.<br>Easy to learn.<br>Checkable.</td>
+        <td>Takes up a lot of screen space.<br>Causes problems where user options do not match the form.</td>
+        <td>Stock control, personal loan processing</td>
+    </tr>
+    <tr>
+        <td><keyword>Command Language</keyword></td>
+        <td>Powerful and flexible</td>
+        <td>Hard to learn.<br>Poor error management.</td>
+        <td>Operating systems, command and control systems</td>
+    </tr>
+    <tr>
+        <td><keyword>Natural Language</keyword></td>
+        <td>Accessible to casual users.<br>Easily extended.</td>
+        <td>Requires more typing.<br>Natural language understanding systems are unreliable.</td>
+        <td>Information retrieval systems</td>
+    </tr>
+</table>
+
+<h4> UI Design Process </h4>
+<p> Designing is an <keyword>iterative process</keyword> involving close liaisons between <strong>users</strong> and <strong>designers</strong>. </p>
+<p> There are three core activities in this process: </p>
+<ul>
+    <li><keyword>User analysis</keyword><ul>
+        <li> Understand what users will do with the system. </li>
+    </ul></li>
+
+    <li><keyword>System prototyping</keyword><ul>
+        <li> Develop a series of prototypes for experiment. </li>
+    </ul></li>
+
+    <li><keyword>Interface evaluation</keyword><ul>
+        <li> Study users working with these prototypes to evaluate and modify them. </li>
+    </ul></li>
+</ul>
+
+<h4> User Analysis </h4>
+<p> <keyword>User analysis</keyword> has to be described in terms that <strong>users</strong> and <strong>other designers can understand</strong>. Scenarios to describe typical episodes of use are one way of describing these analyses. </p>
+<p> Techniques: </p>
+<ul>
+    <li><keyword>Hierarchical Task Analysis</keyword> - <strong>Model</strong> the steps involved in completing a task. </li>
+    <li><keyword>Interviewing and Questionnaires</keyword> - <strong>Ask</strong> the users about the work they do. <ul>
+        <li> Design semi-structured interviews based on open-ended questions. </li>
+        <li> Users provide information that they think is essential. </li>
+        <li> Group interviews or focus groups allow users to discuss with each other what they do. </li>
+    </ul></li>
+    <li><keyword>Ethnography</keyword><ul>
+        <li> <strong>Observe</strong> the user at work. </li>
+        <li> Valuable because many user tasks are intuitive and may be difficult to describe and explain. </li>
+        <li> Helps understand the role of social and organisational influences on work. </li>
+    </ul></li>
+</ul>
+
+<h4> User Interface Prototyping </h4>
+<p> The aim of prototyping is to allow users to <keyword>gain direct experience</keyword> with the interface. Or else it would have been impossible to judge the <keyword>usability</keyword> of an interface. </p>
+<p> Prototyping may be a two-stage process: </p>
+<ul>
+    <li> <keyword>Early in the process</keyword>, paper prototypes <ul>
+        <li> Work through scenarios using sketches of the interface, or base it on hierarchical task analysis. </li>
+        <li> Use a <keyword>storyboard</keyword>. </li>
+        <li> This is an effective way of getting user reactions to a design proposal. </li>
+    </ul></li>
+    <li> The design is then refined and increasingly sophisticated <keyword>automated prototypes</keyword> are then developed. Very useful for ethnographics studies. </li>
+</ul>
+
+<h4> User Interface Evaluation </h4>
+<p> Evaluation of UIs should be carried out to assess its suitability. We want to know if the interface will be <keyword>usable</keyword> or not, or in other words, whether it meets the <keyword>functional requirements</keyword>. </p>
+
+<p> Usability Attributes </p>
+<ul>
+    <li><keyword>Learnability</keyword></li>
+    <li><keyword>Speed of Operation</keyword></li>
+    <li><keyword>Robustness</keyword></li>
+    <li><keyword>Recoverability</keyword></li>
+    <li><keyword>Adaptability</keyword></li>
+</ul>
+
+<p> Simple Evaluation Techniques </p>
+<ul> 
+    <li> <strong>Questionnaires</strong> for user feedback. </li>
+    <li> <strong>Video recording</strong> of system use and subsequent tape evaluation. </li>
+    <li> <strong>Instrumentation of code</strong> to collect information about facility use and user errors. </li>
+    <li> The <strong>provision of code</strong> in the software to collect online user feedback. </li>
+</ul>
+
+<hr/> <!----------------------------------------------------------------------------------->
+
+<h2 id="distribute"> 17 &ndash; Distributed Systems Architecture </h2>
+<h4> Distributed Systems </h4>
+<p> Information processing is <keyword>distributed</keyword> over several computers rather than confined to a single machine. </p>
+<p> It is very important for <keyword>enterprise</keyword> computing systems. </p>
+
+<table>
+    <tr>
+        <th colspan="2"><keyword>Pros</keyword></th>
+        <th colspan="2"><keyword>Cons</keyword></th>
+    </tr>
+    <tr>
+        <th>Topic</th>
+        <th>Description</th>
+        <th>Topic</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td><keyword>Resource Sharing</keyword></td>
+        <td>Sharing of hardware and software resources. </td>
+        <td><keyword>Complexity</keyword></td>
+        <td>Typically are more complex than centralised systems. </td>
+    </tr>
+    <tr>
+        <td><keyword>Openness</keyword></td>
+        <td> Use of equipment and software from different vendors. </td>
+        <td><keyword>Security</keyword></td>
+        <td> More susceptible to external attacks. </td>
+    </tr>
+    <tr>
+        <td><keyword>Concurrency</keyword></td>
+        <td> Concurrent processing to enhance performance. </td>
+        <td><keyword>Manageability</keyword></td>
+        <td> More effort is required to manage the system. </td>
+    </tr>
+    <tr>
+        <td><keyword>Scalability</keyword></td>
+        <td> Increased throughput by adding new resources. </td>
+        <td><keyword>Unpredictability</keyword></td>
+        <td> Unpredictable responses depending on the system organisation and network load. </td>
+    </tr>
+    <tr>
+        <td><keyword>Fault tolerance</keyword></td>
+        <td>The ability to continue in operation after a fault has occurred. </td>
+        <td><keyword></keyword></td>
+        <td></td>
+    </tr>
+</table>
+
+<h4> Architecture Categorisation </h4>
+<ul>
+    <li><keyword>Client-server</keyword> - Distributed services which are <strong>called on by clients</strong>. Servers that provide services are treated differently from clients that use services. </li>
+    <li><keyword>Distributed object</keyword><ul>
+        <li> <strong>No distinction</strong> between clients and servers. </li>
+        <li> Any objects on the system may provide and use services from other objects. Communication is through a <strong>middleware system</strong>, called an object request broker. </li>
+        <li> Advantages: <ul>
+            <li> Allows the system designer to <keyword>delay decisions</keyword> on where and how the service should be provided. </li>
+            <li> <keyword>Open architecture</keyword> that allows new resources to be added to it. </li>
+            <li> System is flexible and scalable. </li>
+            <li> It is possible to reconfigure the system <keyword>dynamically</keyword>. </li>
+        </ul></li>
+        <li> Uses: <ul>
+            <li> As a <keyword>logical model</keyword> that allows system organisation. </li>
+            <li> As a flexible approach to the <keyword>implementation</keyword> of client-server systems. </li>
+        </ul></li>
+    </ul></li>
+</ul>
+
+<p> A <keyword>middleware</keyword> is a software that manages and supports different components of a distributed system. It sits in the middle of the system and is usually off-the-shelf. </p>
+<p> The <keyword>CORBA</keyword> standards are a set of middleware standards that support distributed object architectures. </p>
+
+<h4> Multiprocessor Architectures </h4>
+<p> The simplest distributed system model. </p>
+<p> Composed of <keyword>multiple processors</keyword> which may <keyword>execute</keyword> on <keyword>different processors</keyword>. </p>
+<p> Distribution of process to processors may be pre-ordered or may be under the control of a dispatcher. </p>
+<p> E.g. Multiprocessor Traffic Control System. </p>
+
+<h4> Thin-Client Model </h4>
+<p> All the application processing and data management is <keyword>carried out on the server</keyword>. The client is simply responsible for running the presentation software</p>
+<p> Used when legacy (old) systems are migrated to client-server architectures. The legacy system acts as a server on its own. </p>
+<p> A major disadvantage is that it places a heavy processing load on both the server and the network. </p>
+
+<h4> Fat-Client Model </h4>
+<p> More processing is delegated to the <keyword>client</keyword> as the application processing is <keyword>locally executed</keyword>. Most suitable for new client-server systems where the capabilities of the client system are known in advance. </p>
+<p> It is more complex and hence harder to manage than thin-client models. </p>
+<p> It will have security issues and are more <keyword>vulnerable to attacks</keyword>. </p>
+
+<h4> Inter-organisational Computing </h4>
+<p> For security and inter-operability reasons, most distributed computing has been implemented at enterprise level. Local standards, management and operational processes apply. </p>
+
+
+<h4> Peer-to-Peer (p2p) Architectures </h4>
+<p> Are <keyword>decentralised systems</keyword> where computations may be carried out by <keyword>any node</keyword> in the network. </p>
+<p> The overall system is designed to take advantage of computational power and storage of large number networked computers. </p>
+<img src="images/softeng/distribute1.JPG"/>
+
+<h4> Service-oriented Architectures </h4>
+<p> Based around the notion of <keyword>externally provided services</keyword> (web services). </p>
+<p> A web service is a standard approach to making a reusable component available and accessible across the web. </p>
+<img src="images/softeng/distribute2.JPG"/>
+
+<p> Services are based on agreed, XML based standards so can be provided on any platform and written in any programming language. Some key standards include: </p>
+<ul>
+    <li> <keyword>SOAP</keyword> - Simple Object Access Protocol </li>
+    <li> <keyword>WSDL</keyword> - Web Services Description Language </li>
+    <li> <keyword>UDDI</keyword> - Universal Description, Discovery and Integration </li>
+</ul>
+
+<h4> Implementation Diagrams </h4>
+<ul>
+    <li> UML <keyword>Component Diagrams</keyword> <ul>
+        <li> Used to document dependencies between components, typically files, either compilation dependencies or run-time dependencies. </li>
+    </ul></li>
+    <li> UML <keyword>Deployment Diagrams</keyword> <ul>
+        <li> Used to the configuration of run-time processing elements and the software components and processes that are located on them. </li>
+        <li> Consists of <ul>
+            <li> Nodes - <keyword>Rectangular Prism</keyword>, represent processors, devices or other resources. </li>
+            <li> Communication Associations - <keyword>Lines between nodes</keyword>, represent communication between nodes that can be stereotyped. <br/> <img src="images/softeng/distribute3.JPG"/> </li>
+        </ul></li>
+    </ul></li>
+</ul>
+
+<hr/> <!----------------------------------------------------------------------------------->
+
+<h2 id="semanticweb"> 18 &ndash; Semantic Web Introduction </h2>
+<h4> The Internet </h4>
+<p> <keyword>Internet</keyword> is formed by the co-operative interconnection of a large number of computer network. It is a <strong>network of networks</strong> and <strong>nobody owns</strong> it. Every person who makes a connection owns a slice of the internet, there is no central administration to it. </p>
+
+<p> Internet let computers <strong>share programs</strong> and <strong>information</strong>. </p>
+
+<p> The <keyword>Syntactic web</keyword> is a place where computers do the presentation (easy work) and people do the linking and interpreting (hard work). </p>
+
+<p> In the current web, Markup only consists of <keyword>rendering information</keyword> Hyper-links to related content. Semantic content is accessible but <em>not</em> to computers. </p>
+
+<h4> Semantic Web </h4>
+<p> Make web resources more accessible to automated processes. </p>
+<ul>
+    <li> Extend existing rendering markup with <keyword>semantic markup</keyword>, which are metadata annotations that describe content or function of web accessible resources. </li>
+    <li> Use ontology to provide <keyword>vocabulary</keyword> for annotations. It represent human's knowledge for computers. </li>
+    <li> OWL is a W3C standard - Web Ontology Language </li>
+</ul>
+
+<p> Semantic Web is the next generation of the Web where machines can understand the content of the Web. </p>
+
+
+<hr/> <!----------------------------------------------------------------------------------->
+Good luck for exams!
 
 <!-- Utils -->
 <button onclick="topFunction()" id="topBtn" title="Go to top">Top</button>
