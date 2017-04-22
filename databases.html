@@ -97,46 +97,46 @@
 <hr/> <!------------------------------------------------------------------------------->
 <h1> LI Introductory Databases </h1>
 <hr/> <!------------------------------------------------------------------------------->
-Table of Contents
+Table of Contents (<a href="#" onclick="var expanded=this.innerHTML==='expand'; var subtopics=document.getElementsByClassName('subtopic'); for (var i = 0; i < subtopics.length; i++) { subtopics[i].style.display=(expanded ? '' : 'none'); } this.innerHTML=(expanded ? 'collapse' : 'expand');">expand</a>)
 <ol>
     <li><a href="#intro"> Introduction </a></li>
-    <li><a href="#database"> Database </a><ol>
+    <li><a href="#database"> Database </a><ol class="subtopic" style="display: none">
         <li><a href="#database1"> Relational Database </a></li>
     </ol></li>
-    <li><a href="#basics"> Basics </a><ol>
+    <li><a href="#basics"> Basics </a><ol class="subtopic" style="display: none">
         <li><a href="#basics1"> Sets </a></li>
         <li><a href="#basics2"> Keys </a></li>
         <li><a href="#basics3"> SQL </a></li>
     </ol></li>
-    <li><a href="#constraints"> Constraints </a><ol>
+    <li><a href="#constraints"> Constraints </a><ol class="subtopic" style="display: none">
         <li><a href="#constraints1"> Primary Key </a></li>
         <li><a href="#constraints2"> Foreign Key </a></li>
     </ol></li>
-    <li><a href="#joins"> Joins </a><ol>
+    <li><a href="#joins"> Joins </a><ol class="subtopic" style="display: none">
         <li><a href="#joins1"> Join Variations </a></li>
         <li><a href="#joins2"> Set Operations </a></li>
         <li><a href="#joins3"> Subqueries </a></li>
         <li><a href="#joins4"> Groups </a></li>
         <li><a href="#joins5"> Views </a></li>
     </ol></li>
-    <li><a href="#jdbc"> Java Database Connection (JDBC) </a><ol>
+    <li><a href="#jdbc"> Java Database Connection (JDBC) </a><ol class="subtopic" style="display: none">
         <li><a href="#jdbc1"> Using JDBC </a></li>
         <li><a href="#jdbc2"> Transactions </a></li>
     </ol></li>
-    <li><a href="#design"> Database Designs </a><ol>
+    <li><a href="#design"> Database Designs </a><ol class="subtopic" style="display: none">
         <li><a href="#design1"> Design with Entity Relationship (ER) </a></li>
         <li><a href="#design2"> Mapping from ER to DB </a></li>
     </ol></li>
-    <li><a href="#webapps"> Web Applications </a><ol>
+    <li><a href="#webapps"> Web Applications </a><ol class="subtopic" style="display: none">
         <li><a href="#webapps1"> Introduction to Web Services </a></li>
         <li><a href="#webapps2"> Server Side Processing </a></li>
         <li><a href="#webapps3"> HttpServlet </a></li>
         <li><a href="#webapps4"> JSP </a></li>
     </ol></li>
-    <li><a href="#session"> Session Tracking </a><ol>
+    <li><a href="#session"> Session Tracking </a><ol class="subtopic" style="display: none">
         <li><a href="#session1"> Ways to Track </a></li>
     </ol></li>
-    <li><a href="#normalisation"> Database Normalisation </a><ol>
+    <li><a href="#normalisation"> Database Normalisation </a><ol class="subtopic" style="display: none">
         <li><a href="#normalisation1"> Conclusion </a></li>
     </ol></li>
     <li><a href="#papers"> Exam Paper </a></li>
@@ -1214,33 +1214,23 @@ Table of Contents
 
 <div style="display: inline-block; background-color: #f7ffe4; width: 700px; height: 800px; overflow: auto;">
     <h4> You may practice, then click each <span style="border: dotted 1px;" onclick="style.color='red'; this.innerHTML='OoohhH CONGRATULATIONS! You Sir, Found an EASTER EGG';">boxes</span> to reveal answers for Example Paper </h4>
-    <ul>
-        <li> Q1 a) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='<pre>SELECT city, sum(duration) FROM Calls\nJOIN Subscribers ON Calls.receiver=Subscribers.phoneno\nGROUP BY City;</pre>'; this.style.border='none'"> Show </span></li>
+    <h4>  Taken from <a href="https://github.com/Rinaldyr/ExamNotes2017/blob/master/DatabaseExamSolution.md">here</a>, Ahmed's solution! </h4>
 
-        <li> Q1 b) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='<pre>SELECT name FROM Subscribers\nJOIN Calls C1 ON C1.receiver=Subscribers.phoneno\nJOIN Calls C2 ON C2.caller=Subscribers.phoneno\nWHERE C1.duration >= 600 OR C2.duration >= 600\nGROUP BY name;</pre>'; this.style.border='none'"> Show </span></li>
+    <ul>
+        <li> Q1 a) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='<pre>SELECT city, sum(duration) &quot;duration of calls received&quot;\nFROM Calls\nJOIN Subscribers ON receiver=phoneno\nGROUP BY city;</pre>'; this.style.border='none'"> Show </span></li>
+
+        <li> Q1 b) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='<pre>SELECT DISTINCT name FROM Calls\nJOIN Subscribers ON receiver=phoneno OR caller=phoneno\nWHERE duration >= 600 ;</pre>'; this.style.border='none'"> Show </span></li>
 
         <li> Q1 c) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick='this.innerHTML="<pre>" +
-     "SELECT DISTINCT name
-FROM Subscribers
-WHERE phoneno NOT IN (
-    SELECT DISTINCT caller 
-    FROM Calls
-    JOIN Subscribers
-    ON caller == phoneno
-    WHERE receiver IN (SELECT phoneno
-    FROM Subscribers
-    WHERE city LIKE &apos;London&apos;)
-)
-ORDER BY name;</pre>"; this.style.border="none"'> Show </span></li>
+     "SELECT DISTINCT name FROM Subscribers\nWHERE phoneno NOT IN (\n    SELECT DISTINCT caller\n    FROM Calls\n    JOIN Subscribers\n    ON caller == phoneno\n    WHERE receiver IN (SELECT phoneno\n       FROM Subscribers\n       WHERE city LIKE &apos;London&apos;)\n) ORDER BY name;</pre>"; this.style.border="none"'> Show </span></li>
 
         <li> Q1 d) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='<pre>SELECT name, sum(duration) FROM Subscribers\nJOIN Calls ON caller=phoneno\nGROUP BY name HAVING sum(duration) > 500;</pre>'; this.style.border='none'"> Show </span></li>
 
-        <li> Q3 ) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='E1(A1, A2)
-E2(A4, A5)
-E3(A6, A4, A7)
-R1(A1, A4, A6, A3)'; this.style.border='none'"> Show </span></li>
+        <li> Q2 ) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='E1(A1, A2)<br>E2(A4, A5)<br>E3(A6, A4, A7)<br>R1(A1, A4, A6, A3)'; this.style.border='none'"> Show </span></li>
 
-        <li> Q4 ) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='Add an answer'; this.style.border='none'"> Show (NO ANS YET) </span></li>
+        <li> Q3 ) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='<img src=&quot;https://i.gyazo.com/f9ba03c1791c66134aba827296070afc.png&quot/>'; this.style.border='none'"> Show </span></li>
+
+        <li> Q4 ) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='A transaction is a compound operation that must be performed in its entirety as though it was atomic. Transactions are needed for operations that must either happen or not happen &ndash; in order to maintain consistency between databases. They also allow concurrent access and modification of the same database &ndash; errors may arise when accessing a database that is in the middle of the operation. They also prevent corruption for if the communication between the interface and database is lost in the middle of a transaction -- the transaction would not go through at all and therefore would not be partially executed. <br><br> <strong>Example</strong> <br> Say Alice presses a button to tell her bank to send £10 to Bob. The bank begins the operation and takes £10 out of Alice account, but midway through the bank falls victim to a power cut failure. If a transaction is not implemented, Alice will lose £10 and Bob will not receive £10. Implementing a transaction will mean that the database is not updated with the inconsistent state.'; this.style.border='none'"> Show </span></li>
 
         <li> Q5 ) <br/> <textarea style="display: inline-block;" cols="75" title="Answer here!"></textarea> <br/> <span style="border: dotted 1px" title="Click to reveal answer" onclick="this.innerHTML='Add an answer'; this.style.border='none'"> Show (NO ANS YET) </span></li>
 
@@ -1254,7 +1244,6 @@ R1(A1, A4, A6, A3)'; this.style.border='none'"> Show </span></li>
 <!-- Utils -->
 <button onclick="topFunction()" id="topBtn" title="Go to top">Top</button>
 <script>
-
     var opened = false;
     function openPaper() {
         if (!opened) { document.getElementById("paper").innerHTML='<iframe width="700" height="800" src="images/database/paper.pdf" allowfullscreen>Your browser does not support iFrames.</iframe>'; opened = true; }
