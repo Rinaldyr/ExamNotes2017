@@ -223,6 +223,226 @@ A language is a set of words, which means that it is a subset of &Sigma;*. <br/>
 <hr/>
 
 <h3 id="lambda"> Lambda Calculus </h3>
+<p>&lambda;-calculus is a calculus of functions</p>
+<p><em>"&lambda;x"</em> means <em>"the function that maps x to "</em></p>
+<p>Juxtaposition means application</p>
+<ul>
+    <li>f x (as in OCaml and Haskell)</li>
+</ul>
+<p align="center"><img src="images/models/lambdasyntax.png" width="500"></p>
+<p><strong>Precedence conventions</strong></p>
+<ol>
+    <li>Application has highest precedence</li>
+    <li>* and /</li>
+    <li>+ and -</li>
+    <li>&lambda;x has lowest precedence</li>
+</ol>
+<p><strong>Application associates to the left</strong></p>
+    <ul>
+        <li>e.g. MNP should be bracketed as (MN)P</li>
+        <li>e.g. (&lambda;x. &lambda;y. z x y) 15 12 implies ((&lambda;x. &lambda;y ((z x) y)) 15) 12</li>
+    </ul>
+<p>There are <strong>bound</strong> and <strong>free</strong> occurrences of variables</p>
+<ul>
+    <li>e.g. In (&lambda;x. &lambda;y. z x y) 15 12</li>
+    <li>x and y are bound, but z is free</li>
+</ul>
+<p>An occurrence of a variable is bound to the innermost binder of that variable whose scope contains the occurrence</p>
+<p>We say that terms are <strong>&alpha;-equivalent</strong> when they are the same, except for the binders and
+    bound occurrences of variables, and these are bound to the same place</p>
+<ul>
+    <li>&alpha;-equivalent<ul>
+        <li>&lambda;x. &lambda;x. &lambda;y. x+3</li>
+        <li>&lambda;u. &lambda;v. &lambda;u. v+3</li>
+    </ul></li>
+    <li>Not &alpha;-equivalent (because free variables are different)<ul>
+        <li>&lambda;x. &lambda;x. &lambda;y. x+z</li>
+        <li>&lambda;u. &lambda;v. &lambda;u. v+w</li>
+    </ul></li>
+</ul>
+<p>&alpha;-equivalent terms are regarded as the same</p>
+<p><strong>Reduction of &lambda;-terms</strong></p>
+<ul>
+    <li><strong>&delta;-reductions</strong> (arithmetic)<ul>
+        <li><u>m</u> + <u>n</u> &#8594; <u>m+n</u></li>
+        <li>e.g. <u>5</u> + <u>7</u> &#8594; <u>12</u></li>
+        <li><u>m</u> + <u>n</u> is a <strong>"&delta;-redex"</strong></li>
+    </ul></li>
+    <li><strong>&beta;-reductions</strong><ul>
+        <li>(&lambda;x. M) N &#8594; M[N/x]<ul>
+            <li>(&lambda;x. M) - "body" of the &lambda;-abstraction</li>
+            <li>N - argument</li>
+            <li>M[N/x] - M, where x is replaced by N</li>
+        </ul></li>
+        <li>e.g. (&lambda;x. x+3) 7 &#8594;<sub><em>&beta;</em></sub> 7 + 3 &#8594;<sub><em>&delta;</em></sub> 10</li>
+        <li>(&lambda;x. M) N is a <strong>"&beta;-redex"</strong></li>
+    </ul></li>
+</ul>
+<p>Substitution notes:</p>
+<ul>
+    <li>When we form M[N/x]<ul>
+        <li>We replace only the <strong>free</strong> occurrences of x by N<ul>
+            <li>i.e. in (&lambda;x. ((&lambda;x. x) 17) + x) 8</li>
+        </ul></li>
+        <li>The free variables in N must not be captured<ul>
+            <li>i.e. in (&lambda;y. ((&lambda;x. x + y) 7) (x + 5)</li>
+        </ul></li>
+    </ul></li>
+</ul>
+<p> We stop evaluating when we reach a &beta;&delta;-normal form</p>
+<ul>
+    <li>i.e. a term that doesn't contain either a &beta;-redex or a &delta;-redex<ul>
+        <li>e.g 23, x + 23, &lambda;x. x+23</li>
+    </ul></li>
+</ul>
+<p>A term that has no free variables is called a <strong>closed term</strong>.</p>
+<p><strong>Church-Rosser Theorem</strong></p>
+<ul><li>If M &#8605;* N and M &#8605;* P then there exists Q such that N &#8605;* Q and P &#8605;* Q<ul>
+    <li><em>M &#8605;* N means that M reduces to N in zero or more steps</em></li>
+</ul></li></ul>
+<p><strong>Corollary:</strong> Any term M has at most one &beta;&delta;-normal form</p>
+<p><strong>Omega</strong></p>
+<p>The term &Omega; is the following:</p>
+<ul>
+    <li>(&lambda;x. x x)(&lambda;x. x x) &#8605; (&lambda;x. x x)(&lambda;x. x x)</li>
+    <li>The reduction graph is &Omega;&#8634;</li>
+    <li>So &Omega; doesn't have a normal form</li>
+</ul>
+<p><strong>Types</strong></p>
+<p>Types are a way of ruling out "badexes"</p>
+<p>Examples of "badexes"</p>
+<ul>
+    <li>&lambda;x. M + <u>n</u></li>
+    <li><u>n</u> + &lambda;x. M</li>
+    <li>&lambda;x. M + &lambda;x. M'</li>
+    <li><u>n</u> M</li>
+</ul>
+<p>They're correct terms of <strong>untyped</strong> &lambda;-calculus. So is &Omega;</p>
+<p><strong>Typed &lambda;-calculus with arithmetic</strong></p>
+<p><u>Syntax of types</u><br>
+<div align="center">A ::= int | A &#8594; A | (A)</div></p>
+<ul>
+    <li>i.e. int &#8594; int is the type of functions that take an integer argument and return an integer</li>
+</ul>
+<p><strong>Convention:</strong> &#8594; associates to the right</p>
+<ul><li> int &#8594; int &#8594; int </li>
+<li>Implicit bracketing is int &#8594; (int &#8594; int)</li></ul>
+<p>Here is a term of <strong>untyped</strong> &lambda;-calc with arithmetic</p>
+<p>Example 1:</p>
+<p align="center"><strong>&lambda;x. x<u>3</u> + <u>7</u></strong></p>
+<p>Annotate this with <strong>types</strong> by looking for clues</p>
+<ul>
+    <li><strong>Clue 1:</strong> x is applied to something. So has type A &#8594; B</li>
+    <li><strong>Clue 2:</strong> The thing it's applied to, which has type A, is an integer. So A = int</li>
+    <li><strong>Clue 3:</strong> x<u>3</u>, which has type B, gets added to something. So B = int</li>
+    <li><strong>Conclusion:</strong> x has type int &#8594; int</li>
+</ul>
+<p>Annotated term:</p>
+<p align="center"><strong>&lambda;x: int &#8594; int. x<u>3</u> + <u>7</u></strong></p>
+<p>Example 2:</p>
+<p align="center"><strong>&lambda;x. &lambda;y. x(xy) + <u>17</u></strong></p>
+<p>Look for the clues</p>
+<ul>
+    <li><strong>Clue 1:</strong> x is applied to something. So x has type A &#8594; B</li>
+    <li><strong>Clue 2:</strong> x is applied to y. So y has type A</li>
+    <li><strong>Clue 3:</strong> x is applied to xy, which has type B. So A = B</li>
+    <li><strong>Clue 4:</strong> x(xy), which has type B, is added to something. So B = int</li>
+    <li><strong>Conclusion:</strong> x has type int &#8594; int and y has type int</li>
+</ul>
+<p>Annotated term:</p>
+<p align="center"><strong>&lambda;x: int &#8594; int. &lambda;y: int. x(xy) + <u>17</u></strong></p>
+<p>This has type (int &#8594; int) &#8594; (int &#8594; int) <br> or just (int &#8594; int) &#8594; int &#8594; int</p>
+<p>Example 3:</p>
+<p align="center"><strong>(&lambda;x. <u>3</u>)(<u>17</u> &lambda;y. y)</strong></p>
+<ul>
+    <li><u>17</u> has type A &#8594; B because it's applied to something, but also has type int. <strong>
+        Contradiction
+    </strong> </li>
+</ul>
+<p>Example 4:</p>
+<p align="center"><strong>(&lambda;x. x x)(&lambda;y. y y)</strong></p>
+<ul>
+    <li><strong>Clue 1:</strong> x gets applied to something, so it has type A &#8594; B </li>
+    <li><strong>Clue 2:</strong> x gets applied to x, so A = A &#8594; B</li>
+</ul>
+<p>So A is:</p>
+<p align="center">(( ... &#8594; B) &#8594; B) &#8594; B</p>
+<p>But all out type expression are finite. <strong>Contradiction.</strong></p>
+<p>Example 5:</p>
+<p align="center"><strong>&lambda;x. x <u>7</u></strong></p>
+<ul>
+    <li><strong>Clue 1:</strong> x is applied to something, so it has type A &#8594; B</li>
+    <li><strong>Clue 2:</strong> x is applied to <u>7</u>, which has type int, so A = int</li>
+    <li><strong>Conclusion:</strong> x has type int &#8594; B</li>
+</ul>
+<p>Most general solution:</p>
+<p align="center"><strong>&lambda;x: int &#8594; B. x <u>7</u></strong></p>
+<p>which has type:</p>
+<p align="center"><strong>(int &#8594; B) &#8594; B</strong></p>
+<p><strong>Multi-ary Functions</strong></p>
+<p>In &lambda;-calculus, all functions are <strong>unary</strong>. i.e. They take just 1 argument</p>
+<p>We use <strong>currying</strong> to express <strong>multi-ary</strong> functions in &lambda;-calculus</p>
+<p>We represent a function with two arguments as a function that returns a function. <br> Say we want the function that
+takes arguments x:int and y:int and returns x + 17 * y<br> We represent it as:</p>
+<p align="center">&lambda;x: int. &lambda;y: int. x + 17 * y</p>
+<p>which has type</p>
+<p align="center">int &#8594; (int &#8594; int)</p>
+<p align="center">(&lambda;f: int &#8594; (int &#8594; int). (f 5) 2) (&lambda;x: int. &lambda;y: int. x + 17 * y) </p>
+<p>This is the reason for the conventions:</p>
+<ul>
+    <li>&#8594; associates to the right</li>
+    <li>Application associates to the left</li>
+</ul>
+<p>We also use Currying in untyped &lambda;-calculus</p>
+<p>(&lambda;f. f 5 2)(&lambda;x. &lambda;y. x + 17 * y)<br>
+    &#8605; (&lambda;x. &lambda;y. x + 17 * y) 5 2 <br>
+    &#8605; (&lambda;y. 5 + 17 * y) 2 <br>
+    &#8605; 5 + 17 * 2 <br>
+    &#8605; 5 + 34 <br>
+    &#8605; 39</p>
+
+<p><strong>Advantages of Types</strong></p>
+<ul>
+    <li>There are no terms that evaluate to a "badex".<ul>
+        <li><strong>Well-typed programs don't get stuck!</strong></li>
+        <li>Programmers' mistakes can be caught at compile-time</li>
+    </ul></li>
+    <li>No terms that run forever<ul>
+        <li><strong>Theorem: Strong Normalisation</strong></li>
+        <li>There is no infinite sequence of reductions M<sub>0</sub> &#8605; M<sub>1</sub>
+            &#8605; M<sub>2</sub> &#8605; M<sub>3</sub> &#8605; ... for typed &lambda;-calculus with arithmetic</li>
+        <li>We often, however, want to extend typed &lambda;-calculus with features that allows terms to run forever e.g.
+        recursion or iteration (such as a while loop)</li>
+    </ul></li>
+    <li>Typed terms have a meaning<ul>
+        <li>The meaning of &lambda;x: int. x is the identity function &#8484; &#8594; &#8484; </li>
+        <li>The meaning of &lambda;x: bool. x is the identity function &#120121; &#8594; &#120121;</li>
+        <li>The meaning of &lambda;x. x is problematic</li>
+    </ul></li>
+</ul>
+<p><strong>Disadvantages of Types</strong></p>
+<ul>
+    <li>Types rule out useful programs<ul>
+        <li>Example: in untyped &lambda;-calculus<ul>
+            <li>
+                (&lambda;f. (f &lambda;x. x)(f <u>3</u>)) &lambda;y. y <br>
+                &#8605; ((&lambda;y. y)(&lambda;x. x))((&lambda;y.y)<u>3</u>) <br>
+                &#8605; (&lambda;x. x)((&lambda;y. y) <u>3</u>) <br>
+                &#8605; (&lambda;x. x) <u>3</u> <br>
+                &#8605; 3
+            </li>
+        </ul></li>
+        <li><strong>Clue 1:</strong> f is applied to something, so it has type A &#8594; B</li>
+        <li><strong>Clue 2:</strong> f is applied to <u>3</u> so A = int</li>
+        <li><strong>Clue 3:</strong> f is applied to &lambda;x.x so A = C &#8594; D</li>
+        <li>To allow terms like this example, we need a fancier type system. (Specifically a polymorphic system)</li>
+        <li>But no matter how fancy the type system, there will always be legitimate terms that are rules out.</li>
+        <li>This is because whether a term is safe (i.e. avoids badexes, avoids running forever) is undecidable and
+            compilers always have to terminate</li>
+        <li>Some languages have a compromise solution: types are present most of the time, but in rare situations the type
+        discipline can be ignored</li>
+    </ul></li>
+</ul>
 
 <hr/>
 
