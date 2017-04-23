@@ -1,20 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!--[if lt IE 9]>
+    <script> document.createElement("keyword"); document.createElement("comment"); </script>
+    <![endif]-->
+
     <meta charset="UTF-8">
     <title> C/C++ </title>
     <style type="text/css">
         body {
-            background-color: #b8e6e4;
-            font-family: "Georgia", serif;
+            font-family: "Century Gothic", serif;
+            margin: 50px;
         }
 
-        div {
-            border:1px hidden cadetblue;
+        keyword {
+            font-weight: bold;
+            color: #c976c6;
+        }
+
+        comment {
+            font-family: Consolas, monospace;
+            color: #b8b8b8;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+            color: blueviolet;
+        }
+
+        pre {
             margin:10px;
-            font-family: "Consolas", monospace;
-            font-size: 15px;
+            font-family: Consolas, monospace;
             color: #4913d3;
+        }
+
+        h1 {
+            color: #2e4566;
+        }
+
+        h2 {
+            text-decoration: underline;
+            color: #2f5496;
+        }
+
+        h3 {
+            color: #5b9bd5;
+        }
+
+        h4 {
+            font-weight: normal;
+            color: #70c4f5;
+        }
+        
+        hr {
+            border-color: #59a7ea;
         }
 
         #topBtn {
@@ -25,7 +64,7 @@
             z-index: 99;
             border: none;
             outline: none;
-            background-color: red;
+            background-color: #3460a9;
             color: white;
             cursor: pointer;
             padding: 15px;
@@ -34,6 +73,7 @@
 
         #topBtn:hover {
             background-color: #555;
+            opacity: 0.5;
         }
 
         #homeBtn {
@@ -44,7 +84,7 @@
             z-index: 99;
             border: none;
             outline: none;
-            background-color: red;
+            background-color: #3460a9;
             color: white;
             cursor: pointer;
             padding: 15px;
@@ -53,38 +93,37 @@
 
         #homeBtn:hover {
             background-color: #555;
+            opacity: 0.5;
         }
     </style>
 </head>
 <body>
 <hr/>
-<h1> LI C/C++ </h1>
+<h1 align="center"> LI C/C++ </h1>
+<p align="center"> Template and style original: <keyword>Rhys Barrett</keyword>. </p>
 <hr/>
-Table of Contents
+Table of Contents (<a href="#" onclick="var expanded=this.innerHTML==='expand'; var subtopics=document.getElementsByClassName('subtopic'); for (var i = 0; i < subtopics.length; i++) { subtopics[i].style.display=(expanded ? '' : 'none'); } this.innerHTML=(expanded ? 'collapse' : 'expand');">expand</a>)
 <ol>
-    <li><a href="#introduction"> Introduction </a> <ul>
-        <li><a href="#aboutCLanguage"> About C Language </a></li>
-        <li><a href="#aboutCPrograms"> About C Programs </a></li>
-        <li><a href="#comparingC"> Comparing C and Java Programs </a></li>
-    </ul> </li>
-    <li><a href="#pointer"> Pointers in C </a> <ul>
-        <li><a href="#introPointer"> Intro to Pointers </a></li>
-        <li><a href="#defPointer"> Pointer Definitions and Examples </a></li>
-        <li><a href="#equalityPointer"> Pointer equality in C </a></li>
-        <li><a href="#mallocfree"> Memory Management with malloc and free </a></li>
-        <li><a href="#memoryErrors"> Memory Errors </a></li>
-        <li><a href="#valgrind"> Valgrind </a></li>
-        <li><a href="#structs"> Structures and Pointers &DoubleRightArrow; Recursive Data Structures </a></li>
-        <li><a href="#arithmeticPointer"> Pointer Arithmetic and Arrays </a></li>
-        <li><a href="#buffOverflow"> Strings and Buffer Overflows </a></li>
-        <li><a href="#voidPointer"> Void Pointers and Casting </a> </li>
-        <li><a href="#functionPointer"> Function Pointers </a></li>
-    </ul> </li>
+    <li><a href="#intro"> Introduction </a> <ol class="subtopic" style="display: none;">
+        <li><a href="#intro1"> About C Language </a></li>
+        <li><a href="#intro2"> About C Programs </a></li>
+        <li><a href="#intro3"> Comparing C and Java Programs </a></li>
+    </ol> </li>
+    <li><a href="#pointer"> Pointers in C </a> <ol class="subtopic" style="display: none;">
+        <li><a href="#pointer1"> Intro to Pointers </a></li>
+        <li><a href="#pointer2"> Pointer Definitions and Examples </a></li>
+        <li><a href="#pointer3"> Pointer equality in C </a></li>
+    </ol> </li>
+    <li><a href="#mallocfree"> Memory Management with malloc and free </a><ol class="subtopic" style="display: none;">
+        <li><a href="#mallocfree1"> malloc and free </a></li>
+        <li><a href="#mallocfree2"> Memory Horrors </a></li>
+        <li><a href="#mallocfree3"> Valgrind </a></li>
+    </ol></li>
 </ol>
 
 <hr/>
 
-<h2 id="introduction"> Introduction </h2>
+<h2 id="intro"> 1 &ndash; Introduction </h2>
 <p> Comparing C, C++ and Java. <br/> They all have core imperative language that includes assignment
 while, functions and recursion. </p>
 <ul>
@@ -104,47 +143,47 @@ while, functions and recursion. </p>
 </ul>
 <p> C and C++ are about efficiency and control over memory. Being aware of memory is important! </p>
 
-<h3 id="aboutCLanguage"> About C Language</h3>
+<h3 id="intro1"> 1.1 &ndash; About C Language </h3>
 <p> C is <em>low</em>-level compared to other languages like Java, OCaml, Haskell, which are all type-safe and garbage collected. However, C is <em>high</em>-level compared to assembly language. C is just halfway between high level languages and machine code. Compiled code is a mess of pointers. </p>
 
-<h3 id="aboutCPrograms"> About C programs </h3>
+<h3 id="intro2"> 1.2 &ndash; About C programs </h3>
 <p> A C program consists essentially of some #includes, function definitions and one of them is a main, type declarations (most importantly structs), and perhaps some global variables. <br/> Abstraction mechanisms are largely absent in C, but were added in C++.</p>
 
 <p> There are no classes or other ways to structure large programs. A program can be split into many files, compiled separately. <br/> A header file (extension .h) works as a kind of interface that has type information but no implementation. We need to include headers to use library functions. Header files can contain function declarations or sometimes called <b>prototypes</b> and structure definitions. </p>
 
-<div>
-    #include &lt;stdlib.h&gt; <br/>
+<pre>
+    #include &lt;stdlib.h&gt;
     #include "file.h"
-</div>
+</pre>
 
-<p> C does not have any exceptions. So need to check function return values to see whether an operation has succeeded. If not, then return values like -1, or NULL pointer. <br/> There are C library functions like <code> setjmp </code> and <code> longjmp </code> that are a very crude version of exceptions. C++ has exceptions much like Java. </p>
+<p> C does not have any exceptions. So need to check function return values to see whether an operation has succeeded. If not, then return values like -1, or <code>NULL</code> pointer. <br/> There are C library functions like <code> setjmp </code> and <code> longjmp </code> that are a very crude version of exceptions. C++ has exceptions much like Java. </p>
 
 <p> C does not have classes. So functions are defined directly inside the file. Splitting into files is up to the programmer. </p>
 
-<h3 id="comparingC"> Comparing C and Java programs </h3>
-<p> Java </p>
-<div>
-    public class HelloWorld { <br/>
-    &emsp; public static void main (String[] args) { <br/>
-    &emsp;&emsp; System.out.println("Hello world!"); <br/>
-    &emsp; } <br/>
+<h3 id="intro3"> 1.3 &ndash; Comparing C and Java programs </h3>
+<h4> Java </h4>
+<pre>
+    public class HelloWorld {
+        public static void main (String[] args) {
+            System.out.println("Hello world!");
+        }
     }
-</div>
-<p> C </p>
-<div>
-    #include &lt;stdio.h&gt; <br/>
-    int main(int argc, char *argv[]) { <br/>
-    &emsp; printf("Hello world!"); <br/>
-    &emsp; return 0; <br/>
+</pre>
+<h4> C </h4>
+<pre>
+    #include &lt;stdio.h&gt;
+    int main(int argc, char *argv[]) {
+        printf("Hello world!");
+        return 0;
     }
-</div>
+</pre>
 <p> A function in C is like a method in Java without any objects. Just like public static. </p>
 <p> A while loop in C is typically faster than using recursion and uses less stack space, particularly when the function is not tail recursive. </p>
 
 <hr/>
 
-<h2 id="pointer"> Pointers in C </h2>
-<h3 id="introPointer"> Pointers </h3>
+<h2 id="pointer"> 2 &ndash; Pointers in C </h2>
+<h3 id="pointer1"> 2.1 &ndash; Pointers </h3>
 <p> Pointers are the fundamental feature of C compared to other languages. Pointers are everywhere in C: </p>
 <ol>
     <li> Pointer types and operations &mdash; <code> * & . -&gt; </code> </li>
@@ -157,14 +196,14 @@ while, functions and recursion. </p>
 </ol>
 
 <p> Basic imperative programming is an abstraction of the memory as named boxes that contain values. </p>
-<div>
+<code>
     x = x + 1;
-</div>
+</code>
 <p> We can imagine these equation is made up of two parts, the L and R values. <br/>
 The x on the left of the = refers to the address of x, the L value. <br/>
 The x on the right of the = refers to the contents of x, the R value. </p>
 
-<h3 id="defPointer"></h3>
+<h3 id="pointer2"> 2.2 &ndash; Pointer Definitions and Examples </h3>
 <p> Pointers are an abstraction of machine addresses. Addresses are at a hardware level, but in C, we are not supposed to care about actual hardware addresses. It is easier to visualise C memory as a graph where nodes are the chunks of memory (often a struct) and edges are pointers. </p>
 
 <p> In C, * is also a unary operator which has nothing to do with the binary infix operator for multiplication. <br/>
@@ -178,11 +217,11 @@ The x on the right of the = refers to the contents of x, the R value. </p>
 <p> If a variable appears on the right side of an =, then its R-value is taken. <br/>
     If we want the address of member x rather than its contents, we use the & operator, so &x.  </p>
 
-<div>
-    y = x; <span style="color: #696969"> // means y get the contents of x </span> <br/>
-    p = &x&semi; <span style="color: #696969"> // means p is made to point to x </span> <br/>
-    <span style="color: #696969"> <code> // So <span style="color: indianred; font-family: Candara, sans-serif;"> *&x </span> is essentially the same thing as <span style="color: indianred; font-family: Candara, sans-serif;"> x </span>. </code> </span>
-</div>
+<pre>
+    y = x; <comment> // means y get the contents of x</comment>
+    p = &x&semi; <comment>// means p is made to point to x</comment>
+    <comment>// So <span style="color: indianred; font-family: Candara, sans-serif;"> *&x </span> is essentially the same thing as <span style="color: indianred; font-family: Candara, sans-serif;"> x </span>.</comment>
+</pre>
 
 <p> Example codes from the slides <em> (Click images to reveal answer) </em> </p>
 <div>
@@ -199,22 +238,22 @@ The x on the right of the = refers to the contents of x, the R value. </p>
 
 
 
-<h3 id="equalityPointer"> Pointer equality == in C </h3>
+<h3 id="pointer3"> 2.3 &ndash; Pointer equality == in C </h3>
 <p> In C, two pointers are == if they refer to the same address in memory. Pointer equality is different from structural equality like that built into functional languages such as OCaml. </p>
 
-<div>
-    # [ 1 ] = [ 1 ] ;; <br/>
-    - : bool = true <br/>
-    <br/>
-    p = q <span style="color: #696969"> // makes p == q because p takes the address of q </span> <br/>
-    *p = *q <span style="color: #696969"> // <span style="color: darkred;"> does not </span> make p == q because *p will have a different address from *q. </span> <br/>
-</div>
+<pre>
+    # [ 1 ] = [ 1 ] ;;
+    - : bool = true
+
+    p = q <comment>  // makes p == q because p takes the address of q</comment>
+    *p = *q <comment>// <span style="color: darkred;">does not</span> make p == q because *p will have a different address from *q. </comment>
+</pre>
 
 <p> <code>NULL</code> pointer is a special value that does not point to anything. Dereferencing NULL gives undefined behaviour (usually crash). A typical idiom to test whether a pointer <code>p</code> is equal to the <code>NULL</code> pointer: </p>
-<div>
-    if (p) ... <br/>
-    <span style="color: #696969">// Note that pointers are not always initialized to null. </span>
-</div>
+<pre>
+    if (p) ...
+    <comment>// Note that pointers are not always initialized to null. </comment>
+</pre>
 <p> Pointer Equality Example 1 </p>
 <div>
     <img src="images/ccpp/pointerEg2.JPG" title="Click to show answer" onclick="
@@ -260,16 +299,16 @@ The x on the right of the = refers to the contents of x, the R value. </p>
 </div>
 
 <p> It is important to note when declaring a pointer, the * sticks to the variable and not to the type. Array declarations behave the same, sticking only to one identifier </p>
-<div>
-    int *p, n; <br/>
-    <span style="color: #696969;"> // Is the same as </span> <br/>
-    int *p; <br/>
-    int n; <br/>
-    <span style="color: #696969;"> // and not </span> <br/>
-    int *p; <br/>
-    int *n; <br/>
-    <span style="color: #696969;"> // The * sticks only to the p and not the int. </span>
-</div>
+<pre>
+    int *p, n;
+    <comment>// Is the same as</comment>
+    int *p;
+    int n;
+    <comment>// and not</comment>
+    int *p;
+    int *n;
+    <comment>// The * sticks only to the p and not the int</comment>
+</pre>
 
 <p> Pointer Exercise </p>
 <div>
@@ -282,13 +321,110 @@ The x on the right of the = refers to the contents of x, the R value. </p>
     <img src="images/ccpp/pointerEg6Ans.JPG">
 </div>
 
-<h3 id="mallocfree"> Memory Management with malloc and free </h3>
+<h2 id="mallocfree"> 2 &ndash; Memory Management with malloc and free </h2>
+<h3 id="mallocfree1"> 2.1 &ndash; malloc and free </h3>
+<p><code>stdlib.h</code> provides C functions <code>malloc</code> and <code>free</code>. </p>
+<ul>
+    <li><code>malloc</code> - <keyword>borrow</keyword> memory in bytes from the memory manager.<ul>
+        <li><code>p = malloc(sizeof(N));</code></li>
+    </ul></li>
+    <li><code>free</code> - <keyword>return</keyword> memory and promise not to use it again.<ul>
+        <li><code>free(p);</code></li>
+        <li>After <code>free</code>, the memory is no longer owned by the program.</li>
+        <li>Dereferencing a freed memory causes <keyword>undefined behaviour</keyword>.</li>
+    </ul></li>
+</ul>
+<p> The part of memory managed by <code>malloc</code> is called the <keyword>heap</keyword>. If memory was used incorrectly in C, then it will cause <keyword>undefined behaviour</keyword>: may crash, or anything may happen. </p>
 
+<h4> Implementing malloc and free </h4>
+<ul>
+    <li> The allocator requests some memory from the OS. </li>
+    <li> The available memory is divided into chunks in a "free list". </li>
+    <li> <code>malloc</code> gets a chunk from the free list and returns a pointer to it. </li>
+    <li> <code>free</code> takes a pointer to a chunk and links it back to the "free list". </li>
+    <li> Problems: Efficiency, memory fragmentation. </li>
+</ul>
+<p> After <code>free</code> is called on some memory, various things may happen. The same piece of memory is re-used in a later <code>malloc</code>, or the memory manager puts the memory into the "free list". This is called <keyword>undefined behaviour</keyword>. </p>
 
+<p> The operator <code>sizeof(T)</code> gives the <keyword>size in bytes</keyword> for some type T. </p>
 
+<p> stdlib.h also contains other variants of <code>malloc</code>: </p>
+<ul>
+    <li><code>calloc</code> to allocate and initialise to zeros </li>
+    <li><code>realloc</code> to reallocate </li>
+</ul>
 
+<h4> malloc and free Example </h4>
+<pre>
+    int *p1, **p2;
+    p1 = malloc(sizeof(int));
+    *p1 = 7;
+    p2 = malloc(sizeof(int*));
+    p2* = p1;
+    free(p1);
+</pre>
 
+<h4> Use After free Example (BAD) </h4>
+<pre>
+    int *p1, **p2;
+    p1 = malloc(sizeof(int));
+    *p1 = 7;
+    p2 = malloc(sizeof(int*));
+    *p2 = p1;
+    free(p1);
 
+    **p2 = 11; <comment>// This will cause undefined behaviour because we freed before</comment>
+</pre>
+
+<h4> Double free Example (BAD) </h4>
+<pre>
+    int *p1, **p2;
+    p1 = malloc(sizeof(int));
+    *p1 = 7;
+    p2 = malloc(sizeof(int*));
+    *p2 = p1;
+    free(p1);
+
+    p1 = NULL;
+    free(*p2); <comment>// This will also cause undefined behaviour because we freed before</comment>
+</pre>
+<p> Keep in mind that you can only <code>free</code> something you <code>malloc</code> before. </p>
+
+<h4> Memory Leak Example </h4>
+<pre>
+    int *p1, **p2;
+    p1 = malloc(sizeof(int));
+    *p1 = 7;
+    p2 = malloc(sizeof(int*));
+    *p2 = p1;
+    p1 = NULL;
+    p2 = NULL; <comment>// This will cause the 7 and its pointer to be unreachable, hence memory leak</comment>
+</pre>
+
+<h3 id="mallocfree2"> 2.2 &ndash; Memory Horrors </h3>
+<p> <keyword>Crash</keyword> is an error detected by the hardware or OS. Some crashes include: </p>
+<ul>
+    <li><keyword>Segmentation Fault</keyword><ul>
+        <li> A failure raised by hardware with memory protection, notifying an OS the software attempted to <strong>access a restricted area of memory</strong>. </li>
+    </ul></li>
+</ul>
+<p> A C program with <keyword>memory error</keyword> is always <strong>wrong</strong>. A memory <keyword>leak</keyword> is <em>not</em> the same as a memory <keyword>error</keyword>, and may lead to <strong>crash</strong> when the program <strong>runs out of memory</strong>. </p>
+
+<p> Memory errors and leaks are <strong>not necessarily observable</strong> and <strong>not deterministic</strong>. </p>
+
+<h3 id="mallocfree3"> 2.3 &ndash; Valgrind </h3>
+<blockquote>
+    <em><keyword>Valgrind</keyword> is an instrumentation framework for building dynamic analysis tools. There are Valgrind tools that can automatically detect many memory management and threading bugs, and profile your programs in detail.</em>
+</blockquote>
+
+<p> In C, memory becomes <keyword>non-deterministic</keyword> after <code>free</code>. </p>
+
+<blockquote>
+    O RLY? YA RLY <cite>-Hayo Thielecke</cite>
+</blockquote>
+<p> Valgrind makes memory errors and leaks <keyword>observable</keyword> and produces <keyword>deterministic errors</keyword>. </p>
+
+<h2 id="structs"> Structures and Pointers </h2>
 
 
 

@@ -5,19 +5,46 @@
     <script> document.createElement("keyword"); </script>
     <![endif]-->
 
-    <meta charset="UTF-8">
-    <title> Software Engineering </title>
-    <link href="images/icon.png" rel="icon"/>
     <style type="text/css">
         body {
-            background-color: #cbe6e6;
-            font-family: "Georgia", serif;
-            margin: 20px;
+            font-family: "Century Gothic", serif;
+            margin: 50px;
+        }
+
+        h1 {
+            color: #2e4566;
+        }
+
+        h2 {
+            text-decoration: underline;
+            color: #2f5496;
+        }
+
+        h3 {
+            color: #5b9bd5;
+        }
+
+        h4 {
+            font-weight: normal;
+            color: #70c4f5;
+        }
+
+        hr {
+            border-color: #59a7ea;
         }
 
         keyword {
-            color: #a90001;
+            color: #c976c6;
             font-weight: bold;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
         }
 
         #topBtn {
@@ -28,20 +55,11 @@
             z-index: 99;
             border: none;
             outline: none;
-            background-color: red;
+            background-color: #3460a9;
             color: white;
             cursor: pointer;
             padding: 15px;
             border-radius: 10px;
-        }
-
-        table, th, td {
-            border: 1px solid black;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 8px;
         }
 
         #topBtn:hover {
@@ -57,7 +75,7 @@
             z-index: 99;
             border: none;
             outline: none;
-            background-color: red;
+            background-color: #3460a9;
             color: white;
             cursor: pointer;
             padding: 15px;
@@ -69,11 +87,15 @@
             opacity: 0.5;
         }
     </style>
+    <meta charset="UTF-8">
+    <title> Software Engineering </title>
+    <link href="images/icon.png" rel="icon"/>
 </head>
 <body>
 <hr/> <!----------------------------------------------------------------------------------->
-<h1> LI Software Engineering Extended 1 </h1>
-<h4> Click <a href="https://github.com/Rinaldyr/ExamNotes2017/blob/master/Softeng1.md">here</a> for Ahmed's Notes! </h4>
+<h1 align="center"> LI Software Engineering Extended 1 </h1>
+<p align="center"> Template and style original: <keyword>Rhys Barrett</keyword>. </p>
+<h3 align="center"> Click <a href="https://github.com/Rinaldyr/ExamNotes2017/blob/master/Softeng1.md">here</a> for Ahmed's Notes! </h3>
 <hr/> <!----------------------------------------------------------------------------------->
 Table of contents (<a href="#" onclick="var expanded=this.innerHTML==='expand'; var subtopics=document.getElementsByClassName('subtopic'); for (var i = 0; i < subtopics.length; i++) { subtopics[i].style.display=(expanded ? '' : 'none'); } this.innerHTML=(expanded ? 'collapse' : 'expand');">expand</a>)
 <ol>
@@ -306,7 +328,7 @@ Table of contents (<a href="#" onclick="var expanded=this.innerHTML==='expand'; 
 </ul>
 
 <h3 id="models5"> 2.5 &ndash; Spiral Development </h3>
-<p> The process is represented as a spiral rather than as a sequence of activities with backtracking. Each loo[ in the spiral represents a phase in the process. There are no fixed phases such as specification or design &ndash; loops in the spiral are chosen depending on what is required. Risks are explicitly assessed and resolved throughout the process. </p>
+<p> The process is represented as a spiral rather than as a sequence of activities with backtracking. Each loop in the spiral represents a phase in the process. There are no fixed phases such as specification or design &ndash; loops in the spiral are chosen depending on what is required. Risks are explicitly assessed and resolved throughout the process. </p>
 <img src="images/softeng/models7.JPG"/>
 
 
@@ -324,7 +346,7 @@ Table of contents (<a href="#" onclick="var expanded=this.innerHTML==='expand'; 
         <li> Defining, validating the baseline architecture. </li>
         <li> Refining the vision. </li>
         <li> Creating detail of iteration plans for the construction phase. </li>
-        <li> Refining the development case and putting in [lace the development environment. </li>
+        <li> Refining the development case and putting in place the development environment. </li>
         <li> Refining the architecture and selecting components. </li>
     </ul></li>
     <li> <keyword>Construction</keyword>: System design, programming and testing. <ul>
