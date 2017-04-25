@@ -34,14 +34,25 @@
 
         .parentBar {
             width: 125px;
+            border-radius: 30px;
             background-color: lightslategrey;
+        }
+
+        .parentBar:hover {
+            box-shadow: 0 0 10px rgb(53, 62, 74);
         }
 
         .childBar {
             width: 0;
-            text-align: center;
             color: #d8f3f5;
+            text-align: center;
+            border-radius: 30px;
             background-color: #3460a9;
+            text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+        }
+
+        .childBar:hover {
+            box-shadow: 0 0 5px rgb(255, 140, 247);
         }
 
         ul > li {
@@ -131,14 +142,14 @@
             for (i = 0; i < progresses.length; i++) {
                 (function (i) {
                     var flow = 0;
+                    var limit = 100 * (progresses[i].getAttribute('value') / progresses[i].getAttribute('max'));
                     setInterval(function () {
-                        var limit = 100 * (progresses[i].getAttribute('value') / progresses[i].getAttribute('max'));
                         progresses[i].style.width = flow + '%';
                         progresses[i].innerHTML = flow + '%';
                         if (flow >= limit) clearInterval(this);
                         else flow++;
-                    }, 25);
-                })(i);
+                    }, 20 / (limit/100));
+                }) (i);
             }
         }
     </script>
