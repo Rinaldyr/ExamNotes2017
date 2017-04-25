@@ -32,16 +32,28 @@
             border-color: #59a7ea;
         }
 
+        .parentBar {
+            width: 125px;
+            background-color: lightslategrey;
+        }
+
+        .childBar {
+            width: 0;
+            text-align: center;
+            color: #d8f3f5;
+            background-color: #3460a9;
+        }
+
         ul > li {
             display: inline-block;
-            margin:5px;
+            margin: 5px;
         }
 
         th, td {
             padding: 5px;
         }
 
-        table tr:nth-child(even){
+        table tr:nth-child(even) {
             background-color: #c1fffd;
         }
 
@@ -60,25 +72,25 @@
             border-collapse: collapse;
         }
     </style>
-    <script>
+    <script> // Front End
         function setCookie(name, value, expire) {
             var date = new Date();
-            date.setTime(date.getTime() + (expire*24*60*60*1000));
-            var expires = "expires="+ date.toUTCString();
+            date.setTime(date.getTime() + (expire * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + date.toUTCString();
             document.cookie = name + "=" + value + ";" + expires + ";path=/";
         }
 
         function getCookie(name) {
             var n = name + "=";
             var decodedCookie = decodeURIComponent(document.cookie);
-            var ca = decodedCookie.split(';');
-            for (var i = 0; i < ca.length; i++) {
-                var c = ca[i];
-                while (c.charAt(0)===' ') {
-                    c = c.substring(1);
+            var cookieList = decodedCookie.split(';');
+            for (var i = 0; i < cookieList.length; i++) {
+                var cookie = cookieList[i];
+                while (cookie.charAt(0) === ' ') {
+                    cookie = cookie.substring(1);
                 }
-                if (c.indexOf(n)===0) {
-                    return c.substring(n.length,c.length);
+                if (cookie.indexOf(n) === 0) {
+                    return cookie.substring(n.length, cookie.length);
                 }
             }
             return "";
@@ -87,18 +99,18 @@
         function checkCookie() {
             var username = getCookie("username");
             if (username !== "") {
-                document.getElementById("name").addEventListener("load", change(username,false));
+                document.getElementById("name").addEventListener("load", change(username, false));
             } else {
-                username = prompt("O hai thar, how may I address you? (e.g. Rinaldy)", "");
+                username = prompt("Hi, how may I address you? (e.g. Rinaldy)", "");
                 if (username !== "" && username !== null) {
                     setCookie("username", username, 365);
                 }
-                document.getElementById("name").addEventListener("load", change(username,true));
+                document.getElementById("name").addEventListener("load", change(username, true));
             }
         }
 
         function change(name, firstTime) {
-            if (name!==null) {
+            if (name !== null) {
                 var username = (name.toLowerCase().indexOf("rinaldy") !== -1 ? "rr" : name.toLowerCase().indexOf("siv") !== -1 ? "sr" : name.toLowerCase().indexOf("karanvir") !== -1 ? "kk" : name.toLowerCase().indexOf("rhys") !== -1 ? "rb" : name.toLowerCase().indexOf("ahmed") !== -1 ? "ab" : name.toLowerCase().indexOf("harvey") !== -1 ? "hh" : "wtf");
 
                 var message = "";
@@ -113,239 +125,318 @@
                 }
             }
         }
+
+        function animateProgress() {
+            var progresses = document.getElementsByClassName('childBar');
+            for (i = 0; i < progresses.length; i++) {
+                (function (i) {
+                    var flow = 0;
+                    setInterval(function () {
+                        var limit = 100 * (progresses[i].getAttribute('value') / progresses[i].getAttribute('max'));
+                        progresses[i].style.width = flow + '%';
+                        progresses[i].innerHTML = flow + '%';
+                        if (flow >= limit) clearInterval(this);
+                        else flow++;
+                    }, 25);
+                })(i);
+            }
+        }
     </script>
 </head>
-<body onload="checkCookie()">
+<body onload="checkCookie(); animateProgress()">
 <hr/>
-    <h1 align="center"> Exam Notes May/June 2017 </h1>
-    <p align="center" id="name"> Welcome! </p>
+<h1 align="center"> Exam Notes May/June 2017 </h1>
+<p align="center" id="name"> Welcome! </p>
 <hr/>
-    <a href="progress.html"> <p align="center">Progress</p> </a>
-    <table align="center" style="font-family: Verdana, serif;">
-        <caption> Exam Schedule </caption>
-        <tr style="font-weight: bold;">
-            <th> Day </th>
-            <th> Date </th>
-            <th> Start Time </th>
-            <th> Exam Title </th>
-            <th> Room </th>
-            <th class="rr" style="display: none"> Seat RR </th>
-            <th class="sr" style="display: none"> Seat SR </th>
-            <th class="kk" style="display: none"> Seat KK </th>
-            <th class="rb" style="display: none"> Seat RB </th>
-            <th class="ab" style="display: none"> Seat AB </th>
-            <th class="hh" style="display: none"> Seat HH </th>
-            <th> Duration </th>
-            <th> Days left </th>
-        </tr>
-        <tr> <!-- Software Engineering 1 -->
-            <td> Tuesday </td>
-            <td class="date">02/05/2017</td>
-            <td class="time" align="center">09:30</td>
-            <td> <a href="softeng.html"> LI Software Engineering 1 </a> </td>
-            <td> Muirhead 121 </td>
-            <td class="rr" style="display: none" align="center"> 37 </td>
-            <td class="sr" style="display: none" align="center"> - </td>
-            <td class="kk" style="display: none" align="center"> - </td>
-            <td class="rb" style="display: none" align="center"> - </td>
-            <td class="ab" style="display: none" align="center"> N/A </td>
-            <td class="hh" style="display: none" align="center"> - </td>
-            <td align="center"> 1:30hrs </td>
-            <td> <p class="left" align="center" style ="font-size: 18px; font-family: Consolas, serif"></p> </td>
-        </tr>
-        <tr> <!-- Computational Vision -->
-            <td> Thursday </td>
-            <td class="date">04/05/2017</td>
-            <td class="time" align="center">09:30</td>
-            <td> <a href="vision.html">LI Computational Vision </a></td>
-            <td> Chemical Engineering 112 </td>
-            <td class="rr" style="display: none" align="center"> - </td>
-            <td class="sr" style="display: none" align="center"> 5 </td>
-            <td class="kk" style="display: none" align="center"> - </td>
-            <td class="rb" style="display: none" align="center"> - </td>
-            <td class="ab" style="display: none" align="center"> N/A </td>
-            <td class="hh" style="display: none" align="center"> - </td>
-            <td align="center"> 1:30hrs </td>
-            <td> <p class="left" align="center" style ="font-size: 18px; font-family: Consolas, serif"></p> </td>
-        </tr>
-        <tr> <!-- Models of Computation -->
-            <td> Friday </td>
-            <td class="date">05/05/2017</td>
-            <td class="time" align="center">09:30</td>
-            <td> <a href="models.html"> LI Models of Computation </a> </td>
-            <td> New Gym </td>
-            <td class="rr" style="display: none" align="center"> 137 </td>
-            <td class="sr" style="display: none" align="center"> 21 </td>
-            <td class="kk" style="display: none" align="center"> 84 </td>
-            <td class="rb" style="display: none" align="center"> 28 </td>
-            <td class="ab" style="display: none" align="center"> N/A </td>
-            <td class="hh" style="display: none" align="center"> 78 </td>
-            <td align="center"> 1:30hrs </td>
-            <td> <p class="left" align="center" style ="font-size: 18px; font-family: Consolas, serif"></p> </td>
-        </tr>
-        <tr> <!-- Introductory Databases -->
-            <td> Thursday </td>
-            <td class="date">11/05/2017</td>
-            <td class="time" align="center">09:30</td>
-            <td> <a href="databases.html"> LI Introductory Databases </a> </td>
-            <td> Avon Room </td>
-            <td class="rr" style="display: none" align="center"> 210 </td>
-            <td class="sr" style="display: none" align="center"> 90 </td>
-            <td class="kk" style="display: none" align="center"> 156 </td>
-            <td class="rb" style="display: none" align="center"> 97 </td>
-            <td class="ab" style="display: none" align="center"> N/A </td>
-            <td class="hh" style="display: none" align="center"> 149 </td>
-            <td align="center"> 1:30hrs </td>
-            <td> <p class="left" align="center" style ="font-size: 18px; font-family: Consolas, serif"></p> </td>
-        </tr>
-        <tr> <!-- Professional Computing -->
-            <td> Friday </td>
-            <td class="date">12/05/2017</td>
-            <td class="time" align="center">09:30</td>
-            <td> 
-            	<a href="professionalcomputing.html"> LI Professional Computing </a>
-            	<br>
-            	<a href="ProfComp-CourseNotes.pdf"> LI Professional Computing (PDF) </a> 
-            </td>
-            <td> Great Hall </td>
-            <td class="rr" style="display: none" align="center"> 141 </td>
-            <td class="sr" style="display: none" align="center"> 21 </td>
-            <td class="kk" style="display: none" align="center"> 87 </td>
-            <td class="rb" style="display: none" align="center"> 28 </td>
-            <td class="ab" style="display: none" align="center"> N/A </td>
-            <td class="hh" style="display: none" align="center"> 80 </td>
-            <td align="center"> 1:30hrs </td>
-            <td> <p class="left" align="center" style ="font-size: 18px; font-family: Consolas, serif"></p> </td>
-        </tr>
-        <tr> <!-- Computer Systems and Architecture -->
-            <td> Monday </td>
-            <td class="date">15/05/2017</td>
-            <td class="time" align="center">09:30</td>
-            <td> <a href="CSA-CourseNotes.pdf"> LI Computer Systems and Architecture </a> </td>
-            <td> Sports Hall </td>
-            <td class="rr" style="display: none" align="center"> 332 </td>
-            <td class="sr" style="display: none" align="center"> 216 </td>
-            <td class="kk" style="display: none" align="center"> 279 </td>
-            <td class="rb" style="display: none" align="center"> 223 </td>
-            <td class="ab" style="display: none" align="center"> N/A </td>
-            <td class="hh" style="display: none" align="center"> 272 </td>
-            <td align="center"> 1:30hrs </td>
-            <td> <p class="left" align="center" style ="font-size: 18px; font-family: Consolas, serif"></p> </td>
-        </tr>
-        <tr> <!-- C/C++ -->
-            <td> Thursday </td>
-            <td class="date">18/05/2017</td>
-            <td class="time" align="center">14:00</td>
-            <td> <a href="cplusplus.html"> LI C/C++ </a> </td>
-            <td> Arts Lecture Room 2 </td>
-            <td class="rr" style="display: none" align="center"> 39 </td>
-            <td class="sr" style="display: none" align="center"> 10 </td>
-            <td class="kk" style="display: none" align="center"> 22 </td>
-            <td class="rb" style="display: none" align="center"> 11 </td>
-            <td class="ab" style="display: none" align="center"> N/A </td>
-            <td class="hh" style="display: none" align="center"> 18 </td>
-            <td align="center"> 1:30hrs </td>
-            <td> <p class="left" align="center" style ="font-size: 18px; font-family: Consolas, serif"></p> </td>
-        </tr>
-        <tr> <!-- Graphics -->
-            <td> Tuesday </td>
-            <td class="date">23/05/2017</td>
-            <td class="time" align="center">09:30</td>
-            <td> <a href="graphics.html">LI Graphics </a> </td>
-            <td> Muirhead 121 </td>
-            <td class="rr" style="display: none" align="center"> 42 </td>
-            <td class="sr" style="display: none" align="center"> 11 </td>
-            <td class="kk" style="display: none" align="center"> 32 </td>
-            <td class="rb" style="display: none" align="center"> 12 </td>
-            <td class="ab" style="display: none" align="center"> N/A </td>
-            <td class="hh" style="display: none" align="center"> 20 </td>
-            <td align="center"> 1:30hrs </td>
-            <td> <p class="left" align="center" style ="font-size: 18px; font-family: Consolas, serif"></p> </td>
-        </tr>
-        <tr> <!-- Maths -->
-            <td> Wednesday </td>
-            <td class="date">24/05/2017</td>
-            <td class="time" align="center">09:30</td>
-            <td> <a href="Maths-CourseNotes.pdf"> LI Math Techniques for Comp Sc (PDF) </a> </td>
-            <td> New Gym </td>
-            <td class="rr" style="display: none" align="center"> 197 </td>
-            <td class="sr" style="display: none" align="center"> 92 </td>
-            <td class="kk" style="display: none" align="center"> 152 </td>
-            <td class="rb" style="display: none" align="center"> 98 </td>
-            <td class="ab" style="display: none" align="center"> N/A </td>
-            <td class="hh" style="display: none" align="center"> 145 </td>
-            <td align="center"> 1:30hrs </td>
-            <td> <p class="left" align="center" style ="font-size: 18px; font-family: Consolas, serif"></p> </td>
-        </tr>
-        <tr> <!-- Intro to Computer Security -->
-            <td> Friday </td>
-            <td class="date">26/05/2017</td>
-            <td class="time" align="center">14:00</td>
-            <td> <a href="CompSec-CourseNotes.pdf"> LI Intro to Computer Security </a> </td>
-            <td> Avon Room </td>
-            <td class="rr" style="display: none" align="center"> 209 </td>
-            <td class="sr" style="display: none" align="center"> 114 </td>
-            <td class="kk" style="display: none" align="center"> 168 </td>
-            <td class="rb" style="display: none" align="center"> 119 </td>
-            <td class="ab" style="display: none" align="center"> N/A </td>
-            <td class="hh" style="display: none" align="center"> 162 </td>
-            <td align="center"> 1:30hrs </td>
-            <td> <p class="left" align="center" style ="font-size: 18px; font-family: Consolas, serif"></p> </td>
-        </tr>
-		<tr> <!-- Natural Language Processing -->
-            <td> Wednesday </td>
-            <td class="date">31/05/2017</td>
-            <td class="time" align="center">09:30</td>
-            <td> <a href="nlp.html"> LI Natural Language Processing </a> </td>
-            <td> New Gym </td>
-            <td class="rr" style="display: none" align="center"> - </td>
-            <td class="sr" style="display: none" align="center"> - </td>
-            <td class="kk" style="display: none" align="center"> 41 </td>
-            <td class="rb" style="display: none" align="center"> 14 </td>
-            <td class="ab" style="display: none" align="center"> N/A </td>
-            <td class="hh" style="display: none" align="center"> 37 </td>
-            <td align="center"> 1:30hrs </td>
-            <td> <p class="left" align="center" style ="font-size: 18px; font-family: Consolas, serif"></p> </td>
-        </tr>
-    </table>
+<br/>
+<table align="center">
+    <caption> Exam Schedule</caption>
+    <tr style="font-weight: bold;">
+        <th> Day</th>
+        <th> Date</th>
+        <th> Start Time</th>
+        <th> Exam Title</th>
+        <th> Room</th>
+        <th class="rr" style="display: none"> Seat RR</th>
+        <th class="sr" style="display: none"> Seat SR</th>
+        <th class="kk" style="display: none"> Seat KK</th>
+        <th class="rb" style="display: none"> Seat RB</th>
+        <th class="ab" style="display: none"> Seat AB</th>
+        <th class="hh" style="display: none"> Seat HH</th>
+        <th> Duration</th>
+        <th> Days left</th>
+        <th> Progress</th>
+    </tr>
+    <tr> <!-- Software Engineering 1 -->
+        <td> Tuesday</td>
+        <td class="date">02/05/2017</td>
+        <td class="time" align="center">09:30</td>
+        <td><a href="softeng.html"> LI Software Engineering 1 </a></td>
+        <td> Muirhead 121</td>
+        <td class="rr" style="display: none" align="center"> 37</td>
+        <td class="sr" style="display: none" align="center"> -</td>
+        <td class="kk" style="display: none" align="center"> -</td>
+        <td class="rb" style="display: none" align="center"> -</td>
+        <td class="ab" style="display: none" align="center"> N/A</td>
+        <td class="hh" style="display: none" align="center"> -</td>
+        <td align="center"> 1:30hrs</td>
+        <td><p class="left" align="center" style="font-weight: bold"></p></td>
+        <td>
+            <div class="parentBar">
+                <div class="childBar" value="18" max="18"></div>
+            </div>
+        </td>
+    </tr>
+    <tr> <!-- Computational Vision -->
+        <td> Thursday</td>
+        <td class="date">04/05/2017</td>
+        <td class="time" align="center">09:30</td>
+        <td><a href="vision.html">LI Computational Vision </a></td>
+        <td> Chemical Engineering 112</td>
+        <td class="rr" style="display: none" align="center"> -</td>
+        <td class="sr" style="display: none" align="center"> 5</td>
+        <td class="kk" style="display: none" align="center"> -</td>
+        <td class="rb" style="display: none" align="center"> -</td>
+        <td class="ab" style="display: none" align="center"> N/A</td>
+        <td class="hh" style="display: none" align="center"> -</td>
+        <td align="center"> 1:30hrs</td>
+        <td><p class="left" align="center" style="font-weight: bold"></p></td>
+        <td>
+            <div class="parentBar">
+                <div class="childBar" value="13" max="13"></div>
+            </div>
+        </td>
+    </tr>
+    <tr> <!-- Models of Computation -->
+        <td> Friday</td>
+        <td class="date">05/05/2017</td>
+        <td class="time" align="center">09:30</td>
+        <td><a href="models.html"> LI Models of Computation </a></td>
+        <td> New Gym</td>
+        <td class="rr" style="display: none" align="center"> 137</td>
+        <td class="sr" style="display: none" align="center"> 21</td>
+        <td class="kk" style="display: none" align="center"> 84</td>
+        <td class="rb" style="display: none" align="center"> 28</td>
+        <td class="ab" style="display: none" align="center"> N/A</td>
+        <td class="hh" style="display: none" align="center"> 78</td>
+        <td align="center"> 1:30hrs</td>
+        <td><p class="left" align="center" style="font-weight: bold"></p></td>
+        <td>
+            <div class="parentBar">
+                <div class="childBar" value="14" max="31"></div>
+            </div>
+        </td>
+    </tr>
+    <tr> <!-- Introductory Databases -->
+        <td> Thursday</td>
+        <td class="date">11/05/2017</td>
+        <td class="time" align="center">09:30</td>
+        <td><a href="databases.html"> LI Introductory Databases </a></td>
+        <td> Avon Room</td>
+        <td class="rr" style="display: none" align="center"> 210</td>
+        <td class="sr" style="display: none" align="center"> 90</td>
+        <td class="kk" style="display: none" align="center"> 156</td>
+        <td class="rb" style="display: none" align="center"> 97</td>
+        <td class="ab" style="display: none" align="center"> N/A</td>
+        <td class="hh" style="display: none" align="center"> 149</td>
+        <td align="center"> 1:30hrs</td>
+        <td><p class="left" align="center" style="font-weight: bold"></p></td>
+        <td>
+            <div class="parentBar">
+                <div class="childBar" value="11" max="11"></div>
+            </div>
+        </td>
+    </tr>
+    <tr> <!-- Professional Computing -->
+        <td> Friday</td>
+        <td class="date">12/05/2017</td>
+        <td class="time" align="center">09:30</td>
+        <td>
+            <a href="professionalcomputing.html"> LI Professional Computing </a>
+            <br>
+            <a href="ProfComp-CourseNotes.pdf"> LI Professional Computing (PDF) </a>
+        </td>
+        <td> Great Hall</td>
+        <td class="rr" style="display: none" align="center"> 141</td>
+        <td class="sr" style="display: none" align="center"> 21</td>
+        <td class="kk" style="display: none" align="center"> 87</td>
+        <td class="rb" style="display: none" align="center"> 28</td>
+        <td class="ab" style="display: none" align="center"> N/A</td>
+        <td class="hh" style="display: none" align="center"> 80</td>
+        <td align="center"> 1:30hrs</td>
+        <td><p class="left" align="center" style="font-weight: bold"></p></td>
+        <td>
+            <div class="parentBar">
+                <div class="childBar" value="100" max="100"></div>
+            </div>
+        </td>
+    </tr>
+    <tr> <!-- Computer Systems and Architecture -->
+        <td> Monday</td>
+        <td class="date">15/05/2017</td>
+        <td class="time" align="center">09:30</td>
+        <td><a href="CSA-CourseNotes.pdf"> LI Computer Systems and Architecture </a></td>
+        <td> Sports Hall</td>
+        <td class="rr" style="display: none" align="center"> 332</td>
+        <td class="sr" style="display: none" align="center"> 216</td>
+        <td class="kk" style="display: none" align="center"> 279</td>
+        <td class="rb" style="display: none" align="center"> 223</td>
+        <td class="ab" style="display: none" align="center"> N/A</td>
+        <td class="hh" style="display: none" align="center"> 272</td>
+        <td align="center"> 1:30hrs</td>
+        <td><p class="left" align="center" style="font-weight: bold"></p></td>
+        <td>
+            <div class="parentBar">
+                <div class="childBar" value="8" max="19"></div>
+            </div>
+        </td>
+    </tr>
+    <tr> <!-- C/C++ -->
+        <td> Thursday</td>
+        <td class="date">18/05/2017</td>
+        <td class="time" align="center">14:00</td>
+        <td><a href="cplusplus.html"> LI C/C++ </a></td>
+        <td> Arts Lecture Room 2</td>
+        <td class="rr" style="display: none" align="center"> 39</td>
+        <td class="sr" style="display: none" align="center"> 10</td>
+        <td class="kk" style="display: none" align="center"> 22</td>
+        <td class="rb" style="display: none" align="center"> 11</td>
+        <td class="ab" style="display: none" align="center"> N/A</td>
+        <td class="hh" style="display: none" align="center"> 18</td>
+        <td align="center"> 1:30hrs</td>
+        <td><p class="left" align="center" style="font-weight: bold"></p></td>
+        <td>
+            <div class="parentBar">
+                <div class="childBar" value="20" max="100"></div>
+            </div>
+        </td>
+    </tr>
+    <tr> <!-- Graphics -->
+        <td> Tuesday</td>
+        <td class="date">23/05/2017</td>
+        <td class="time" align="center">09:30</td>
+        <td><a href="graphics.html">LI Graphics </a></td>
+        <td> Muirhead 121</td>
+        <td class="rr" style="display: none" align="center"> 42</td>
+        <td class="sr" style="display: none" align="center"> 11</td>
+        <td class="kk" style="display: none" align="center"> 32</td>
+        <td class="rb" style="display: none" align="center"> 12</td>
+        <td class="ab" style="display: none" align="center"> N/A</td>
+        <td class="hh" style="display: none" align="center"> 20</td>
+        <td align="center"> 1:30hrs</td>
+        <td><p class="left" align="center" style="font-weight: bold"></p></td>
+        <td>
+            <div class="parentBar">
+                <div class="childBar" value="0" max="100"></div>
+            </div>
+        </td>
+    </tr>
+    <tr> <!-- Maths -->
+        <td> Wednesday</td>
+        <td class="date">24/05/2017</td>
+        <td class="time" align="center">09:30</td>
+        <td><a href="Maths-CourseNotes.pdf"> LI Math Techniques for Comp Sc (PDF) </a></td>
+        <td> New Gym</td>
+        <td class="rr" style="display: none" align="center"> 197</td>
+        <td class="sr" style="display: none" align="center"> 92</td>
+        <td class="kk" style="display: none" align="center"> 152</td>
+        <td class="rb" style="display: none" align="center"> 98</td>
+        <td class="ab" style="display: none" align="center"> N/A</td>
+        <td class="hh" style="display: none" align="center"> 145</td>
+        <td align="center"> 1:30hrs</td>
+        <td><p class="left" align="center" style="font-weight: bold"></p></td>
+        <td>
+            <div class="parentBar">
+                <div class="childBar" value="7" max="15"></div>
+            </div>
+        </td>
+    </tr>
+    <tr> <!-- Intro to Computer Security -->
+        <td> Friday</td>
+        <td class="date">26/05/2017</td>
+        <td class="time" align="center">14:00</td>
+        <td><a href="CompSec-CourseNotes.pdf"> LI Intro to Computer Security </a></td>
+        <td> Avon Room</td>
+        <td class="rr" style="display: none" align="center"> 209</td>
+        <td class="sr" style="display: none" align="center"> 114</td>
+        <td class="kk" style="display: none" align="center"> 168</td>
+        <td class="rb" style="display: none" align="center"> 119</td>
+        <td class="ab" style="display: none" align="center"> N/A</td>
+        <td class="hh" style="display: none" align="center"> 162</td>
+        <td align="center"> 1:30hrs</td>
+        <td><p class="left" align="center" style="font-weight: bold"></p></td>
+        <td>
+            <div class="parentBar">
+                <div class="childBar" value="15" max="16"></div>
+            </div>
+        </td>
+    </tr>
+    <tr> <!-- Natural Language Processing -->
+        <td> Wednesday</td>
+        <td class="date">31/05/2017</td>
+        <td class="time" align="center">09:30</td>
+        <td><a href="nlp.html"> LI Natural Language Processing </a></td>
+        <td> New Gym</td>
+        <td class="rr" style="display: none" align="center"> -</td>
+        <td class="sr" style="display: none" align="center"> -</td>
+        <td class="kk" style="display: none" align="center"> 41</td>
+        <td class="rb" style="display: none" align="center"> 14</td>
+        <td class="ab" style="display: none" align="center"> N/A</td>
+        <td class="hh" style="display: none" align="center"> 37</td>
+        <td align="center"> 1:30hrs</td>
+        <td><p class="left" align="center" style="font-weight: bold"></p></td>
+        <td>
+            <div class="parentBar">
+                <div class="childBar" value="15" max="100"></div>
+            </div>
+        </td>
+    </tr>
+</table>
 
-    <script>
-        var now = new Date().getTime();
-        var examDates = document.getElementsByClassName('date');
-        var examTimes = document.getElementsByClassName('time');
-        var examTitles = document.getElementsByClassName('left');
-        for (var i = 0; i < examDates.length; i++) {
-            var distance = new Date(formatUKDateToISO(examDates[i].innerHTML, examTimes[i].innerHTML)).getTime() - now;
-            var daysLeft = Math.floor(distance / (1000 * 60 * 60 * 24));
-            examTitles[i].innerHTML = daysLeft + "d";
-            if (daysLeft < 1 && daysLeft >= 0) {
-                examTitles[i].innerHTML = "<strong> TOMORROW! </strong> <br/> Pray and do your best!";
-            }
-            else if (distance < 0) {
-                examTitles[i].innerHTML = "<strong> DONE! </strong>";
-            }
+<script> // Back end
+    var now = new Date().getTime();
+    var examDates = document.getElementsByClassName('date');
+    var examTimes = document.getElementsByClassName('time');
+    var examTitles = document.getElementsByClassName('left');
+    for (var i = 0; i < examDates.length; i++) {
+        var distance = new Date(formatUKDateToISO(examDates[i].innerHTML, examTimes[i].innerHTML)).getTime() - now;
+        var daysLeft = Math.floor(distance / (1000 * 60 * 60 * 24));
+        examTitles[i].innerHTML = daysLeft + "d";
+        if (daysLeft < 1 && daysLeft >= 0) {
+            examTitles[i].innerHTML = "<strong> TOMORROW! </strong> <br/> Pray and do your best!";
         }
-
-        function formatUKDateToISO(date,time) {
-            var d = date.split("/");
-            var day = d[0];
-            var month = d[1];
-            var year = d[2];
-            return month + "/" + day + "/" + year + " " + time + ":00";
+        else if (distance < 0) {
+            examTitles[i].innerHTML = "<strong> DONE! </strong>";
         }
+    }
 
-        // For revision time table
-        var opened = false;
-        function openPaper() {
-            if (!opened) { document.getElementById("paper").innerHTML='<iframe width="100%" height="800px" src="https://www.cs.bham.ac.uk/internal/timetables/TT-Yr2-RW.pdf" allowfullscreen>Your browser does not support iFrames.</iframe>'; opened = true; }
+    function formatUKDateToISO(date, time) {
+        var d = date.split("/");
+        var day = d[0];
+        var month = d[1];
+        var year = d[2];
+        return month + "/" + day + "/" + year + " " + time + ":00";
+    }
+
+    // For revision time table
+    var opened = false;
+    function openPaper() {
+        if (!opened) {
+            document.getElementById("paper").innerHTML = '<iframe width="100%" height="800px" src="https://www.cs.bham.ac.uk/internal/timetables/TT-Yr2-RW.pdf" allowfullscreen>Your browser does not support iFrames.</iframe>';
+            opened = true;
         }
-    </script>
-    <hr/>
+    }
+</script>
+<hr/>
 
-    Click on respective Exam Titles to view its notes.
+Click on respective Exam Titles to view its notes.
 
-    <h3 align="center"> Revision Week Timetable (<a href="https://www.cs.bham.ac.uk/internal/timetables/TT-Yr2-RW.pdf" download>Download</a>) </h3>
-    <div align="" id="paper" style="display: inline-block; width: 100%; height: 800px; border: 1px solid black;" onclick="openPaper();"><p style="width: 100%; height: 100%; display: table-cell;vertical-align: middle; text-align: center"> Click this box to load PDF </p></div>
+<h3 align="center"> Revision Week Timetable (<a href="https://www.cs.bham.ac.uk/internal/timetables/TT-Yr2-RW.pdf"
+                                                download>Download</a>) </h3>
+<div align="" id="paper" style="display: inline-block; width: 100%; height: 800px; border: 1px solid black;"
+     onclick="openPaper();"><p
+        style="width: 100%; height: 100%; display: table-cell;vertical-align: middle; text-align: center"> Click this
+    box to load PDF </p></div>
 
 </body>
 </html>
