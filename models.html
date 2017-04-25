@@ -5,8 +5,35 @@
     <title> Models of Computation </title>
     <style type="text/css">
         body {
-            background-color: #fbffd8;
-            font-family: "Georgia", serif;
+            font-family: "Century Gothic", serif;
+            margin: 50px;
+        }
+
+        h1 {
+            color: #2e4566;
+        }
+
+        h2 {
+            text-decoration: underline;
+            color: #2f5496;
+        }
+
+        h3 {
+            color: #5b9bd5;
+        }
+
+        h4 {
+            font-weight: normal;
+            color: #70c4f5;
+        }
+
+        hr {
+            border-color: #59a7ea;
+        }
+
+        keyword {
+            color: #c976c6;
+            font-weight: bold;
         }
 
         ol > li {
@@ -21,7 +48,7 @@
             z-index: 99;
             border: none;
             outline: none;
-            background-color: red;
+            background-color: #3460a9;
             color: white;
             cursor: pointer;
             padding: 15px;
@@ -40,7 +67,7 @@
             z-index: 99;
             border: none;
             outline: none;
-            background-color: red;
+            background-color: #3460a9;
             color: white;
             cursor: pointer;
             padding: 15px;
@@ -54,28 +81,30 @@
 </head>
 <body>
 <hr/>
-<h1> LI Models of Computation </h1>
+<h1 align="center"> LI Models of Computation </h1>
+<p align="center"> Template and style original: <keyword>Rhys Barrett</keyword>. </p>
+
 <hr/>
-Table of Contents
+Table of Contents (<a href="#" onclick="var expanded=this.innerHTML==='expand'; var subtopics=document.getElementsByClassName('subtopic'); for (var i = 0; i < subtopics.length; i++) { subtopics[i].style.display=(expanded ? '' : 'none'); } this.innerHTML=(expanded ? 'collapse' : 'expand');">expand</a>)
 <ol>
-    <li> <a href="#fsa"> Language and Automata </a> <ul>
+    <li> <a href="#fsa"> Language and Automata </a> <ul class="subtopic" style="display: none">
         <li> <a href="#fsa1"> Problems and Computers </a> </li>
         <li> <a href="#fsa2"> Regular Expression </a> </li>
         <li> <a href="#fsa3"> Finite State Automaton</a> </li>
         <li> <a href="#fsa4"> Bisimulation </a> </li>
     </ul> </li>
-    <li> <a href="#dec"> Decidability </a> <ul>
+    <li> <a href="#dec"> Decidability </a> <ul class="subtopic" style="display: none">
         <li> <a href="#dec1"> Decision Problems </a> </li>
         <li> <a href="#dec2"> The Halting Theorem </a> </li>
         <li> <a href="#dec3"> Properties of Code </a> </li>
     </ul></li>
-    <li> <a href="#tm"> Turing Machines </a> <ul>
+    <li> <a href="#tm"> Turing Machines </a> <ul class="subtopic" style="display: none">
         <li> <a href="#tm1"> Executing TMs </a> </li>
         <li> <a href="#tm2"> Designing TMs </a> </li>
         <li> <a href="#tm3"> Extensions of TMs </a> </li>
         <li> <a href="#tm4"> Church's Thesis </a> </li>
     </ul></li>
-    <li> <a href="#comp"> Complexity </a> <ul>
+    <li> <a href="#comp"> Complexity </a> <ul class="subtopic" style="display: none">
         <li> <a href="#comp1"> Complexity of Algorithms </a> </li>
         <li> <a href="#comp2"> Complexity of Problems </a> </li>
         <li> <a href="#comp3"> O notation </a> </li>
@@ -83,7 +112,7 @@ Table of Contents
         <li> <a href="#comp5"> NP-complete Problems </a> </li>
         <li> <a href="#comp6"> Satisfiability </a> </li>
     </ul></li>
-    <li> <a href="#lambda"> Lambda Calculus </a> <ul>
+    <li> <a href="#lambda"> Lambda Calculus </a> <ul class="subtopic" style="display: none">
         <li> <a href="#lambda1"> Lambda Application </a> </li>
         <li> <a href="#lambda2"> Evaluating Expressions </a> </li>
         <li> <a href="#lambda3"> Typed Lambda Calculus </a> </li>
@@ -94,8 +123,8 @@ Table of Contents
 
 <hr/>
 
-<h3 id="fsa"> Languages and Automata </h3>
-<h4 id="fsa1"> Problems and Computers </h4>
+<h2 id="fsa"> Languages and Automata </h2>
+<h3 id="fsa1"> Problems and Computers </h3>
 <p> <em> This module is about problems and computers, except for the last part which is about &lambda;-calculus. </em> </p>
 
 <p> Some questions that we can ask ourselves: </p>
@@ -108,7 +137,7 @@ Table of Contents
     <li> etc.. </li>
 </ul>
 
-<h4> Language Membership Problems </h4>
+<h3> Language Membership Problems </h3>
 Suppose that we have a set of characters, the alphabet &Sigma;. <br/>
 A word (or string) is a finite sequence of characters. <br/> We write &Sigma;* for the set of all words. We can concatenate words. <br/>
 The empty word is written as &epsilon;. <br/>
@@ -121,7 +150,7 @@ A language is a set of words, which means that it is a subset of &Sigma;*. <br/>
     <img src="images/models/fsa2.JPG"/> <br/>
     In all of these examples, somebody has provided a word and we want to know whether it is an acceptable word. Ideally, we want a computer program that will tell us. </p>
 
-<h4 id="fsa2"> Regular Expressions </h4>
+<h3 id="fsa2"> Regular Expressions </h3>
 <p> Every regular expression gives rise to a language &ndash; a <em> regular language </em>. Some useful notations for describing languages: </p>
 <ul>
     <li> We write <em> Empty </em> for the language consisting of no words, or the empty set. </li>
@@ -163,7 +192,7 @@ A language is a set of words, which means that it is a subset of &Sigma;*. <br/>
 <p> Here are a few common abbreviations, it is optional to use these. <br/> <img src="images/models/fsa3.JPG"/> </p>
 
 
-<h3 id="fsa3"> Finite State Automaton </h3>
+<h2 id="fsa3"> Finite State Automaton </h2>
 <p> A finite state automaton over &Sigma; is </p>
 <ul>
     <li> a finite set &Qopf; of states (<em> nodes </em>) </li>
@@ -193,13 +222,13 @@ A language is a set of words, which means that it is a subset of &Sigma;*. <br/>
     However, if it is an infinite sequence of distinctive words, then there will be no DFA, and by Kleene's theorem the language is not regular. (<em>Myhill-Nerode Theorem</em>)<br/> </p>
 <p> Also by the use of <strong> pumping lemma</strong>, which says that for any regular language L there exists a constant p such that any word w in L with length at least p can eb split into three substrings, w = xyz, where the middle portion of y must not be empty, such that the words xz, xyz, xyyz, xyyyz, ... constructed by repeating y zero or more times are still in L. The repetition process is called "pumping". Moreover, the pumping lemma guarantees that the length of xy will be at most p, imposing a limit on the way in which w may be split. Finite languages trivially satisfy the pumping lemma by having p equal to the maximum string length in L plus one. </p>
 
-<h4 id="fsa4"> Bisimulation </h4>
+<h3 id="fsa4"> Bisimulation </h3>
 <p> An <em> unpointed automaton </em> is one that has no initial state. <br/> A <strong> bisimulation </strong> between unpointed total deterministic automata (&Qopf;, &sigma;, Acc) and (&Qopf;', &sigma;', Acc') with the same alphabet L is a relation R &subseteq; &Qopf; &times; &Qopf;' such that if <em> qRq' </em> and a &epsi; L then &sigma;(q,a)R&sigma;'(q',a), and if <em> qRq' </em> then q &epsi; Acc iff q' &epsi; Acc'. <br/>
     Suppose that we have to unpointed automata for the same alphabet L. Then a state <em>q<sub>0</sub></em> &epsi; Q is bisimilar to a state <em>q'<sub>0</sub></em> if and only if they accept the same language. To prove this, show that for any word <em> w </em>, if <em>qRq'</em> then <em> q </em> accepts <em> w </em> if and only if <em> q' </em> accepts <em> w</em>. This is by induction on <em> w</em>. </p>
 
 <p> The theorem is that two states accept the same language iff they are bisimilar. </p>
 
-<h4 id="fsa5"> Minimisation </h4>
+<h3 id="fsa5"> Minimisation </h3>
 <p> To minimise an automaton means to throw away unreachable states and to identify bisimilar states. </p>
 <ol>
     <li> Draw a table for all pairs of states (P,Q) </li>
@@ -210,19 +239,19 @@ A language is a set of words, which means that it is a subset of &Sigma;*. <br/>
 
 <hr/>
 
-<h3 id="dec"> Decidability </h3>
+<h2 id="dec"> Decidability </h2>
 
 <hr/>
 
-<h3 id="tm"> Turing Machines </h3>
+<h2 id="tm"> Turing Machines </h2>
 
 <hr/>
 
-<h3 id="comp"> Complexity </h3>
+<h2 id="comp"> Complexity </h2>
 
 <hr/>
 
-<h3 id="lambda"> Lambda Calculus </h3>
+<h2 id="lambda"> Lambda Calculus </h2>
 <p>&lambda;-calculus is a calculus of functions</p>
 <p><em>"&lambda;x"</em> means <em>"the function that maps x to "</em></p>
 <p>Juxtaposition means application</p>
@@ -446,7 +475,7 @@ takes arguments x:int and y:int and returns x + 17 * y<br> We represent it as:</
 
 <hr/>
 
-<h3 id="papers"> Past Papers </h3>
+<h2 id="papers"> Past Papers </h2>
 
 <hr/>
 <!-- Utils -->
