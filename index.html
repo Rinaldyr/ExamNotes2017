@@ -32,6 +32,11 @@
             border-color: #59a7ea;
         }
 
+        keyword {
+            color: #c976c6;
+            font-weight: bold;
+        }
+
         .parentBar {
             width: 125px;
             border-radius: 30px;
@@ -112,7 +117,7 @@
             if (username !== "") {
                 document.getElementById("name").addEventListener("load", change(username, false));
             } else {
-                username = prompt("Hi, how may I address you? (e.g. Rinaldy)", "");
+                username = prompt("Hi, how may I address you? (e.g. Rinaldy)\n\nNote: Clicking OK will save cookies in your browser.");
                 if (username !== "" && username !== null) {
                     setCookie("username", username, 365);
                 }
@@ -120,19 +125,43 @@
             }
         }
 
+        function getUsername(name) {
+            return (name.toLowerCase().indexOf("rinaldy") !== -1 ? "rr" : name.toLowerCase().indexOf("siv") !== -1 ? "sr" : name.toLowerCase().indexOf("karanvir") !== -1 ? "kk" : name.toLowerCase().indexOf("rhys") !== -1 ? "rb" : name.toLowerCase().indexOf("ahmed") !== -1 ? "ab" : name.toLowerCase().indexOf("harvey") !== -1 ? "hh" : "guest");
+        }
+
         function change(name, firstTime) {
             if (name !== null) {
-                var username = (name.toLowerCase().indexOf("rinaldy") !== -1 ? "rr" : name.toLowerCase().indexOf("siv") !== -1 ? "sr" : name.toLowerCase().indexOf("karanvir") !== -1 ? "kk" : name.toLowerCase().indexOf("rhys") !== -1 ? "rb" : name.toLowerCase().indexOf("ahmed") !== -1 ? "ab" : name.toLowerCase().indexOf("harvey") !== -1 ? "hh" : "wtf");
+                var username = getUsername(name);
 
                 var message = "";
-                if (firstTime) {
-                    message = "Welcome, <strong>" + name + "</strong>!";
-                } else message = "Welcome back, <strong>" + name + "</strong>!";
-                document.getElementById("name").innerHTML = message;
+                if (firstTime) message = "Welcome, <strong>" + name + "</strong>!";
+                else message = "Welcome back, <strong>" + name + "</strong>!";
+
+                if (username !== 'guest') document.getElementById('caption').innerHTML = "<keyword>Exam Schedule</keyword> (<a href=\"#!\" onclick=\"if (this.innerHTML === 'Show all') { toggleModules(false); this.innerHTML = 'Hide'; } else { toggleModules(true); this.innerHTML = 'Show all'; }\">Show all</a>)";
+
+                document.getElementById('name').innerHTML = message;
 
                 var seats = document.getElementsByClassName(username);
+                var modules = document.getElementsByClassName('module');
                 for (var i = 0; i < seats.length; i++) {
                     seats[i].style.display = '';
+                    if (seats[i].innerHTML === ' -') modules[i].style.display = 'none';
+                }
+            }
+        }
+
+        function toggleModules(justYours) {
+            var username = getUsername(getCookie("username"));
+            var seats = document.getElementsByClassName(username);
+            var modules = document.getElementsByClassName('module');
+            if (justYours) {
+                for (var j = 1; j < seats.length; j++) {
+                    if (seats[j].innerHTML === ' -')
+                        modules[j].style.display = 'none';
+                }
+            } else {
+                for (var i = 1; i < seats.length; i++) {
+                    modules[i].style.display = '';
                 }
             }
         }
@@ -161,8 +190,8 @@
 <hr/>
 <br/>
 <table align="center">
-    <caption> Exam Schedule</caption>
-    <tr style="font-weight: bold;">
+    <caption id="caption"><keyword>Exam Schedule</keyword></caption>
+    <tr class="module" style="font-weight: bold;">
         <th> Day</th>
         <th> Date</th>
         <th> Start Time</th>
@@ -175,10 +204,10 @@
         <th class="ab" style="display: none"> Seat AB</th>
         <th class="hh" style="display: none"> Seat HH</th>
         <th> Duration</th>
-        <th> Days left</th>
+        <th> Days Left</th>
         <th> Progress</th>
     </tr>
-    <tr> <!-- Software Engineering 1 -->
+    <tr class="module"> <!-- Software Engineering 1 -->
         <td> Tuesday</td>
         <td class="date">02/05/2017</td>
         <td class="time" align="center">09:30</td>
@@ -198,7 +227,7 @@
             </div>
         </td>
     </tr>
-    <tr> <!-- Computational Vision -->
+    <tr class="module"> <!-- Computational Vision -->
         <td> Thursday</td>
         <td class="date">04/05/2017</td>
         <td class="time" align="center">09:30</td>
@@ -218,7 +247,7 @@
             </div>
         </td>
     </tr>
-    <tr> <!-- Models of Computation -->
+    <tr class="module"> <!-- Models of Computation -->
         <td> Friday</td>
         <td class="date">05/05/2017</td>
         <td class="time" align="center">09:30</td>
@@ -238,7 +267,7 @@
             </div>
         </td>
     </tr>
-    <tr> <!-- Introductory Databases -->
+    <tr class="module"> <!-- Introductory Databases -->
         <td> Thursday</td>
         <td class="date">11/05/2017</td>
         <td class="time" align="center">09:30</td>
@@ -258,7 +287,7 @@
             </div>
         </td>
     </tr>
-    <tr> <!-- Professional Computing -->
+    <tr class="module"> <!-- Professional Computing -->
         <td> Friday</td>
         <td class="date">12/05/2017</td>
         <td class="time" align="center">09:30</td>
@@ -282,11 +311,11 @@
             </div>
         </td>
     </tr>
-    <tr> <!-- Computer Systems and Architecture -->
+    <tr class="module"> <!-- Computer Systems and Architecture -->
         <td> Monday</td>
         <td class="date">15/05/2017</td>
         <td class="time" align="center">09:30</td>
-        <td><a href="CSA-CourseNotes.pdf"> LI Computer Systems and Architecture </a></td>
+        <td><a href="CSA-CourseNotes.pdf"> LI Computer Systems and Architecture (PDF) </a></td>
         <td> Sports Hall</td>
         <td class="rr" style="display: none" align="center"> 332</td>
         <td class="sr" style="display: none" align="center"> 216</td>
@@ -302,7 +331,7 @@
             </div>
         </td>
     </tr>
-    <tr> <!-- C/C++ -->
+    <tr class="module"> <!-- C/C++ -->
         <td> Thursday</td>
         <td class="date">18/05/2017</td>
         <td class="time" align="center">14:00</td>
@@ -322,7 +351,7 @@
             </div>
         </td>
     </tr>
-    <tr> <!-- Graphics -->
+    <tr class="module"> <!-- Graphics -->
         <td> Tuesday</td>
         <td class="date">23/05/2017</td>
         <td class="time" align="center">09:30</td>
@@ -342,7 +371,7 @@
             </div>
         </td>
     </tr>
-    <tr> <!-- Maths -->
+    <tr class="module"> <!-- Maths -->
         <td> Wednesday</td>
         <td class="date">24/05/2017</td>
         <td class="time" align="center">09:30</td>
@@ -362,11 +391,11 @@
             </div>
         </td>
     </tr>
-    <tr> <!-- Intro to Computer Security -->
+    <tr class="module"> <!-- Intro to Computer Security -->
         <td> Friday</td>
         <td class="date">26/05/2017</td>
         <td class="time" align="center">14:00</td>
-        <td><a href="CompSec-CourseNotes.pdf"> LI Intro to Computer Security </a></td>
+        <td><a href="CompSec-CourseNotes.pdf"> LI Intro to Computer Security (PDF) </a></td>
         <td> Avon Room</td>
         <td class="rr" style="display: none" align="center"> 209</td>
         <td class="sr" style="display: none" align="center"> 114</td>
@@ -382,7 +411,7 @@
             </div>
         </td>
     </tr>
-    <tr> <!-- Natural Language Processing -->
+    <tr class="module"> <!-- Natural Language Processing -->
         <td> Wednesday</td>
         <td class="date">31/05/2017</td>
         <td class="time" align="center">09:30</td>
