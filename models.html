@@ -97,6 +97,7 @@ Table of Contents (<a href="#" onclick="var expanded=this.innerHTML==='expand'; 
         <li> <a href="#dec1"> Decision Problems </a> </li>
         <li> <a href="#dec2"> The Halting Theorem </a> </li>
         <li> <a href="#dec3"> Properties of Code </a> </li>
+        <li> <a href="#dec4"> Rice’s Theorem </a> </li>
     </ul></li>
     <li> <a href="#tm"> Turing Machines </a> <ul class="subtopic" style="display: none">
         <li> <a href="#tm1"> Executing TMs </a> </li>
@@ -240,7 +241,98 @@ A language is a set of words, which means that it is a subset of &Sigma;*. <br/>
 <hr/>
 
 <h2 id="dec"> Decidability </h2>
-
+<h3 id="dec1"> Problems </h3>
+<p>Every problem has an input and output and can also be called a function.</p>
+<p>We don&rsquo;t consider problems where the set of inputs is finite as this can be solved via a table hence a computer isn&rsquo;t required. We only consider problems where the set of inputs is a countably infinite set which in turn means the set of acceptable outputs is also a countably infinite set.</p>
+<p>Decision Problem - A problem whose result is either yes or no.</p>
+<p>If the set of inputs is the set of words over some alphabet, this subset is a language</p>
+<p>For example if we have the problem &ldquo;given a positive integer, is it prime?&rdquo; which is essentially the function that maps a positive integer to &ldquo;True&rdquo; if it&rsquo;s prime and &ldquo;False&rdquo; otherwise. Which means the set of acceptable outputs is the subset of the set of positive integers consisting of all prime numbers.</p>
+<p>A decision problem is decidable when it can be solved on a computer</p>
+<p>A function is computable when it can be computed by a computer</p>
+<p>A subset of a set of inputs (eg a language) is decidable when the decision problem associated to it can be solved on a computer</p>
+<p>For example &ldquo;Given a n*n*n*n Sudoku problem, find a solution if it exists otherwise return None&rdquo; is not a decision problem as there are is a finite set of inputs.</p>
+<p>If we can solve problem Q using a black box that solves problem P, we&rsquo;ve reduced problem Q to problem P. In this situation if P is decidable then so is Q, if Q is undecidable then so is P.<br /><br /></p>
+<h3 id="dec2"> The Halting Problem </h3>
+<p>The Halting problem is &ldquo;given a nullary program does it terminate or not?&rdquo; Turing proved the halting problem to be undecidable.</p>
+<p>Proof:</p>
+<p>Assume the halting problem is decidable</p>
+<p>&nbsp;</p>
+<ol>
+    <li>Now consider the unary halting problem: given a unary Java method</li>
+</ol>
+<p style="padding-left: 60px;"><strong>void f (String x) {</strong></p>
+<p style="padding-left: 60px;"><strong>&nbsp;&nbsp;...</strong></p>
+<p style="padding-left: 60px;"><strong>}</strong></p>
+<p style="padding-left: 60px;">and a string <strong>y</strong>, does <strong>f </strong>terminate when called with argument <strong>y</strong>?</p>
+<p style="padding-left: 60px;">We can reduce the unary halting problem to the nullary halting problem.</p>
+<p style="padding-left: 60px;">Replace x in the body of <strong>f</strong> by the string <strong>y</strong>. That gives a nullary program, which terminates iff <strong>f</strong> terminates when called with argument <strong>y</strong>. So the unary halting problem is decidable.</p>
+<p style="padding-left: 60px;">That means there is a Java program:</p>
+<p style="padding-left: 60px;"><strong>boolean haltcheck (String somemethod, String y) {</strong></p>
+<p style="padding-left: 60px;"><strong>&nbsp; &hellip;</strong></p>
+<p style="padding-left: 60px;"><strong>}</strong><br /> where <strong>somemethod </strong>is the body of a unary method (<strong>M</strong>). When applied to <strong>M</strong> and<strong> y</strong>, this method returns true <strong>M</strong> applied to <strong>y </strong>terminates, otherwise it returns false.</p>
+<ol start="2">
+    <li>Next we turn this into a program</li>
+</ol>
+<p style="padding-left: 60px;"><strong>void hangcheck (String somemethod, String y) {</strong></p>
+<p style="padding-left: 60px;"><strong>&nbsp;&nbsp; if haltcheck (somemethod, y) {</strong></p>
+<p style="padding-left: 60px;"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while true {}</strong></p>
+<p style="padding-left: 60px;"><strong>&nbsp;&nbsp; } else {</strong></p>
+<p style="padding-left: 60px;"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return;</strong></p>
+<p style="padding-left: 60px;"><strong>&nbsp;&nbsp; }</strong></p>
+<p style="padding-left: 60px;"><strong>}</strong></p>
+<p style="padding-left: 60px;">This method, when applied to M and y, hangs if M and applied to y terminates, otherwise it returns.</p>
+<ol start="3">
+    <li>Next we turn this into a program<br /><br /> <strong>&nbsp; &nbsp; &nbsp;void doublehang (String y) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; haltcheck(y,y)<br />&nbsp; &nbsp; &nbsp;}</strong><br />&nbsp; &nbsp; &nbsp;This method, when applied to y (the body of a unary method), will hang if y applied to y terminates, otherwise it returns.<br /><br /></li>
+    <li>Finally let z be the body of <strong>doublehang</strong>. We see that <strong>doublehang</strong>, when applied to z, terminates iff it hangs. Contradiction, hence the halting problem (for java) is (Java-)undecidable</li>
+</ol>
+<p>&nbsp;</p>
+<h3 id="dec3"> Properties of code </h3>
+<p>You can have any property such as Greenness (a method is green when, applied to any even integer, it returns an odd integer) then check whether methods are green.</p>
+<p>For example the following method is green:</p>
+<p>int jim (int x) {</p>
+<p>&nbsp;&nbsp; if (x == 5) {</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;return 10;</p>
+<p>&nbsp; &nbsp;} else if (x == 7) {</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;while (true) {}</p>
+<p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;return 8;</p>
+<p>&nbsp; &nbsp;} else {</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;return 4*x + 7;</p>
+<p>&nbsp; &nbsp;}</p>
+<p>}</p>
+<p>But the following method isn&rsquo;t green:</p>
+<p>int alwayshang (int x) {</p>
+<p>&nbsp;&nbsp;&nbsp; while (true) {}</p>
+<p>&nbsp;&nbsp;&nbsp; return 13;</p>
+<p>}&nbsp;</p>
+<p>We can show that greenness is undecidable. For a nullary program P, let G(P) be the following method:</p>
+<p>int gp (int x) {</p>
+<p>&nbsp;&nbsp;&nbsp; P();</p>
+<p>&nbsp;&nbsp;&nbsp; if (x == 5) {</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 10;</p>
+<p>&nbsp;&nbsp;&nbsp; } else if (x == 7) {</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while (true) {}</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 8;</p>
+<p>&nbsp;&nbsp;&nbsp; } else {</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 4*x + 7;</p>
+<p>&nbsp;&nbsp;&nbsp; }</p>
+<p>}</p>
+<p>We can see that if P terminates then G(P) is green, whereas if P doesn&rsquo;t terminate then G(P) is not green. So if we can test for greenness, then we can test whether P terminates by testing whether G(P) is green. We can&rsquo;t test whether P terminates, so we can&rsquo;t test for greenness, i.e. greenness is undecidable</p>
+<p>&nbsp;</p>
+<p><strong>Semantic Properties</strong></p>
+<p>If P terminates then G(P) is green. This is due to the methods G(P) and jim having the same semantics.</p>
+<p>Int f (int x) {</p>
+<p>&nbsp;&nbsp;&nbsp; &hellip;</p>
+<p>}</p>
+<p>Is the partial function from Z (the set of ints) to Z that it computes. Therefore, since jim is green, G(P) is too. If P hangs, then G(P) is not green. That&rsquo;s because G(P) and alwayshang have the same semantics (the empty partial function). Therefore since alwayshang isn&rsquo;t green, neither is G(P). We can summarize this all by saying greenness is a semantic property.</p>
+<p>&nbsp;</p>
+<h3 id="dec4"> Rice&rsquo;s Theorem </h3>
+<p>Rice&rsquo;s Theorem: every nontrivial semantic property of code is undecidable</p>
+<p>A trivial property is one that either holds of everything or holds of nothing</p>
+<p>If we say that a method, such as:</p>
+<p>int f (int x) {</p>
+<p>&nbsp;&nbsp;&nbsp; ...</p>
+<p>}</p>
+<p>is yellow if, when applied to an integer n, it either hangs or returns an integer y that is a factor of 3y. Yellowness is a trivial property, because every method is yellow. Clearly every trivial property is decidable.</p>
 <hr/>
 
 <h2 id="tm"> Turing Machines </h2>
