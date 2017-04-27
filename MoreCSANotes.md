@@ -103,9 +103,13 @@ Any natural number can be represented in binary but there are practical limitati
 Keep dividing by 2 to deduce the least significant bit.
 
 24/2 = 12 remainder 0
+
 12/2 = 6 remainder 0
+
 6/2 = 3 remainder 0
+
 3/2 = 1 remainder 1
+
 1/2 = 1 remainder 1
 
 24 base 10 = 11000 base 2
@@ -114,12 +118,19 @@ Keep dividing by 2 to deduce the least significant bit.
 Mutliplying by 2 and take integer part of the result.
 
 0.142 * 2 = 0.284
+
 0.284 * 2 = 0.568
+
 0.568 * 2 = 1.136
+
 1.136 * 2 = 0.272
+
 0.272 * 2 = 0.544
+
 0.544 * 2 = 1.088
+
 1.088 * 2 = 0.176
+
 0.176 * 2 = 0.352
 
 0.142 base 10 = 0.00100100 base 2
@@ -135,8 +146,11 @@ Adding 11111111111... to any number is equivalent to adding -1.
 2. Add 1 to the least significant bit.
 
 Subtraction example 7-15:
+
 (00111 - 01111)
+
 Convert the 7 into it's two's complement and add
+
 (00111 + 10001) = 11000.
 
 Leading digit is 1 so it is negative. Convert to two's complement gives us 8.
