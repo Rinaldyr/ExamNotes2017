@@ -1,4 +1,6 @@
 # CSA Notes
+See CSA-CourseNotes.pdf for content not covered in these notes
+
 ----
 # Miroarchitecture
 ## MIPS Datapath
@@ -90,3 +92,59 @@ Few null microinstructions whilst awaiting data.
 When data ready, microinstruction that configures registeres for writing is issued.
 
 Structure if microcode same as program code. But instead of being stores in RAM, it is stored in ROM (Read only memory). Not accessible or modifiable by the programmer. 
+
+----
+
+# Number Representation
+### Unsigned integers
+Any natural number can be represented in binary but there are practical limitations. Computers break data into 32-bit or 64-bit chunks (words) and this limits the maximum size of numbers. With n bits, we can store from 0 to 2^n - 1. 
+
+**Converting from base 10 to base 2:**
+Keep dividing by 2 to deduce the least significant bit.
+
+24/2 = 12 remainder 0
+12/2 = 6 remainder 0
+6/2 = 3 remainder 0
+3/2 = 1 remainder 1
+1/2 = 1 remainder 1
+
+24 base 10 = 11000 base 2
+### Unsigned fixed point
+**Converting from base 10 to base 2:**
+Mutliplying by 2 and take integer part of the result.
+
+0.142 * 2 = 0.284
+0.284 * 2 = 0.568
+0.568 * 2 = 1.136
+1.136 * 2 = 0.272
+0.272 * 2 = 0.544
+0.544 * 2 = 1.088
+1.088 * 2 = 0.176
+0.176 * 2 = 0.352
+
+0.142 base 10 = 0.00100100 base 2
+
+
+### Signed integers/fixed point: two's complements
+Naivie solution to negative numbers is to add extra bit for sign. This is suboptimal and inefficient - it would also require different hardware for subtraction.
+Adding 11111111111... to any number is equivalent to adding -1.
+01011010 and 10100110 add to 0 so they are the negative of each other. They are called each other's two's complement.
+
+**To form a number's two's complement:**
+1. Invert all bits.
+2. Add 1 to the least significant bit.
+
+Subtraction example 7-15:
+(00111 - 01111)
+Convert the 7 into it's two's complement and add
+(00111 + 10001) = 11000.
+
+Leading digit is 1 so it is negative. Convert to two's complement gives us 8.
+# Digital Logic
+### Logic gates
+### Combinational Logic
+### Building CPU components
+# Clocked logic
+### Memory and Flip-flops
+### State machines
+
