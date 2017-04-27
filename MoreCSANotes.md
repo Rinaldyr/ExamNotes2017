@@ -4,6 +4,7 @@
 ## MIPS Datapath
 The Datapath is a collection of functional unit which implement the instruction set.
 Each unit has a specific purpose.
+
 Unit | Description
 --- | ---
 Registers | Storing data
@@ -43,9 +44,11 @@ Need R/W access to registers, R/W access to memory and be able to use ALU to cal
 Address may be offset but offset is 16-bits whereas base address is 32-bits. 
 Therefore, sign extension unit used to perform malipulation to translate offset (not so trivial due to negative offsets using two's complement representation).
 ### Branches and Jumps
+
 Opcode | Base Address | Src/Dest | Address Offset
 --- | --- | --- | --- 
 6 | 5 | 5 | 10 
+
 Computation for `beq`: Compare the contents of the 2 registers specified. If they are equal, add the specified offset to the PC. Otherwise, the PC is incremented by 4 as normal.
 16-bit offset is used but we need to extend to 32-bits. Therefore ALU is used for comparison and dedicated adder used for calculating new address. 
 ### Integration & Multiplexing
