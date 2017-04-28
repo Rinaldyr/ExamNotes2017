@@ -349,8 +349,9 @@ A language is a set of words, which means that it is a subset of &Sigma;*. <br/>
 <p> <keyword>Turing Machines</keyword> are simple computers, except for their <keyword>infinite tape</keyword>. They can be said to be the simplest kind of computer that can be devised without sacrificing power. </p>
 <img src="images/models/tm8.JPG"/>
 
-<p> A Turing machine consists of finitely many states on a tape. The machine has a <keyword>head</keyword> that sits over one space of the tape. </p>
+<p> A Turing machine consists of finitely many states on a tape. The machine  The machine:</p>
 <ul>
+    <li> Has a <keyword>head</keyword> that sits over one space of the tape.</li>
     <li> Has an <keyword>alphabet</keyword> <em>T</em>. Each space contains one character from <em>T</em>.</li>
     <li> Has a <keyword>blank</keyword> &bbrk; character which is &bbrk; &isin; <em>T</em>. This represents <strong>all finite blank spaces</strong> on the tape.</li>
 </ul>
@@ -422,12 +423,64 @@ A language is a set of words, which means that it is a subset of &Sigma;*. <br/>
 </ul>
 
 <h3 id="tm4"> 3.4 &ndash; Extension to Turing Machines </h3>
+<h4> Extending the Band Alphabet </h4>
+<p> By <keyword>extending</keyword> the alphabet and making some alterations, programming with Turing machines will be much simpler, but it <keyword>does not</keyword> make it any more powerful. These are for <strong>convenience</strong> only. </p>
 
+<p> To convert a <strong>fancy</strong> TM into a <strong>simple</strong> TM that computes the <keyword>same function</keyword>: </p>
+<ol>
+    <li> <keyword>Give a relation</keyword> between configurations of fancy TM and configurations of simple TM. Usually this relation is a function.</li>
+    <li> <strong>Setting-Up</strong> &ndash; <keyword>Convert</keyword> the initial configuration of the simple TM into the translation of the corresponding initial configuration of the fancy TM.</li>
+    <li> For each instruction of the fancy TM, say how to <keyword>simulate</keyword> it in the simple TM as <strong>macros</strong>.</li>
+    <li> <strong>Finishing-off</strong> &ndash; <keyword>Convert</keyword> the result of the fancy TM to a result of the simple TM.</li>
+</ol>
 
+<p> <strong>Configuration</strong> of TM is: </p>
+<ul>
+    <li> State of the head</li>
+    <li> Contents of the tape</li>
+    <li> Position of the head</li>
+</ul>
 
+<p> Hence, a summary to translate a fancy Tm into a simple TM in a diagram:</p>
+<img src="images/models/tm9.JPG"/>
 
+<h4> Multitape Turing Machines </h4>
+<p> This variant has <keyword>several tapes</keyword>, each with its own <keyword>read/write head</keyword>. </p>
+<p> The idea is to <keyword>interleave</keyword> the contents of the two tapes on a single tape, as in the following picture: </p>
+<img src="images/models/tm10.JPG"/>
+<ul>
+    <li> Blank &bbrk; before each data field or mark as H if the head is present at that data field.</li>
+    <li> L to simulate the beginning of the machine. </li>
+    <li> R to simulate the end of the machine. </li>
+</ul>
+
+<p> Following the example from the image above, to translate into a single tape TM, we can <keyword>interleave</keyword> the tape elements from the first and second, but in between leaving a blank &bbrk; or otherwise a head H if it exists. We also use the L and R to indicate the start and end of the tape. </p>
+
+<p> This variant is useful for e.g. copying.</p>
+
+<h4> Multidimensional Tapes </h4>
+<p> This variant allows the machine to be able to move in <keyword>any direction</keyword> in a step. </p>
+<p> E.g. On a 2D storage medium, the head can move up, down, left and right. </p>
+<p> In this case, we can translate the area of interest into a single tape by essentially considering each row of the tape to be a <keyword>Multitape</keyword> from above. Then combine all the tapes into a single tape: </p>
+<img src="images/models/tm11.JPG"/>
+
+<p> These fancy TMs may be more convenient than a simple TM, but they are <keyword>not more expressive </keyword> than a simple TM.</p>
 
 <h3 id="tm5"> 3.5 &ndash; Church's Thesis </h3>
+<blockquote>
+    <em>Whatever can be done by any computational device can be done by a Turing machine.</em>
+    (Function from &Sigma;* &rightarrow; &sigma;*) <br>
+    <em>Every algorithm can be written on a TM, hence can also be written in Java, Haskell, etc.</em>
+    <footer>- Church's Thesis </footer>
+</blockquote>
+<p>Every algorithm can be written on a TM, hence can also be written in <keyword>Java</keyword>. This is because Java is a programming language that is as expressive as TMs. They are <keyword>Turing complete</keyword>. </p>
+
+
+<p> This is <strong>only applicable</strong> for operations which for example converts a string into a string, or a number into a number, etc, and not other computational tasks. </p>
+
+<p> If we accept Church's Thesis, then it follows that a problem which is unsolvable by a Java program is unsolvable by any computational device. </p>
+
+<p> Agda, however, is an example of a language that isn't Turing complete. It is less expressive because every program terminates. </p>
 
 <hr/>
 
