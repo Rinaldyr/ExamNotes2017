@@ -36,8 +36,15 @@
             font-weight: bold;
         }
 
-        ol > li {
-            margin: 10px;
+        code {
+            font-family: Consolas, monospace;
+            color: #4913d3;
+        }
+
+        pre {
+            margin:10px;
+            font-family: Consolas, monospace;
+            color: #4913d3;
         }
 
         #topBtn {
@@ -57,6 +64,7 @@
 
         #topBtn:hover {
             background-color: #555;
+            opacity: 0.5;
         }
 
         #homeBtn {
@@ -76,6 +84,7 @@
 
         #homeBtn:hover {
             background-color: #555;
+            opacity: 0.5;
         }
     </style>
 </head>
@@ -102,8 +111,9 @@ Table of Contents (<a href="#" onclick="var expanded=this.innerHTML==='expand'; 
     <li> <a href="#tm"> Turing Machines </a> <ul class="subtopic" style="display: none">
         <li> <a href="#tm1"> Executing TMs </a> </li>
         <li> <a href="#tm2"> Designing TMs </a> </li>
-        <li> <a href="#tm3"> Extensions of TMs </a> </li>
-        <li> <a href="#tm4"> Church's Thesis </a> </li>
+        <li> <a href="#tm3"> Macros </a> </li>
+        <li> <a href="#tm4"> Extension to TMs </a> </li>
+        <li> <a href="#tm5"> Church's Thesis </a> </li>
     </ul></li>
     <li> <a href="#comp"> Complexity </a> <ul class="subtopic" style="display: none">
         <li> <a href="#comp1"> Complexity of Algorithms </a> </li>
@@ -335,11 +345,95 @@ A language is a set of words, which means that it is a subset of &Sigma;*. <br/>
 <p>is yellow if, when applied to an integer n, it either hangs or returns an integer y that is a factor of 3y. Yellowness is a trivial property, because every method is yellow. Clearly every trivial property is decidable.</p>
 <hr/>
 
-<h2 id="tm"> Turing Machines </h2>
+<h2 id="tm"> 3 &ndash; Turing Machines </h2>
+<p> <keyword>Turing Machines</keyword> are simple computers, except for their <keyword>infinite tape</keyword>. They can be said to be the simplest kind of computer that can be devised without sacrificing power. </p>
+<img src="images/models/tm8.JPG"/>
+
+<p> A Turing machine consists of finitely many states on a tape. The machine has a <keyword>head</keyword> that sits over one space of the tape. </p>
+<ul>
+    <li> Has an <keyword>alphabet</keyword> <em>T</em>. Each space contains one character from <em>T</em>.</li>
+    <li> Has a <keyword>blank</keyword> &bbrk; character which is &bbrk; &isin; <em>T</em>. This represents <strong>all finite blank spaces</strong> on the tape.</li>
+</ul>
+
+<p> It is <em>never</em> the case that an <strong>infinite tape</strong> is filled with characters. Hence comes the <keyword>blank</keyword> &bbrk;. For this reason, we are only interested in the <keyword>part</keyword> of the tape that <keyword>has characters</keyword>. </p>
+
+<p> This part of the tape must be <keyword>extendable</keyword> when required. But this would mean we have <strong>unlimited time and space</strong>, which is unrealistic in this world. Therefore a Turing Machine is an <keyword>idealised</keyword> computer.</p>
+
+<h4> Definitions </h4>
+<pre>
+<keyword>T</keyword> &ndash; finite set of <em>tape alphabet</em>
+<keyword>R</keyword> &ndash; finite set of <em>return values</em>
+
+<keyword>Q</keyword> &ndash; finite set of states
+<keyword><em>q<sub>o</sub></em></keyword> &isin; <keyword>Q</keyword> &ndash; initial state
+<keyword>&delta;</keyword> &ndash; transition function from <keyword>Q</keyword> with these behaviors:
+      (<keyword>T</keyword> &rightarrow; <keyword>Q</keyword>) - read from current position
+    + (<keyword>T</keyword> &times; <keyword>Q</keyword>) - write to current position
+          + <keyword>Q</keyword> - move left
+          + <keyword>Q</keyword> - move right
+          + <keyword>Q</keyword> - do nothing
+          + <keyword>R</keyword> - stop
+</pre>
+<p> where: <br><code>+</code> means join by <keyword>Union &Union;</keyword>, <br><code>&rightarrow;</code> means <keyword>functions</keyword> from T to Q, <br><code>&times;</code> means the set of <keyword>ordered pairs</keyword> (t,q) &isin; (T &times; Q).</p>
+
+<h3 id="tm1"> 3.1 &ndash; Example for Execution of Turing Machines </h3>
+<h4> Example </h4>
+<p> Design a Turing Machine that starts on the leftmost character of a non-empty block of a's & b's on an otherwise blank tape. </p>
+<img src="images/models/tm2.JPG"/>
+<p> And its execution will look like this: </p>
+<img src="images/models/tm3.JPG"/>
+
+<h3 id="tm2"> 3.2 &ndash; Examples for Designing a Turing Machine </h3>
+<h4> Another Example 1 </h4>
+<img src="images/models/tm1.JPG"/>
+
+<h4 id="tmexample"> Another Example 2 </h4>
+<p> Start on the leftmost character of a nonempty block of a's and b's on an otherwise blank tape. End on the space to right of block. Say whether the number of a's is even or odd. </p>
+<img src="images/models/tm4.JPG"/>
+
+<h3 id="tm3"> 3.3 &ndash; Macros </h3>
+<p> <keyword>Macros</keyword> are a <strong>convenient notation</strong> for big machines. </p>
+<h4> Yet Another Example </h4>
+<p> Design a Turing Machine that starts on <em>leftmost</em> character of a block of a's and b's, and ends on <em>leftmost</em> character: </p>
+<ul>
+    <li> If the initial number of a's is <strong>even</strong> then change all a's to b's. </li>
+    <li> Else leave the block <strong>unchanged</strong>. </li>
+</ul>
+<p> Note that we have already designed a machine <a href="#tmexample">above</a> which checks for <em>evenness</em>. Hence we can assign this as a macro: </p>
+<img src="images/models/tm5.JPG"/>
+<p> Because we have made a Turing Machine with <keyword>result set R</keyword>, we can then <strong>abbreviate</strong> it as a <strong>single instruction</strong> with <keyword>R outcomes</keyword>. </p>
+<p> Thus, forming the solution: </p>
+<img src="images/models/tm6.JPG"/>
+
+<h4> Expanding Macros </h4>
+<p> After formulating the machine above, we can then <keyword>expand the macro</keyword> to have the full Turing Machine by these steps: </p>
+<ul>
+    <li> <strong>Identify</strong> all <code>r &isin; R</code> (all elements in the result set),</li>
+    <li> <keyword>Replace</keyword> all occurrence of <code>r &isin; R</code> with <code>No-op</code>,</li>
+    <li> Connect this <code>No-op</code> with the rest of the main machine.</li>
+</ul>
+<p> And hence the final solution: </p>
+<img src="images/models/tm7.JPG"/>
+
+<p> Turing Machines are very convenient for analysing the <keyword>running time of algorithms</keyword>. </p>
+<ul>
+    <li> Time taken for an algorithm <strong>scales staightforwardly</strong> as the size of input increases.</li>
+    <li> Every step of computation is made explicit in a very conservative way.</li>
+</ul>
+
+<h3 id="tm4"> 3.4 &ndash; Extension to Turing Machines </h3>
+
+
+
+
+
+<h3 id="tm5"> 3.5 &ndash; Church's Thesis </h3>
 
 <hr/>
 
-<h2 id="comp"> Complexity </h2>
+<h2 id="comp"> 4 &ndash; Complexity </h2>
+
+
 
 <hr/>
 
@@ -441,7 +535,7 @@ A language is a set of words, which means that it is a subset of &Sigma;*. <br/>
 <p>They're correct terms of <strong>untyped</strong> &lambda;-calculus. So is &Omega;</p>
 <p><strong>Typed &lambda;-calculus with arithmetic</strong></p>
 <p><u>Syntax of types</u><br>
-<div align="center">A ::= int | A &#8594; A | (A)</div></p>
+<div align="center">A ::= int | A &#8594; A | (A)</div>
 <ul>
     <li>i.e. int &#8594; int is the type of functions that take an integer argument and return an integer</li>
 </ul>
