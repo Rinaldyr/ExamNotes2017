@@ -458,26 +458,10 @@
         var year = d[2];
         return month + "/" + day + "/" + year + " " + time + ":00";
     }
-
-    // For revision time table
-    var opened = false;
-    function openPaper() {
-        if (!opened) {
-            document.getElementById("paper").innerHTML = '<iframe width="100%" height="800px" src="https://www.cs.bham.ac.uk/internal/timetables/TT-Yr2-RW.pdf" allowfullscreen>Your browser does not support iFrames.</iframe>';
-            opened = true;
-        }
-    }
 </script>
 <hr/>
 
 Click on respective Exam Titles to view its notes.
-
-<h3 align="center"> Revision Week Timetable (<a href="https://www.cs.bham.ac.uk/internal/timetables/TT-Yr2-RW.pdf"
-                                                download>Download</a>) </h3>
-<div align="" id="paper" style="display: inline-block; width: 100%; height: 800px; border: 1px solid black;"
-     onclick="openPaper();"><p
-        style="width: 100%; height: 100%; display: table-cell;vertical-align: middle; text-align: center"> Click this
-    box to load PDF </p></div>
 
 </body>
 </html>
