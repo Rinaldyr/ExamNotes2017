@@ -14,8 +14,10 @@ Hopefully these notes will remain useful for the future generations too!
 ## Notes Templates Guide
 No need to follow, but it might be useful if you wanna do some notes making in html (for this project). Most of these already have CSS bound to them, following Rhys' template. 
 
-####HTML
-######Template
+#### HTML
+
+###### Template
+
 `<h1> Module Title </h1>` &ndash; For module title
 
 `<h2> 1 &ndash; Section </h2>` &ndash; For section 1 title
@@ -28,18 +30,21 @@ No need to follow, but it might be useful if you wanna do some notes making in h
  
  `<!-- This is a comment -->` &ndash; A line of comment in HTML. 
  
- ######Keywords
+ ###### Keywords
+ 
 `<keyword> primary keyword </keyword>` &ndash; To emphasise a **primary keyword**. This is a custom tag so it will only work for this project. 
 
 `<strong> secondary keyword </strong>` &ndash; For <strong> secondary keyword </strong>
 
-######Linking
-`<a href="www.google.com"> Link </a>` &ndash; To anchor the surrounded text with a link. Go to that link when clicked. Example above <a href="www.google.com">Link</a>.
+###### Linking
+
+`<a href="www.google.co.uk"> Link </a>` &ndash; To anchor the surrounded text with a link. Go to that link when clicked. Example above [Link](www.google.co.uk).
 
 * `<anyTag id="uniqueID"></anyTag>` &ndash; To assign an ID on this tag. This will be useful for table of content links. Usually specified at every *Section* and *Subsection*.
-* `<a href="#id"> Section </a>` &ndash; The hashtag <code>#</code> will link to the specified ID element in the page.
+* `<a href="#id"> Section </a>` &ndash; The pound sign <code>#</code> will link to the specified ID element in the page.
 
-######Writing Code
+###### Writing Code
+
 `<code> Line of code </code>` &ndash; For any line of code. Makes the font <code>monospaced</code>. 
 ```html
 <pre>
@@ -60,7 +65,8 @@ For any block of code. This also recognises tabs and white spaces. So just type 
     }
 </pre>
 
-######Updating Progress Bar
+###### Updating Progress Bar
+
 Look for the module row in index.html, then seek for this block of code inside that row, and change the <code>value=" "</code> parameter.
 ```html
 <tr> <!-- Module Title --> 
