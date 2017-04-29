@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!--[if lt IE 9]>
+    <script> document.createElement("keyword"); document.createElement("formula"); </script>
+    <![endif]-->
+
     <meta charset="UTF-8">
     <title> Models of Computation </title>
     <style type="text/css">
@@ -36,6 +40,12 @@
             font-weight: bold;
         }
 
+        formula {
+            font-family: "Times New Roman", serif;
+            font-style: italic;
+            font-weight: bold;
+        }
+
         code {
             font-family: Consolas, monospace;
             color: #4913d3;
@@ -45,6 +55,16 @@
             margin:10px;
             font-family: Consolas, monospace;
             color: #4913d3;
+        }
+
+
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
         }
 
         #topBtn {
@@ -116,12 +136,11 @@ Table of Contents (<a href="#" onclick="var expanded=this.innerHTML==='expand'; 
         <li> <a href="#tm5"> Church's Thesis </a> </li>
     </ul></li>
     <li> <a href="#comp"> Complexity </a> <ul class="subtopic" style="display: none">
-        <li> <a href="#comp1"> Complexity of Algorithms </a> </li>
+        <li> <a href="#comp1"> Complexity of Programs </a> </li>
         <li> <a href="#comp2"> Complexity of Problems </a> </li>
         <li> <a href="#comp3"> O notation </a> </li>
-        <li> <a href="#comp4"> NP Problems </a> </li>
+        <li> <a href="#comp4"> P and NP Problems </a> </li>
         <li> <a href="#comp5"> NP-complete Problems </a> </li>
-        <li> <a href="#comp6"> Satisfiability </a> </li>
     </ul></li>
     <li> <a href="#lambda"> Lambda Calculus </a> <ul class="subtopic" style="display: none">
         <li> <a href="#lambda1"> Lambda Application </a> </li>
@@ -203,7 +222,7 @@ A language is a set of words, which means that it is a subset of &Sigma;*. <br/>
 <p> Here are a few common abbreviations, it is optional to use these. <br/> <img src="images/models/fsa3.JPG"/> </p>
 
 
-<h2 id="fsa3"> Finite State Automaton </h2>
+<h3 id="fsa3"> Finite State Automaton </h3>
 <p> A finite state automaton over &Sigma; is </p>
 <ul>
     <li> a finite set &Qopf; of states (<em> nodes </em>) </li>
@@ -469,7 +488,7 @@ A language is a set of words, which means that it is a subset of &Sigma;*. <br/>
 <h3 id="tm5"> 3.5 &ndash; Church's Thesis </h3>
 <blockquote>
     <em>Whatever can be done by any computational device can be done by a Turing machine.</em>
-    (Function from &Sigma;* &rightarrow; &sigma;*) <br>
+    (Function from &Sigma;* &rightarrow; &Sigma;*) <br>
     <em>Every algorithm can be written on a TM, hence can also be written in Java, Haskell, etc.</em>
     <footer>- Church's Thesis </footer>
 </blockquote>
@@ -485,8 +504,98 @@ A language is a set of words, which means that it is a subset of &Sigma;*. <br/>
 <hr/>
 
 <h2 id="comp"> 4 &ndash; Complexity </h2>
+<p> <keyword>Complexity</keyword> refers to the amount of <strong>resources needed</strong> during a computation.</p>
+<p> These resources are mainly <strong>time</strong> and <strong>space</strong>.</p>
 
+<p> This word has two uses: </p>
+<ul>
+    <li> Refers to the <strong>runtime behaviour</strong> of a program.</li>
+    <li> Refers to an <strong>inherent difficulty</strong> in solving a problem. This also means making judgement across all possible implementations.</li>
+</ul>
 
+<p> The runtime behavior of <keyword>TMs</keyword> is suitable to study complexity because:</p>
+<ul>
+    <li> <keyword>Time</keyword> that a TM takes can be characterised by the <strong>number of steps</strong> it makes. </li>
+    <li> <keyword>Space</keyword> that it takes is the <strong>number of cells</strong> it ever visits during a computation.</li>
+    <li> TMs are able to <keyword>operate uniformly on input of arbitrary size</keyword>.</li>
+</ul>
+
+<h3 id="comp1"> 4.1 &ndash; Complexity of Programs </h3>
+<p> To measure the <keyword>time</keyword> complexity of programs, measure the number of steps executed by the TM for <strong>all possible inputs</strong>. However, it may not seem feasible to measure from every possible input from an infinitely many possibilities. Hence, by <em>abstracting away</em> from <keyword>actual input</keyword> to the <keyword>length of the input</keyword>, the situation becomes much more manageable both in finding and interpreting a formula.</p>
+
+<p> We will get a function from &naturals; (length of input) &rightarrow; &naturals; (number of steps).</p>
+<p> When analysing the <strong>runtime complexity of algorithms</strong>, there can be three cases to distinguish:</p>
+<table>
+    <tr>
+        <th>Case</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td><keyword>Best-case runtime / Minimum Time</keyword></td>
+        <td>The time needed when the algorithm is applied to the "easiest" possible input.</td>
+        <td>Sorting algorithm applied to an already sorted list.</td>
+    </tr>
+    <tr>
+        <td><keyword>Worst-case runtime / Maximum Time</keyword></td>
+        <td>The time needed when the algorithm is applied to the "worst" possible input.</td>
+        <td>Sorting algorithm applied to a list sorted in reverse order.</td>
+    </tr>
+    <tr>
+        <td><keyword>Average-case runtime / Average Time</keyword></td>
+        <td>The average time needed over all possible inputs.</td>
+        <td></td>
+    </tr>
+</table>
+
+<h4> Counting Steps </h4>
+<p> Example below is a turing machine used to copy a string: </p>
+<img src="images/models/comp1.JPG"/>
+<img src="images/models/comp2.JPG"/>
+<P> In this example, totalling the steps for an <keyword>arbitrary input string size n</keyword> will give us <formula>2n<sup>2</sup> + 6n + 2</formula> steps.  This is described as the <strong>worst case time</strong> complexity, given by the function <formula>f(n) = 2n<sup>2</sup> + 6n + 2</formula>.</P>
+
+<p> There are numerous optimisations that can be made to the TM, but we are mostly interested in only the <keyword>largest degree</keyword> of polynomial. So if somehow we can optimise the TM above to have <formula>f(n) = n<sup>2</sup> + 6n + 2</formula>, even if the coefficient of the quadratic is halved, it does not change the fact that it is still <formula>n<sup>2</sup></formula>.</p>
+
+<h3 id="comp2"> 4.2 &ndash; Complexity of Problems </h3>
+<p> This is about making a statement about <strong>all possible algorithms</strong> that would solve the given problem, and the complexity of the problem would be the <keyword>infimum</keyword> (i.e. the largest lower bound) of all implementations. There are four cases of this:</p>
+<ul>
+    <li> A problem might be solvable but nobody can provide an algorithm for it.</li>
+    <li> We have some algorithms but are unable to determine their complexity functions. E.g. Simplex Method</li>
+    <li> We have some algorithms and their complexity but don't know if there exists better ones. E.g. Travelling Salesman</li>
+    <li> We have a problem but we can never determine the infimum.</li>
+</ul>
+<p> Every algorithm whose runtime behaviour is known gives us the <strong>upper bound</strong> for the complexity of the problem. A <strong>lower bound</strong> cannot be established by programming at all. </p>
+
+<p> The scarcity of lower bounds leads to the use of <strong>Big-O</strong> to <keyword>describe the complexity of problems</keyword>.</p>
+
+<h3 id="comp3"> 4.3 &ndash; O and &Theta; Notations </h3>
+<table>
+    <tr>
+        <th>Notation</th>
+        <th>Description</th>
+        <th colspan="2">Example</th>
+    </tr>
+    <tr>
+        <td><keyword><formula>O(n)</formula></keyword></td>
+        <td>Big-O refers to an <strong>upper bound</strong>.</td>
+        <td>F(n) &isin; O(n<sup>2</sup>)</td>
+        <td>F(n) grows asymptotically <strong>no faster than</strong> n<sup>2</sup>.</td>
+    </tr>
+    <tr>
+        <td><keyword><formula>&Theta;(n)</formula></keyword></td>
+        <td>Big-Theta refers to a <strong>tight bound</strong>, which is both an upper and lower bound.</td>
+        <td>F(n) &isin; &Theta;(n<sup>2</sup>)</td>
+        <td>F(n) grows asymptotically <strong>as fast as</strong> n<sup>2</sup>.</td>
+    </tr>
+</table>
+
+<h3 id="comp4"> 4.4 &ndash; P and NP Problems </h3>
+<p> A problem is said to have a complexity class <strong>P</strong> when its implementations are <keyword>polynomial</keyword> <formula>O(n<sup>k</sup>)</formula>. These are considered <keyword>feasible</keyword> problems, and anything not in this class is NP for not-P, <keyword>infeasible</keyword>.</p>
+
+<h3 id="comp5"> 4.5 &ndash; NP-Complete Problems </h3>
+<p> <keyword>NP-Complete Problems</keyword> are ones which we do not know whether they are feasible or not.</p>
+
+<p> The <keyword>satisfiability</keyword> of propositional expressions (SAT) is a NP-complete problem. A problem is <keyword>satisfiable</keyword> when, for a given propositional formula, there exists an assignment to truth values where the result becomes true as a whole. </p>
 
 <hr/>
 
