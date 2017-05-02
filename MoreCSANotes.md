@@ -294,7 +294,7 @@ Combinational logic is blocks of digital logic which contain no memory: output i
 
 A block of cominational logic can be described by its truth table.
 
-For a logic block of $n$ inputs, there are $2^n$ possible output states.
+For a logic block of n inputs, there are 2^n possible output states.
 
 Examples: Multiplexers, adders, ALU.
 
@@ -310,7 +310,7 @@ Decoder designed so that each of four possible input combinations uniquely selec
 Here is the truth table for a decoder:
 
 i0 | i1 || Q1 | Q2 | Q3 | Q4
---- | ---
+--- | --- | --- | --- | --- | --- | --- 	
 0 | 0 || 1 | 0 | 0 | 0
 0 | 1 || 0 | 1 | 0 | 0
 1 | 0 || 0 | 0 | 1 | 0
@@ -318,8 +318,107 @@ i0 | i1 || Q1 | Q2 | Q3 | Q4
 
 Now let's formulate this as logic equations:
 
-$Q_1 = ¬A $
- 
+Q1 = ¬i0 ^ ¬i1
+
+Q2 = ¬i0 ^ i1
+
+Q3 = i0 ^ ¬i1
+
+Q4 = i0 ^ i1
+
+From this, it's trivial to translate into a circuit diagram.
+
+![](https://i.gyazo.com/b27b5d99bad73bdef00efd0b08ca4e7e.png)
+
+#### Multiplexer
+Truth table: 
+
+ i0 | i1 || S | Q
+--- | --- | --- | --- | --- 	
+0 | 0 || 0 | 0 
+0 | 0 || 1 | 0 
+0 | 1 || 0 | 0 
+0 | 1 || 1 | 1 
+1 | 0 || 0 | 1 
+1 | 0 || 1 | 0 
+1 | 1 || 0 | 1 
+1 | 1 || 1 | 1 
+
+Logic Expression:
+
+Q = (i1 ^ S) V (i0 ^ ¬S)
+
+Diagram:
+
+![](https://i.gyazo.com/6d780654ef0d023bb1ebfaf86f4c5706.png)
+
+#### Simple Adder
+
+The circuit we will design will be able to add unsigned integers, two-complement integers, and both unsigned and two’s complement ﬁxed-point numbers.
+
+We know that:
+
+0 + 0 = 0
+
+0 + 1 = 1 + 0 = 1
+
+For 1 + 1, we need a second output, the carry.
+
+Truth table for single bit addition:
+
+A | B || Q | C
+--- | --- | --- | --- | --- 	
+0 | 0 || 0 | 0 
+0 | 1 || 1 | 0 
+1 | 0 || 1 | 0 
+1 | 1 || 0 | 1 
+
+It's obvious that C = A ^ B from truth table.
+
+Q is not so obvious. We must introduce XOR (exclusive or):
+
+![](https://i.gyazo.com/bfae4f3c52e2e6e48cb912181fdd394b.png)
+
+Q = A ⊻ B
+C = A ^ B
+
+Here is the circuit diagram: 
+![](https://i.gyazo.com/75bdf089d71d9550f27396f293acf123.png)
+
+This is referred to as half adder. Works for adding single-bit numbers, but we want to add multiple-bit numbers.
+
+Half adder can be used for LSB but for higher bits we need to take the previous carry as an input. This is a full adder.
+
+Truth table for full adder: 
+
+ i0 | i1 || Cin | Q | Cout
+--- | --- | --- | --- | --- | ---
+0 | 0 || 0 | 0 | 0  
+0 | 0 || 1 | 1 | 0
+0 | 1 || 0 | 1 | 0
+0 | 1 || 1 | 0 | 1
+1 | 0 || 0 | 1 | 0
+1 | 0 || 1 | 0 | 1
+1 | 1 || 0 | 0 | 1
+1 | 1 || 1 | 1 | 1
+
+Circuit diagram:
+
+![](https://i.gyazo.com/03ac719997dbaffe24e48766ec6bf656.png)
+
+32-bit full adder for unsigned ints:
+
+![](https://i.gyazo.com/9e61f221359eb58240c54ef45630beb3.png)
+
+#### Simple ALU
+
+We can put together elementary ALU that can add, AND and OR.
+
+In order to do this, we take out 32-bit adder and mod-ify it by adding one AND gate per bit, and one OR gate per bit, plus some multiplexers to select which operation we wish to per-form:
+
+![](https://i.gyazo.com/eff9d4636a7aada44234e6c6b2d2fa14.png)
+
+
 # Clocked logic
 
 ### Memory and Flip-flops
