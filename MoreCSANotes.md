@@ -302,6 +302,7 @@ Not examples: Registers (since they are a form of memory)
 
 ### Building CPU components
 Here are Boolean algebra laws:
+
 ![](https://i.gyazo.com/0c79b9bad478913d53c457ef091f5f06.png)
 
 #### Decoder
@@ -383,6 +384,7 @@ Q = A ⊻ B
 C = A ^ B
 
 Here is the circuit diagram: 
+
 ![](https://i.gyazo.com/75bdf089d71d9550f27396f293acf123.png)
 
 This is referred to as half adder. Works for adding single-bit numbers, but we want to add multiple-bit numbers.
@@ -421,9 +423,190 @@ In order to do this, we take out 32-bit adder and mod-ify it by adding one AND g
 
 # Clocked logic
 
+All processors use an externally provided clock signal to synchronise the timing of the machine so we can always guarantee that the output of a functional unit is stable at a particular well-deﬁne moment in time. 
+
+The frequency of the clock signal is chosen to ensure that all signal paths are stable, even in the worst case (poor quality materials, high temperature).
+
 ### Memory and Flip-flops
 
-### State machines
+In order to stabilise before they are used, we need to store them for the duration of the clock cycle.
+
+The start is taken to be the rising edge of the clock signal.
+
+On this event, outputs of blocks of combinational logic are captured by flip-flops.
+
+Output of flip-flops only change on rising clock edge, regardless of change in  inputs, making it stable for the whole cycle. This allows outputs of subsequent blocks of cominational logic to stabilise before inputs change again.
+
+Visualisation:
+
+![](https://i.gyazo.com/86e7ef462e4c38b431f9a0107db4ecd0.png)
+
+Flip-Flops are widely used throughout the CPU whenever we have something to store or protect. 
+
+In MIPS, each register is simply a bank of 32 ﬂip-ﬂops.  
+
+#### Master-Slave flip-flop (D-Type)
+
+D-Type has 2 inputs (detain and clock) and 1 output (dataout).
+
+D-types are edge-triggered so output data only gets the input data when clock signal changes from 0 to 1.
+
+Not immediately obvious how to make a circuit that is edge-triggered. The key is to make it in two 
+
+Stage 1: Allow input data to pass only when clock is low
+
+Stage 2: Only allow data to pass when clock it high machines
+
+##### Set-reset latch
+
+The basic building block for ﬂip-ﬂops is the set-reset latch, which implements a simple memory element.
+
+We will take advantage of the properties of the NOR gate, which can be programmed to behave like an inverter by setting one of it’s inputs to zero. 
+
+The output is then the inverse of the other input. Let us examine the behaviour of the cross-coupled NOR gates referred to as a bistable circuit
+
+![](https://i.gyazo.com/f7b581b087245782a3c90efa1aae84d7.png)
+
+
+To aid us, here is truth table for NOR:
+
+A | B | Q
+--- | --- | --- |
+0 | 0 | 1
+0 | 1 | 0
+1 | 0 | 0
+1 | 1 | 0
+
+
+* When R=0 and S=1, then Q=1 and Q'=0. (Q' must be 0 because one input is 1). **Setting the latch**
+
+* When R=1 and S=0, then Q=0 and Q'=1. (Q must be 0 because one input is 1) **Resetting the latch**
+
+* If R=1 and S=1, then Q=0 and Q'=0. (We need to avoid this)
+
+* If R=0 and S=0, outputs hold their current values.
+
+We need to add further logic to prevent the 3rd case when both inputs are 1.
+
+A modified bistable circuit forms a D-latch:
+
+![](https://i.gyazo.com/bc44b4f53695aa32264e9ee0d4a6e962.png)
+
+* If C=1, then R=0 and S=0 holding current state
+* If C=0, then R=¬D and S=D
+	* If D=0, then S=0, R=1 (reset)
+	* If D=1, then S=1, R=0 (set)
+
+(S=1 and R=1 is not possible)
+
+ Now we connect 2 D-latches together to create an edge-triggered D-type flip flop
+
+![](https://i.gyazo.com/4d7240ca2774271345e25e669bb6d0dc.png)
+
+* When clock is low, first latch is open and output follows its input.
+* When clock is high, second latch opens and first one closes.
+
+On the rising edge, the second latch captures the ouput of the ﬁrst at that time, and prevents it from being changed until the next rising edge. 
+
+Output of ﬂip-ﬂop can be read at any time, and is stable for the whole clock cycle, except for a short period just after the rising clock edge, when it may change as the input is captured.
+
+A common modiﬁcation made to D-type ﬂip-ﬂops is to provide a mechanism by which a ﬂip-ﬂop can be selectively written so we can use it in, for example, a register, where we don’t want the stored value to be overwritten on every cycle. 
+
+An obvious way to do this is to AND the clock with a write signal, but this is generally avoided as it introduces a extra delay to the clock signal which can cause problems.
+
+A more usual method is to feed the output back to the input and add extra logic such then when write=1, the input of the master latch gets D and when write=0, the input of the master latch gets Q. Here is the circuit diagram:
+
+![](https://i.gyazo.com/b1788524a39445e2f45556df17c3dcad.png)
+
+### Registers
+
+Edge-triggered ﬂip-ﬂops can be used as the basis for a register.
+
+A single 32-bit register has 32 D-type flip flops such that input to each flip-flop corresponds to 1 bit of input data, and output of each flip-flop corresponds to 1 bit of output data.
+
+The clock and write signals are shared by all ﬂip-ﬂops, although often we allow individual bytes to be written, in which case a register has separate write signals for each byte. This would be necessary for MIPS, which has a store-byte (sb) instruction.
+
+![](https://i.gyazo.com/17ecb3147b9bd8fd34a848e0c6ece389.png)
+
+#### Building a register file
+
+Having constructed a single 32-bit registers, we can put together a full 32-register register ﬁle such as the one at the core of the MIPS datapath. Revisiting the structure of the datapath we recall that the registers have:
+
+* 1 x 32-bit write port
+* 2 x 32-bit read ports
+* 1 x 5-bit write address
+* 2 x 5-bit read addresses
+* 1 register_write signal
+
+To implement, we need:
+
+* 32 x 32-bit registers
+* 2 x 32-1 multiplexers, to select which two of the 32 registers will be propagated to the output as specified by the read addresses.
+* 1 x write decoder, to select which register should be written to during a write, as specified by the write address
+* Some extra logic to ensure the write only occurs when register_write is asserted.
+
+![](https://i.gyazo.com/55a35c2e61238d0a26642a50eb750200.png)
+
+Other clocked elements, like the program counter and instruc-tion register can be built similarly easily
+
+### State Machines
+
+All state machines consist of:
+
+* Inputs
+* Outputs
+* A state register
+* Combinational logic
+
+Two ways these can be combined.
+
+1. **Mealy state machine**: outputs and the next state are a combinatorial function of both the state and the input
+2. **Moore state machine**:  ouputs are a function of the state only, whilst the next state depends on the inputs and the current state
+
+![](https://i.gyazo.com/2395c984f15d7c8e7ac576620eaeb4c9.png)
+
+The output of the **Moore-type** state machine can only change on the clock edge.
+
+The output of a **Mealy** machine can change asynchronously when the inputs change. 
+
+Which of these is desirable depends on the properties of the application.
+
+When designing a FSM, one must:
+
+* Determine how many states are needed and how to enumerate them.
+* Determine the sequence of state transitions.
+* Write down the truth tables for the combinational logic.
+* Implement the logic.
+
+Let's consider simple Moore example - the outputs only change synchronously, i.e. when the clock ticks.
+
+The machine has 1 input (stop) and 3 output (A, B, C).
+
+In our desired machine, only one of the out-puts is ever “on” and with each clock tick, the outputs are cycled in the order A→B→C→A→ · · · , unless stop=1, in which case the output remains constant.
+
+Since, in a Moore machine, the outputs are dependent only on the state, we can ascribe each distinct combination of outputs to a separate state of the state register. We will choose the following:
+
+ABC | State
+--- | ---
+100 | 00 
+010 | 01
+001 | 10
+000 | 11
+
+Since we have only three desired output states, but four possible register states, there is a spare state (11) to which we have ascribed a “safe” output (000).  In practice though, when we consider how the machine will transit between states, we will make sure that this state is never reachable, but connects to one of the other states, as shown in the state diagram below:
+
+![](https://i.gyazo.com/429bf1fd6ea8c2ae3c04d5a953ae91c3.png)
+
+Since we know the order, we can formulate this in terms of the states: 00→01→10→00→...
+
+To ensure 11 is never reached, we add transition 11→00.
+
+![](https://i.gyazo.com/d6ff84ac6fa42915dae9b49f2c1b93fd.png)
+
+![](https://i.gyazo.com/bffce79f726f091493231e9fe198c595.png)
+
+![](https://i.gyazo.com/0a4dfffbf8b5c6e2a47e9200ad6b78bd.png)
+
 
 # Interrupts & Peripherals
 
