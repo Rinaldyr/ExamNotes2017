@@ -67,6 +67,14 @@
             padding: 8px;
         }
 
+        .paper {
+            display: inline-block;
+            height: 900px;
+            width: 800px;
+            vertical-align: top;
+            padding: 10px;
+        }
+        
         #topBtn {
             display: none;
             position: fixed;
@@ -597,6 +605,8 @@ A language is a set of words, which means that it is a subset of &Sigma;*. <br/>
 
 <p> The <keyword>satisfiability</keyword> of propositional expressions (SAT) is a NP-complete problem. A problem is <keyword>satisfiable</keyword> when, for a given propositional formula, there exists an assignment to truth values where the result becomes true as a whole. </p>
 
+<p><em> Difficult to explain this chapter. Check notes in canvas for more detail. </em></p>
+
 <hr/>
 
 <h2 id="lambda"> Lambda Calculus </h2>
@@ -825,6 +835,17 @@ takes arguments x:int and y:int and returns x + 17 * y<br> We represent it as:</
 
 <h2 id="papers"> Past Papers </h2>
 
+<strong> Click each <keyword>headings</keyword> to load the paper.</strong><br>
+<div class="paper" id="2012" onclick="openPaper(this.id, 'https://view-api.box.com/1/sessions/bc07e334379a49b196f2b612959383a2/view')"><h3> May 2012 </h3><hr/></div>
+
+<div class="paper" id="2012ans" onclick="openPaper(this.id, 'https://view-api.box.com/1/sessions/bf6a553f786a450f9598997ac6822309/view')"><h3> May 2012 Answers From Page 2 </h3><hr/></div>
+
+<br><br>
+
+<div class="paper" id="mock" onclick="openPaper(this.id, 'https://view-api.box.com/1/sessions/e661d3dbc80f43f3a2b44fe29f4761f9/view')"><h3> Resit 2016 </h3><hr/></div>
+
+<div class="paper" id="mockans" onclick="openPaper(this.id, 'https://view-api.box.com/1/sessions/c26946cdd66b40d8a66a47e5a9891d70/view')"><h3> Resit 2016 Answers </h3><hr></div>
+
 <hr/>
 <!-- Utils -->
 <button onclick="topFunction()" id="topBtn" title="Go to top">Top</button>
@@ -844,6 +865,11 @@ takes arguments x:int and y:int and returns x + 17 * y<br> We represent it as:</
     function topFunction() {
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
+    }
+
+    function openPaper(id, URL) {
+        document.getElementById(id).innerHTML += '<iframe style="display: inline-block;" width="800" height="800" src="' + URL + '" allowfullscreen></iframe>';
+        document.getElementById(id).onclick = function () { /* Don't load paper again once it's loaded */ };
     }
 </script>
 <button onclick="window.location.href='index.html'" id="homeBtn" title="Back to Home"> Home </button>
