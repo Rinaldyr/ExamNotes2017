@@ -139,7 +139,6 @@
 
                 if (username !== 'guest') {
                     document.getElementById('caption').innerHTML = "<keyword>Exam Schedule</keyword> (<a href=\"#!\" onclick=\"if (this.innerHTML === 'Show all') { toggleModules(false); this.innerHTML = 'Hide'; } else { toggleModules(true); this.innerHTML = 'Show all'; }\">Show all</a>)";
-                    document.getElementById('reminder').innerHTML += "<br><br>MESSAGE ME SO I CAN CHANGE IT FOR YOU. -Rinaldy";
                 }
 
                 if (username === "hh") {
@@ -153,9 +152,13 @@
 
                 var seats = document.getElementsByClassName(username);
                 var modules = document.getElementsByClassName('module');
+                var lefts = document.getElementsByClassName('left');
                 for (var i = 0; i < seats.length; i++) {
                     seats[i].style.display = '';
                     if (seats[i].innerHTML === ' -') modules[i].style.display = 'none';
+                }
+                for (i = 0; i < lefts.length; i++) {
+                    if (lefts[i].innerHTML === "<strong> DONE! </strong>") modules[i+1].style.display = 'none';
                 }
             }
         }
@@ -164,10 +167,14 @@
             var username = getUsername(getCookie("username"));
             var seats = document.getElementsByClassName(username);
             var modules = document.getElementsByClassName('module');
+            var lefts = document.getElementsByClassName('left');
             if (justYours) {
                 for (var j = 1; j < seats.length; j++) {
                     if (seats[j].innerHTML === ' -')
                         modules[j].style.display = 'none';
+                }
+                for (i = 0; i < lefts.length; i++) {
+                    if (lefts[i].innerHTML === "<strong> DONE! </strong>") modules[i+1].style.display = 'none';
                 }
             } else {
                 for (var i = 1; i < seats.length; i++) {
@@ -197,8 +204,7 @@
 <hr/>
 <h1 align="center"> Exam Notes May/June 2017 </h1>
 <p align="center" id="name"> Welcome! </p>
-<hr/>
-<h3 id='reminder' align="center" style="color: red"> PLEASE DOUBLE CHECK YOUR EXAM ROOM IN <a href="https://my.bham.ac.uk">my.bham</a> BECAUSE SOME PEOPLE HAVE DIFFERENT ROOMS FOR THE SAME MODULE. </h3>
+<hr/> <br>
 <table align="center">
     <caption id="caption"><keyword>Exam Schedule</keyword></caption>
     <tr class="module" style="font-weight: bold;">
