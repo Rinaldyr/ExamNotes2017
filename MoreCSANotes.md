@@ -610,9 +610,61 @@ To ensure 11 is never reached, we add transition 11→00.
 
 # Interrupts & Peripherals
 
+I/O devices are not an integrated part of the main processor.
+
+It is necessary to provide mechanisms that allow external devices to communicate with the processor, memory, and programmes that they execute.
+
 ### I/O Requirements
 
+We need:
+
+1. A communications channel between the processor and the IO device;
+
+2. A way of identifying which I/O device we are communicating with; and
+
+3. A mechanism by which we can determine whether the I/O device requires the processor's attention
+
+
+Events occur at a much lower frequency that the processor's clock rate; therefore they do not require constant attention.
+
+The communications channel is realised by the bus.
+
+The bus is a collection of wires that carry signals between devices.
+
+The signals down these wires must be multiplexed between various devices, and the bus must also include a set of rules and protocols that determine which devices can send and receive signals.
+
+The bus is time-shared between all the system's devices and the bus controller will arbitrate between the devices to determine which can have access at any given moment.
+
+![](https://i.gyazo.com/ed5edbf26f624e808750a3de39b67bc9.png)
+
+
 ### Memory-mapped vs port-mapped I/O
+
+The bus allows CPU to communicate with peripherals in two ways
+
+#### 1 Memory-mapped
+
+Sends them commands, and send/receive data. This is similar to the way the CPU interacts with memory. Peripherals can be treated similar to memory in what is known as **memory-mapped**.
+
+Each IO device is allocated a region of the address space, i.e. a block of "memory addresses". Each address corresponds to some form of register of buffer on the device. 
+
+It is employed in RISC designs as it allows IO to be implemented with the minimum of additional complexity - accessed by the same mechanisms as memory.
+
+
+#### 2 Port-mapped
+
+Devices have their own address space instead of sharing the memory's address space. Done by adding a single control wire that indicates whether an address is for memory or IO. Thisis more complex.
+
+Adopted in x86 processors. This family
+of devices employ a logically separate I/O bus with its own address space, and dedicated instructions for controlling this bus. 
+
+Physically, the address and I/O buses share the same wires, but are controlled by different instructions and are thus effectively separate buses.
+
+The x86 I/O bus is supported by dedicated I/O instructions.
+
+Recall that to control the memory bus, there is the mov instruction that can access both memory and registers, but mov cannot access the I/O bus. For this, there are the in and out instructions, with in used to read a peripheral’s registers and out used to write to them
+
+Typically a simple peripheral will have a command buffer and a data buffer. In a typical output operation, we will send some data to the data buffer, and then send a command to the command buffer that tells the peripheral what to do with it.
 
 ### Polling
 
