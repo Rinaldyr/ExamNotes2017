@@ -326,6 +326,8 @@ The x on the right of the = refers to the contents of x, the R value. </p>
     <img src="images/ccpp/pointerEg6Ans.JPG">
 </div>
 
+<hr>
+
 <h2 id="mallocfree"> 2 &ndash; Memory Management with malloc and free </h2>
 <h3 id="mallocfree1"> 2.1 &ndash; malloc and free </h3>
 <p><code>stdlib.h</code> provides C functions <code>malloc</code> and <code>free</code>. </p>
@@ -429,12 +431,194 @@ The x on the right of the = refers to the contents of x, the R value. </p>
 </blockquote>
 <p> Valgrind makes memory errors and leaks <keyword>observable</keyword> and produces <keyword>deterministic errors</keyword>. </p>
 
-<h2 id="structs"> Structures and Pointers </h2>
+<hr>
 
+<h2 id="structs"> 3 &ndash; Structures and Pointers </h2>
+<p> A <code>struct</code> in C is much like a Java class that contains <strong>only data</strong> without methods.</p>
+<p> A <code>struct</code> contains <keyword>members</keyword>.</p>
+<p> In C++, <code>struct</code>s can contain functions, hence gives object orientation.</p>
+<pre>
+    struct s {
+        T1 m1; <comment>// type name and member declared here</comment>
+        ...
+        Tk mk;
+    }; <comment>// dont forget the semi colon after ending a struct declaration</comment>
 
+    struct s y; <comment>// declares y as a struct s</comment>
+    struct s *p; <comment>// declares p as a pointer to struct s</comment>
+</pre>
+<p> Access to structure member by using the <keyword>dot operator</keyword>.</p>
+<h4> Example</h4>
+<pre>
+    struct Point {
+        int x, y;
+    };
 
+    struct Point p;
+    p.x = p.y; <comment>// this accesses struct Point's x member and assigns it to p.y</comment>
+</pre>
 
+<p> In terms of memory, these <code>struct</code> members are laid out in order:</p>
+<img src="images/ccpp/structs1.JPG"/>
+<p> The grey area may represent few bytes of <keyword>padding</keyword> between structure members.</p>
+<p> Hence </p>
+<pre>
+    sizeof(struct s) &ge; sizeof(T1) + ... + sizeof(Tk)
+</pre>
 
+<h3> 3.1 &ndash; Recursive Data Structures </h3>
+<p> <keyword>Pointers</keyword> are required for the recursion. </p>
+<h4> Examples</h4>
+<pre>
+    struct IntList {
+        int data; <comment>// contains integer data </comment>
+        struct IntList * next; <comment>// and a pointer to the tail of the list</comment>
+    }
+
+    struct BinTree {
+        int data;
+        struct BinTree * left, * right; <comment>// pointer to the left and right children</comment>
+    }
+
+    struct QuadTree {
+        int data;
+        struct QuadTree * child[4]; <comment>// pointer to the array of children</comment>
+    }
+</pre>
+
+<h4> The <code>-></code> operator </h4>
+<p> <code>p -> m</code> is an abbreviation for <code>(*p).m</code>. It does: </p>
+<ol>
+    <li>Dereference pointer <code>p</code>;</li>
+    <li>Structure member <code>m</code> access.</li>
+</ol>
+<p> Can also do chaining: </p>
+<pre>
+    p -> m1 -> m2 -> ... -> mk
+</pre>
+<p> Could also use this to call member functions in C++. </p>
+
+<h3> 3.2 &ndash; List Traversals </h3>
+<p> It is common to use a <code>while</code> loop to traverse lists.</p>
+<pre>
+    while (p) { ... }
+    <comment>// is equivalent to</comment>
+    while (p != NULL) { ... }
+
+    <comment>// and to traverse the list, at most cases we add this:</comment>
+    while (p) {
+        ...
+        p = p -> next; <comment>// the next loop will start using p -> next.</comment>
+    }
+</pre>
+<h4> Examples </h4>
+<pre>
+    while (p) {
+        q = p; <comment>// assign q to hold the pointer p</comment>
+        p = p -> next; <comment>// next recursion will be using p -> next</comment>
+        free(q); <comment>// and finally free q</comment>
+    }
+    <comment>// explanation: this idiom starts with a pointer to a head, and at each
+    //      recursion, it frees the current head and moves on to free the tail.</comment>
+
+    <comment style="color: palevioletred">// THIS BELOW IS WRONG</comment>
+    while (p) {
+        free(p);
+        p -> next; <comment>// Wrong because we are trying to use p after freeing it</comment>
+    }
+    <comment>// A typical example of use-after-free</comment>
+</pre>
+
+<p> For traversing <keyword>trees</keyword> and <keyword>graphs</keyword>, <strong>recursion</strong> is much easier to program than using a while loop.</p>
+
+<h4> Trees and Doubly-linked list Difference</h4>
+<p> They are made from the <keyword>same struct</keyword>, but traversing or deleting is <strong>very different</strong>.</p>
+<pre>
+    <comment>// This part is the same for both data structures</comment>
+    struct Twoptrs {
+        struct Twoptrs *one, *two;
+    };
+
+    struct Twoptrs *p1 = malloc(sizeof(struct Twoptrs));
+    struct Twoptrs *p2 = malloc(sizeof(struct Twoptrs));
+    struct Twoptrs *p3 = malloc(sizeof(struct Twoptrs));
+</pre>
+<div style="display: inline-block; padding: 10px;">
+    <pre style="display: table-cell;">
+        <comment>// for TREE</comment>
+        p3 -> one = p1;
+        p3 -> two = p2;
+    </pre>
+    <img style="display: inline-block;" src="images/ccpp/structs2.JPG"/>
+</div>
+<div style="display: inline-block; vertical-align: top; padding: 10px;">
+    <pre style="display: table-cell">
+    <comment>// for DOUBLY-LINKED LIST</comment>
+    p1 -> one = p2;
+    p2 -> two = p1;
+    </pre>
+    <img style="display: inline-block;" src="images/ccpp/structs3.JPG"/>
+</div>
+<p> For doubly-linked lists: </p>
+<ul>
+    <li>Traversing - just like normal lists</li>
+    <li>Deleting<br>
+<pre>
+    void delete(struct doublylinked *p) {
+        if (!p) return;
+        if (p -> prev) p -> prev -> next = p -> next;
+        if (p -> next) p -> next -> prev = p -> prev;
+        free(p);
+    }
+</pre></li>
+</ul>
+
+<p> The address operator can be applied to structure members. </p>
+<img src="images/ccpp/structs4.JPG"/>
+
+<h3> typedef </h3>
+<p> An alternative to define structures, but it is optional to use. </p>
+<pre>
+    typedef
+    struct s { <comment>// declare typedef before struct</comment>
+        ...
+    } Type; <comment>// this will be the name of the type. Just like class names in java</comment>
+
+    Type *p; <comment>// declares p as a pointer to the structure Type</comment>
+</pre>
+
+<h4> Exercise </h4>
+<pre style="display: inline-block; padding-right: 30px; border-right: 1px dotted black;">
+int main() {
+    struct s {
+        int x, y;
+    }
+
+    struct s a;
+
+    <comment>// True or false?</comment>
+    printf("Q1: ");
+    if (&a == &(a.x)) printf("True\n");
+    else printf("False\n");
+
+    printf("Q2: ");
+    if (&a == &(a.y)) printf("True\n");
+    else printf("False\n");
+    
+    return 0;
+}
+</pre>
+<div style="display: inline-block; vertical-align: top;">
+    <p> Click to run code for answer: </p>
+    <button onclick="document.getElementById('structsex1').innerHTML='Q1: True<br>Q2: False<br><br>Process finished with exit code 0'">Execute</button>
+    <br> <br>
+    <hr style="border-color: #000; border-style: dotted;">
+    <code id="structsex1"></code>
+</div>
+
+<hr>
+
+<h2 id="arrays"> 4 &ndash; Pointer Arithmetic and Arrays </h2>
 
 
 
