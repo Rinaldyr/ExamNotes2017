@@ -609,16 +609,207 @@ int main() {
 }
 </pre>
 <div style="display: inline-block; vertical-align: top;">
-    <p> Click to run code for answer: </p>
-    <button onclick="document.getElementById('structsex1').innerHTML='Q1: True<br>Q2: False<br><br>Process finished with exit code 0'">Execute</button>
-    <br> <br>
+    <p> Click to run code for answer </p>
+    <button onclick="document.getElementById('structsex1').innerHTML='Q1: True<br>Q2: False<br><br>Process finished with exit code 0'; this.style.display='none'">Execute</button>
+    <br><br>
     <hr style="border-color: #000; border-style: dotted;">
-    <code id="structsex1"></code>
+    <code id="structsex1">&gt;_</code>
 </div>
 
 <hr>
 
 <h2 id="arrays"> 4 &ndash; Pointer Arithmetic and Arrays </h2>
+<p>A <keyword>string</keyword> in C is:</p>
+<ul>
+    <li>An array of char terminated by a <keyword>zero byte</keyword>(<code>\0</code>)</li>
+    <li>The size of the array is <strong>not stored</strong>.</li>
+    <li>When the array is passed to a function, a <keyword>pointer</keyword> to the start of the array is passed, not the contents of the array.</li>
+</ul>
+
+<h3> 4.1 &ndash; Pointer Arithmetic </h3>
+<p> In C, adding a pointer and an integer is allowed, but <strong>not</strong> adding two pointers.</p>
+<p> Accessing arrays require pointer arithmetic. <code>p + n</code> means <code>n</code> is scaled up by the size of the type of what <code>p</code> points to.</p>
+<p> Array Indexing</p>
+<pre>a[i]</pre>
+<p> is short for</p>
+<pre>*(a + 1)</pre>
+
+<p> The diagram below shows the memory of some array.</p>
+<img src="images/ccpp/arrays1.JPG"/>
+<p> The upper part represents higher addresses. Each of the cells is <code>sizeof(T)</code> wide if <code>p</code> is of type <code>T</code>. Pointer arithmetic is <keyword>scaled</keyword> by the type system.</p>
+
+<h4> Prefix and Postfix Operators</h4>
+<p> In C, postfix operators <keyword>bind more tightly</keyword> than prefix.</p>
+<pre>
+    *p++ <comment>// the * is prefix, the ++ is postfix</comment>
+    <comment>// is parsed like</comment>
+    *(p++)
+
+    <comment>// similarly, </comment>
+    *f()
+    <comment>// is parsed like</comment>
+    *(f())
+</pre>
+
+<ul>
+    <li><code>*p++</code><ul>
+        <li>Gives the value of *p before incrementing<br>
+            <img src="images/ccpp/arrays2.JPG"/><br>In this case, 10.</li>
+    </ul></li>
+
+    <li><code>(*p)++</code><ul>
+        <li>Increments the value pointed to by p<br>
+        <img src="images/ccpp/arrays3.JPG"/><br>In this case, 10 gets incremented to 11.</li>
+    </ul></li>
+</ul>
+
+<h4> Exercise </h4>
+<p>Analyse and determine what these codes do.</p>
+<pre style="display: inline-block; padding-right: 30px; border-right: 1px dotted black;">
+int a[10], *p;
+
+<comment>// what does each of these do? </comment>
+p = a + 2;
+p++;
+(*p)--;
+--*p;
+*--p;
+*p = *p * *p;
+</pre>
+
+<pre style="display: inline-block; vertical-align: top">
+Click to show answers
+<button onclick="document.getElementById('arraysex1').style.visibility = ''; this.style.display='none'">Show</button>
+
+<comment id="arraysex1" style="visibility: hidden;">// points to the item after next in the array
+// increments the pointer
+// decrements the value p is pointing to
+// predecrement the value p is pointing to
+// predecrement the pointer, give the value
+// <span style="color: palevioletred;">ERROR</span> cannot multiply pointers. </comment>
+</pre>
+
+<h3> String Copy </h3>
+<p> This is an idiom from Kernighan and Ritchie.</p>
+<pre>
+    while(*p++ = *q++); <comment>// where p and q are pointers to a string</comment>
+</pre>
+<p> This does <keyword>unbounded copy</keyword>, and is the cause for many security vulnerabilities: <strong>buffer overflows</strong>.</p>
+
+<h4> Examples </h4>
+<p> This shows an application of the idiom.</p>
+<div>
+<pre style="display: inline-block; padding-right: 30px; border-right: 1px dotted black;">
+void mystrcopy(char *p, char *q)
+{
+    while(*p++ = *q++);
+}
+
+char from[] = "abc";
+char to[4];
+mystrcopy(to, from);
+</pre>
+<div style="display: inline-block; vertical-align: inherit;">
+    Click to <keyword>animate</keyword> the string copy process
+    <button onclick="animateArrays('arraysa'); this.style.display='none';">Animate</button><br>
+    <img id="arraysa" src="images/ccpp/arraysa1.JPG"/>
+</div>
+</div>
+
+<p> This below shows a <strong>bad</strong> application of the idiom as it causes an overflow. </p>
+<div>
+<pre style="display: inline-block; padding-right: 30px; border-right: 1px dotted black;">
+void mystrcopy(char *p, char *q)
+{
+    while(*p++ = *q++);
+}
+
+char a[] = "abc";
+char b[2];
+mystrcopy(b, a);
+</pre>
+<div style="display: inline-block; vertical-align: inherit;">
+    Click to <keyword>animate</keyword> the string copy process
+    <button onclick="animateArrays('arraysb'); this.style.display='none';">Animate</button><br>
+    <img id="arraysb" src="images/ccpp/arraysb1.JPG"/>
+</div>
+</div>
+<p> Where <code>x, y, z</code> are some other things inside memory. Could be something useful that keeps the computer running. And this overflow causes it to be replaced. </p>
+
+<p> The call stack grows towards <keyword>lower</keyword> machine addresses.</p>
+
+<h4> Buffer Overflow Prevention and Mitigation</h4>
+<ul>
+    <li>All array accesses in C are <keyword>potentially dangerous</keyword>.</li>
+    <li>Check bounds for arrays.</li>
+    <li>Use functions with bounds like <code>strncpy()</code> and <code>fgets()</code>.</li>
+    <li>Watch out for off-by-one errors in bounds.</li>
+    <li>C compilers do <keyword>stack canaries</keyword> for buffer overflow mitigation.</li>
+</ul>
+
+<p> C does <strong>not</strong> perform bounds check when accessing array, contrast to Java, which will throw exceptions. If you get an overflow, then an <keyword>undefined behavior</keyword> will occur. But this lack of checking makes C <keyword>much faster</keyword>.</p>
+
+<h3> Arguments to main </h3>
+<p> Basically just <keyword>array</keyword> and a <keyword>count</keyword>. </p>
+<p><code>main</code> takes two arguments</p><ul>
+    <li>Number of strings</li>
+    <li>The array of strings</li>
+</ul>
+<pre>
+main(int argc, char *argv[]) { ... }
+
+main(int argc, char **argv) { ... }
+</pre>
+<p> If we don't need arguments, then no need to use it. Just <code>main() { ... }</code>. But we <strong>cannot</strong> do this in C++.</p>
+
+<p>Keep in mind that the <code>+</code> operator is <strong>not</strong> overloading of the string concatenation as in Java. So:</p>
+<pre>
+int n = 6;
+printf("The value of n is " + n);
+<comment>// output: lue of n is
+// because pointer arithmetic:
+//      add 6 to the start of the string,
+//      and then print it out.
+
+// So the right way is to do this
+</comment>
+printf("The value of n is %d", n);
+<comment>// output: The value of n is 6</comment>
+</pre>
+
+<h3> Stack Data Structure </h3>
+<p> Basically an <keyword>array</keyword> with <keyword>stack pointer</keyword>.</p>
+<p> Consists of two main functions:<p>
+<ul>
+    <li><code>push()<comment> // pushes an item to the top of the stack</comment></code></li>
+    <li><code>pop()<comment> // pops an item from the top of the stack</comment></code></li>
+</ul>
+<img src="images/ccpp/arrays4.JPG"/>
+<p> Here is a typical way to make those functions: </p>
+<pre>
+int stack[100];
+int *sp = stack; <comment>// invariant: sp points to first free element</comment>
+
+void push(int n) {
+    if (sp < stack + stacksize - 1) *sp++ = n;
+    else {
+        fprintf(stderr, "Stack overflow!\n\n");
+        exit(1);
+    }
+}
+
+void pop() {
+    if (sp > stack) return *--sp;
+    else {
+        fprintf(stderr, "Stack overflow!\n\n");
+        exit(1);
+    }
+
+}
+</pre>
+
+<h3> Void Pointers </h3>
+continue from slide 129
 
 
 
@@ -640,6 +831,22 @@ int main() {
     function topFunction() {
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
+    }
+
+    function animateArrays(id) {
+        var i = 1;
+        setInterval(function () {
+            var imageAt = 'images/ccpp/' + id + i + '.JPG';
+            document.getElementById(id).setAttribute('src', imageAt);
+
+            if (i >= 5) i %= 5;
+            i++;
+        }, 700);
+    }
+
+    // can't make it work yet...
+    function stopAnimate() {
+        // removed
     }
 </script>
 <button onclick="window.location.href='index.html'" id="homeBtn" title="Back to Home"> Home </button>
