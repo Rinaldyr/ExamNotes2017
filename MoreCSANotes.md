@@ -668,9 +668,66 @@ Typically a simple peripheral will have a command buffer and a data buffer. In a
 
 ### Polling
 
+It is not necessary to check frequently whether, for example, a key on the keyboard is pressed.
+
+Instead, we can test, or poll the device regularly, but less frequently, allowing the CPU to perform other tasks between polling events.
+
+Is is very simple to do with software but it can still waste a signiﬁcant amount of processor time even if the polling frequency is reduced.
+
+One can of course reduce the frequency even further, but in this case there is a risk that multiple events may occur between polling events, and thus the earlier ones will be missed by the CPU. 
+
+There are wasted clock cycles in any polling based scheme, even if the frequency is correctly chosen there can still be idle period when no input is received.
+
+There may also be problems if a particular I/O device is very slow as the last I/O operation may not have ﬁnished before the next poll.
+
+This approach can be summarised in a diagram:
+
+![](https://i.gyazo.com/ab162ebbdb2361b52361fbbbebfb8abb.png)
+
+Polling gives us a simple software solution to I/O control, but sub-optimal. The main alternative requires some extra hardware complexity, but is much more ﬂexible and efﬁcient.
+
 ### Interrupts
 
+Instead of repeatedly probing a device to see when it is ready as we do in the polling scheme, one can conceive an alternative system that includes a mechanism to allow peripheral devices to tell the CPU when they are ready, effectively allowing them to interrupt the current process.
+
+Each device is allocated a special hardware interrupt request channel (IRQ), which can be used to signal to the processor that it needs to pay some attention to the device.
+
+Here is the diagram:
+
+![](https://i.gyazo.com/78615b315cae165511d8cf6267108f2d.png)
+
+Interrupts require some specialist action by the programmer, who must include a handler (subroutine) to deal with interrupt requests (IRQs), and manually initiate I/O by sending appropriate commands to the relevant I/O controller. These routines are usually included in the device driver associated with a particular peripheral.
+
+Interrupt request channels are checked by the CPU each time a new instruction is fetched, to ensure that instructions are never left unﬁnished.
+
+If there is a pending request, the CPU then acknowledges the request via the interrupt channel and disables further interrupts.
+
+The CPU state is saved to the stack and the interrupt-handling subroutine is loaded, temporarily halting the execution of the program that was running. The state of the CPU is retrieved from the stack once the interrupt has been handled so that the main program’s execution can continue.
+
+By this scheme, the CPU does not waste cycles polling the peripherals so in this sense interrupts are a great improvement over polling.
+
 ### DMA
+
+Direct Memory Access (DMA) is a method for removing the load of large, monotonous data transfers from the CPU by providing a separate controller for processing certain types of request without using the CPU resource.
+
+![](https://i.gyazo.com/ea84b1172bda6d945d16bcb1be50928f.png)
+
+The DMA module is a mini-processor that specialises in transferring data between (virtual) memory locations which can include memory-mapped or isolated peripherals.
+
+When the CPU needs to read or write a block of data, it issues commands to the DMA controller which consist of:
+
+1. the address of the I/O device
+2. the starting location of the data block
+3. the number of words of data to be transferred
+4. whether the transfer is read or write.
+
+The CPU then returns to the interrupted program, leaving the DMA module to do the memory transfer with the system bus.
+
+The DMA module can control the bus independently of the CPU so can use it when the processor doesn’t need it, or can steal cycles from from CPU by forcing it to suspend bus access. 
+
+When the transfer is complete, the DMA module issues an IRQ to the CPU so that, if necessary, it can make use of any data that has been loaded into memory.
+
+If the system has a cache then some care is required with DMA. In particular, if the cache is write-back, then we need to ensure that the correct version of the data is being copied. In this case, the cache would normally be ﬂushed (any changed entries written back to memory) before the DMA transfer is allowed to start.
 
 # Improving Performance
 
