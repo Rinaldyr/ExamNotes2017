@@ -106,7 +106,819 @@
 </p>
 
 <hr/>
+<h1 id="csanotes">CSA Notes</h1>
 
+<p>See CSA-CourseNotes.pdf for content not covered in these notes</p>
+
+<hr />
+
+<h1 id="miroarchitecture">Miroarchitecture</h1>
+
+<h2 id="mipsdatapath">MIPS Datapath</h2>
+
+<p>The Datapath is a collection of functional unit which implement the instruction set.</p>
+
+<p>Each unit has a specific purpose.</p>
+
+<p>Unit | Description
+--- | ---
+Registers | Storing data
+Program Counter | Book marks code
+Instruction Register | Stores current instruction
+ALU | Executes arithmetic and logic operations
+Control Unit | Configure the datapath such that desired instruction is correctly implemented.
+Load/Store Unit | Accessing the memory to be used by the CPU</p>
+
+<h5 id="summaryoftheinstructionexecutioncycle">Summary of the instruction execution cycle:</h5>
+
+<ol>
+<li><p>Get next address from PC</p></li>
+
+<li><p>Fetch next instruction from memory</p></li>
+
+<li><p>Update PC</p></li>
+
+<li><p>Decode instruction</p></li>
+
+<li><p>Fetch required data (if any)</p></li>
+
+<li><p>Execute instruction</p></li>
+
+<li><p>Return to 1</p></li>
+</ol>
+
+<h3 id="instructionfetchpcincrement">Instruction fetch &amp; PC increment</h3>
+
+<p>First step is to get the address of next instruction.</p>
+
+<p>Program counter is sent to memory as an address via address bus.</p>
+
+<p>Contents of that address is loaded onto the IR via data bus.</p>
+
+<p>We use PC, IR and Main Memory (not a part of the datapath).</p>
+
+<p>Then increment PC (adding "4"). This is done frequently so simple adder is included.</p>
+
+<h3 id="alurtypeinstructions">ALU (R-type) instructions</h3>
+
+<p>Performs arithmetic and logic operations (e.g. comparisons).</p>
+
+<p>Used to compare address.</p>
+
+<p>Must be able to accept any 2 32-bit words from the registers, perform the instruction, and output another 32-bit word (or true/false).</p>
+
+<p>Once the correct registers have been selected and the ALU correctly configured, the contents of the source registers can be read by the ALU, which will perform the selected operation and put the result back in the destination register.</p>
+
+<h3 id="loadstores">Load/stores</h3>
+
+<p>Surprisingly more complex than ALU.</p>
+
+<p>Need R/W access to registers, R/W access to memory and be able to use ALU to calculate addresses.</p>
+
+<p>Address may be offset but offset is 16-bits whereas base address is 32-bits. </p>
+
+<p>Therefore, sign extension unit used to perform manipulation to translate offset (not so trivial due to negative offsets using two's complement representation).</p>
+
+<h3 id="branchesandjumps">Branches and Jumps</h3>
+
+<p>Opcode | Base Address | Src/Dest | Address Offset
+--- | --- | --- | --- 
+6 | 5 | 5 | 10 </p>
+
+<p>Computation for <code>beq</code>: Compare the contents of the 2 registers specified. If they are equal, add the specified offset to the PC. Otherwise, the PC is incremented by 4 as normal.</p>
+
+<p>16-bit offset is used but we need to extend to 32-bits. Therefore ALU is used for comparison and dedicated adder used for calculating new address. </p>
+
+<h3 id="integrationmultiplexing">Integration &amp; Multiplexing</h3>
+
+<p>We don't want seperate ALU's for branches/loads and instruction. So we will put these datapaths together to form one single datapath.</p>
+
+<p>This is called <strong>multiplexing</strong>.</p>
+
+<p>Allows us to switch between different signals to allow multiple pieces of data to go to the same functional units.</p>
+
+<p>In other words, transmit multiple signals along the same channel and select which one is allowed to pass.</p>
+
+<p>A multiplexer with N control wires allows for 2^N inputs.</p>
+
+<h3 id="jumps">Jumps</h3>
+
+<p>In jump instruction, a 26-bit memory addres is encoded.</p>
+
+<p>This is the word address (not a byte address) so it is converted to a byte address by shifting it by 2 bits.</p>
+
+<p>It is then concatenated with the 4 most significant bits from the PC to form a full 32-bit address.</p>
+
+<p>The jump instruction can span up to 256MB relative to the current position.</p>
+
+<p>Jump instruction then multiplexed with the PC update value from the branch multiplexer and selected using the "jump" signal.</p>
+
+<h2 id="cpucontrol">CPU Control</h2>
+
+<h3 id="alucontrolnotsureifassessedsoincomplete">ALU Control (Not sure if assessed so incomplete)</h3>
+
+<p>ALU opcode is always 000000, and precise instruction is specified by <code>func</code> code.</p>
+
+<p>But R-Type ALU are not the only instruction that use ALU so no as simple as reading the <code>func</code> code.</p>
+
+<p>Therefore another control signal <code>alu_op</code> gives extra information about the kind of instruction.</p>
+
+<p>Consider various types that use ALU:</p>
+
+<p><strong>Loads and Stores:</strong> use ALU to add address offset to base register. Must be configured for addition.</p>
+
+<p><strong>Branches:</strong> use ALU to perform comparison. </p>
+
+<h3 id="singlecyclecombinatorialcontrol">Single-cycle: combinatorial control</h3>
+
+<p>Can be implemented easily using stateless (combinational) logic. Input is 6-bit opcode and output are control signals which are a simple function of the opcode and combinational logic.</p>
+
+<p>Appropriate if each instruction can be completed in one clock cycle.</p>
+
+<p>Some instruction (memory related for example) take long. Instead of extending clock cycle to allow all operations in 1 cycle, we allow some instruction to take multiple. Serious complication.</p>
+
+<h3 id="multicyclestatemachineormicrocode">Multi-cycle: state machine or microcode</h3>
+
+<p>Performance is gained but control is much harder.</p>
+
+<p>One way to implement is to use a <strong>state machine</strong>. The outputs of which depend on current state and its inputs.</p>
+
+<p>It allows various stages to be stract, and can stall the machine while waiting for instruction to execute. IOW, next instruction doesn't start until current state indicates that current instruction is finished.</p>
+
+<p>Straight forward for simple designs but almost impossible for complex designs. Therefore, a better approach is to use a microcode.</p>
+
+<h5 id="microcode">Microcode</h5>
+
+<p>Instructs are expressed as a sequence of microinstructions. Each microinstruction configures the datapath in a particular way.</p>
+
+<p>Example <code>lw</code>:</p>
+
+<p>First microinstruction issues requrest to memory.</p>
+
+<p>Few null microinstructions whilst awaiting data.</p>
+
+<p>When data ready, microinstruction that configures registeres for writing is issued.</p>
+
+<p>Structure if microcode same as program code. But instead of being stores in RAM, it is stored in ROM (Read only memory). Not accessible or modifiable by the programmer. </p>
+
+<hr />
+
+<h1 id="numberrepresentation">Number Representation</h1>
+
+<h3 id="unsignedintegers">Unsigned integers</h3>
+
+<p>Any natural number can be represented in binary but there are practical limitations. Computers break data into 32-bit or 64-bit chunks (words) and this limits the maximum size of numbers. With n bits, we can store from 0 to 2^n - 1. </p>
+
+<p><strong>Converting from base 10 to base 2:</strong></p>
+
+<p>Keep dividing by 2 to deduce the least significant bit.</p>
+
+<p>24/2 = 12 remainder 0</p>
+
+<p>12/2 = 6 remainder 0</p>
+
+<p>6/2 = 3 remainder 0</p>
+
+<p>3/2 = 1 remainder 1</p>
+
+<p>1/2 = 1 remainder 1</p>
+
+<p>24 base 10 = 11000 base 2</p>
+
+<h3 id="unsignedfixedpoint">Unsigned fixed point</h3>
+
+<p><strong>Converting from base 10 to base 2:</strong></p>
+
+<p>Mutliplying by 2 and take integer part of the result.</p>
+
+<p>0.142 * 2 = 0.284</p>
+
+<p>0.284 * 2 = 0.568</p>
+
+<p>0.568 * 2 = 1.136</p>
+
+<p>1.136 * 2 = 0.272</p>
+
+<p>0.272 * 2 = 0.544</p>
+
+<p>0.544 * 2 = 1.088</p>
+
+<p>1.088 * 2 = 0.176</p>
+
+<p>0.176 * 2 = 0.352</p>
+
+<p>0.142 base 10 = 0.00100100 base 2</p>
+
+<h3 id="signedintegersfixedpointtwoscomplements">Signed integers/fixed point: two's complements</h3>
+
+<p>Naivie solution to negative numbers is to add extra bit for sign. This is suboptimal and inefficient - it would also require different hardware for subtraction.</p>
+
+<p>Adding 11111111111... to any number is equivalent to adding -1.</p>
+
+<p>01011010 and 10100110 add to 0 so they are the negative of each other. They are called each other's two's complement.</p>
+
+<p><strong>To form a number's two's complement:</strong></p>
+
+<ol>
+<li><p>Invert all bits.</p></li>
+
+<li><p>Add 1 to the least significant bit.</p></li>
+</ol>
+
+<p>Subtraction example 7-15:</p>
+
+<p>(00111 - 01111)</p>
+
+<p>Convert the 7 into it's two's complement and add</p>
+
+<p>(00111 + 10001) = 11000.</p>
+
+<p>Leading digit is 1 so it is negative. Convert to two's complement gives us 8.</p>
+
+<h1 id="digitallogic">Digital Logic</h1>
+
+<h3 id="logicgates">Logic gates</h3>
+
+<h3 id="combinationallogic">Combinational Logic</h3>
+
+<p>Combinational logic is blocks of digital logic which contain no memory: output is solely dependent on input.</p>
+
+<p>A block of cominational logic can be described by its truth table.</p>
+
+<p>For a logic block of n inputs, there are 2^n possible output states.</p>
+
+<p>Examples: Multiplexers, adders, ALU.</p>
+
+<p>Not examples: Registers (since they are a form of memory)</p>
+
+<h3 id="buildingcpucomponents">Building CPU components</h3>
+
+<p>Here are Boolean algebra laws:</p>
+
+<p><img src="https://i.gyazo.com/0c79b9bad478913d53c457ef091f5f06.png" alt="" /></p>
+
+<h4 id="decoder">Decoder</h4>
+
+<p>Decoder designed so that each of four possible input combinations uniquely selects only 1 of the possible output.</p>
+
+<p>Here is the truth table for a decoder:</p>
+
+<p>i0 | i1 || Q1 | Q2 | Q3 | Q4
+--- | --- | --- | --- | --- | --- | --- <br />
+0 | 0 || 1 | 0 | 0 | 0
+0 | 1 || 0 | 1 | 0 | 0
+1 | 0 || 0 | 0 | 1 | 0
+1 | 1 || 0 | 0 | 0 | 1</p>
+
+<p>Now let's formulate this as logic equations:</p>
+
+<p>Q1 = ¬i0 ^ ¬i1</p>
+
+<p>Q2 = ¬i0 ^ i1</p>
+
+<p>Q3 = i0 ^ ¬i1</p>
+
+<p>Q4 = i0 ^ i1</p>
+
+<p>From this, it's trivial to translate into a circuit diagram.</p>
+
+<p><img src="https://i.gyazo.com/b27b5d99bad73bdef00efd0b08ca4e7e.png" alt="" /></p>
+
+<h4 id="multiplexer">Multiplexer</h4>
+
+<p>Truth table: </p>
+
+<p>i0 | i1 || S | Q
+--- | --- | --- | --- | --- <br />
+0 | 0 || 0 | 0 
+0 | 0 || 1 | 0 
+0 | 1 || 0 | 0 
+0 | 1 || 1 | 1 
+1 | 0 || 0 | 1 
+1 | 0 || 1 | 0 
+1 | 1 || 0 | 1 
+1 | 1 || 1 | 1 </p>
+
+<p>Logic Expression:</p>
+
+<p>Q = (i1 ^ S) V (i0 ^ ¬S)</p>
+
+<p>Diagram:</p>
+
+<p><img src="https://i.gyazo.com/6d780654ef0d023bb1ebfaf86f4c5706.png" alt="" /></p>
+
+<h4 id="simpleadder">Simple Adder</h4>
+
+<p>The circuit we will design will be able to add unsigned integers, two-complement integers, and both unsigned and two’s complement ﬁxed-point numbers.</p>
+
+<p>We know that:</p>
+
+<p>0 + 0 = 0</p>
+
+<p>0 + 1 = 1 + 0 = 1</p>
+
+<p>For 1 + 1, we need a second output, the carry.</p>
+
+<p>Truth table for single bit addition:</p>
+
+<p>A | B || Q | C
+--- | --- | --- | --- | --- <br />
+0 | 0 || 0 | 0 
+0 | 1 || 1 | 0 
+1 | 0 || 1 | 0 
+1 | 1 || 0 | 1 </p>
+
+<p>It's obvious that C = A ^ B from truth table.</p>
+
+<p>Q is not so obvious. We must introduce XOR (exclusive or):</p>
+
+<p><img src="https://i.gyazo.com/bfae4f3c52e2e6e48cb912181fdd394b.png" alt="" /></p>
+
+<p>Q = A ⊻ B
+C = A ^ B</p>
+
+<p>Here is the circuit diagram: </p>
+
+<p><img src="https://i.gyazo.com/75bdf089d71d9550f27396f293acf123.png" alt="" /></p>
+
+<p>This is referred to as half adder. Works for adding single-bit numbers, but we want to add multiple-bit numbers.</p>
+
+<p>Half adder can be used for LSB but for higher bits we need to take the previous carry as an input. This is a full adder.</p>
+
+<p>Truth table for full adder: </p>
+
+<p>i0 | i1 || Cin | Q | Cout
+--- | --- | --- | --- | --- | ---
+0 | 0 || 0 | 0 | 0 <br />
+0 | 0 || 1 | 1 | 0
+0 | 1 || 0 | 1 | 0
+0 | 1 || 1 | 0 | 1
+1 | 0 || 0 | 1 | 0
+1 | 0 || 1 | 0 | 1
+1 | 1 || 0 | 0 | 1
+1 | 1 || 1 | 1 | 1</p>
+
+<p>Circuit diagram:</p>
+
+<p><img src="https://i.gyazo.com/03ac719997dbaffe24e48766ec6bf656.png" alt="" /></p>
+
+<p>32-bit full adder for unsigned ints:</p>
+
+<p><img src="https://i.gyazo.com/9e61f221359eb58240c54ef45630beb3.png" alt="" /></p>
+
+<h4 id="simplealu">Simple ALU</h4>
+
+<p>We can put together elementary ALU that can add, AND and OR.</p>
+
+<p>In order to do this, we take out 32-bit adder and mod-ify it by adding one AND gate per bit, and one OR gate per bit, plus some multiplexers to select which operation we wish to per-form:</p>
+
+<p><img src="https://i.gyazo.com/eff9d4636a7aada44234e6c6b2d2fa14.png" alt="" /></p>
+
+<h1 id="clockedlogic">Clocked logic</h1>
+
+<p>All processors use an externally provided clock signal to synchronise the timing of the machine so we can always guarantee that the output of a functional unit is stable at a particular well-deﬁne moment in time. </p>
+
+<p>The frequency of the clock signal is chosen to ensure that all signal paths are stable, even in the worst case (poor quality materials, high temperature).</p>
+
+<h3 id="memoryandflipflops">Memory and Flip-flops</h3>
+
+<p>In order to stabilise before they are used, we need to store them for the duration of the clock cycle.</p>
+
+<p>The start is taken to be the rising edge of the clock signal.</p>
+
+<p>On this event, outputs of blocks of combinational logic are captured by flip-flops.</p>
+
+<p>Output of flip-flops only change on rising clock edge, regardless of change in  inputs, making it stable for the whole cycle. This allows outputs of subsequent blocks of cominational logic to stabilise before inputs change again.</p>
+
+<p>Visualisation:</p>
+
+<p><img src="https://i.gyazo.com/86e7ef462e4c38b431f9a0107db4ecd0.png" alt="" /></p>
+
+<p>Flip-Flops are widely used throughout the CPU whenever we have something to store or protect. </p>
+
+<p>In MIPS, each register is simply a bank of 32 ﬂip-ﬂops.  </p>
+
+<h4 id="masterslaveflipflopdtype">Master-Slave flip-flop (D-Type)</h4>
+
+<p>D-Type has 2 inputs (detain and clock) and 1 output (dataout).</p>
+
+<p>D-types are edge-triggered so output data only gets the input data when clock signal changes from 0 to 1.</p>
+
+<p>Not immediately obvious how to make a circuit that is edge-triggered. The key is to make it in two </p>
+
+<p>Stage 1: Allow input data to pass only when clock is low</p>
+
+<p>Stage 2: Only allow data to pass when clock it high machines</p>
+
+<h5 id="setresetlatch">Set-reset latch</h5>
+
+<p>The basic building block for ﬂip-ﬂops is the set-reset latch, which implements a simple memory element.</p>
+
+<p>We will take advantage of the properties of the NOR gate, which can be programmed to behave like an inverter by setting one of it’s inputs to zero. </p>
+
+<p>The output is then the inverse of the other input. Let us examine the behaviour of the cross-coupled NOR gates referred to as a bistable circuit</p>
+
+<p><img src="https://i.gyazo.com/f7b581b087245782a3c90efa1aae84d7.png" alt="" /></p>
+
+<p>To aid us, here is truth table for NOR:</p>
+
+<p>A | B | Q
+--- | --- | --- |
+0 | 0 | 1
+0 | 1 | 0
+1 | 0 | 0
+1 | 1 | 0</p>
+
+<ul>
+<li><p>When R=0 and S=1, then Q=1 and Q'=0. (Q' must be 0 because one input is 1). <strong>Setting the latch</strong></p></li>
+
+<li><p>When R=1 and S=0, then Q=0 and Q'=1. (Q must be 0 because one input is 1) <strong>Resetting the latch</strong></p></li>
+
+<li><p>If R=1 and S=1, then Q=0 and Q'=0. (We need to avoid this)</p></li>
+
+<li><p>If R=0 and S=0, outputs hold their current values.</p></li>
+</ul>
+
+<p>We need to add further logic to prevent the 3rd case when both inputs are 1.</p>
+
+<p>A modified bistable circuit forms a D-latch:</p>
+
+<p><img src="https://i.gyazo.com/bc44b4f53695aa32264e9ee0d4a6e962.png" alt="" /></p>
+
+<ul>
+<li>If C=1, then R=0 and S=0 holding current state</li>
+
+<li>If C=0, then R=¬D and S=D
+
+
+<ul>
+<li>If D=0, then S=0, R=1 (reset)</li>
+
+<li>If D=1, then S=1, R=0 (set)</li></ul>
+</li>
+</ul>
+
+<p>(S=1 and R=1 is not possible)</p>
+
+<p>Now we connect 2 D-latches together to create an edge-triggered D-type flip flop</p>
+
+<p><img src="https://i.gyazo.com/4d7240ca2774271345e25e669bb6d0dc.png" alt="" /></p>
+
+<ul>
+<li>When clock is low, first latch is open and output follows its input.</li>
+
+<li>When clock is high, second latch opens and first one closes.</li>
+</ul>
+
+<p>On the rising edge, the second latch captures the ouput of the ﬁrst at that time, and prevents it from being changed until the next rising edge. </p>
+
+<p>Output of ﬂip-ﬂop can be read at any time, and is stable for the whole clock cycle, except for a short period just after the rising clock edge, when it may change as the input is captured.</p>
+
+<p>A common modiﬁcation made to D-type ﬂip-ﬂops is to provide a mechanism by which a ﬂip-ﬂop can be selectively written so we can use it in, for example, a register, where we don’t want the stored value to be overwritten on every cycle. </p>
+
+<p>An obvious way to do this is to AND the clock with a write signal, but this is generally avoided as it introduces a extra delay to the clock signal which can cause problems.</p>
+
+<p>A more usual method is to feed the output back to the input and add extra logic such then when write=1, the input of the master latch gets D and when write=0, the input of the master latch gets Q. Here is the circuit diagram:</p>
+
+<p><img src="https://i.gyazo.com/b1788524a39445e2f45556df17c3dcad.png" alt="" /></p>
+
+<h3 id="registers">Registers</h3>
+
+<p>Edge-triggered ﬂip-ﬂops can be used as the basis for a register.</p>
+
+<p>A single 32-bit register has 32 D-type flip flops such that input to each flip-flop corresponds to 1 bit of input data, and output of each flip-flop corresponds to 1 bit of output data.</p>
+
+<p>The clock and write signals are shared by all ﬂip-ﬂops, although often we allow individual bytes to be written, in which case a register has separate write signals for each byte. This would be necessary for MIPS, which has a store-byte (sb) instruction.</p>
+
+<p><img src="https://i.gyazo.com/17ecb3147b9bd8fd34a848e0c6ece389.png" alt="" /></p>
+
+<h4 id="buildingaregisterfile">Building a register file</h4>
+
+<p>Having constructed a single 32-bit registers, we can put together a full 32-register register ﬁle such as the one at the core of the MIPS datapath. Revisiting the structure of the datapath we recall that the registers have:</p>
+
+<ul>
+<li>1 x 32-bit write port</li>
+
+<li>2 x 32-bit read ports</li>
+
+<li>1 x 5-bit write address</li>
+
+<li>2 x 5-bit read addresses</li>
+
+<li>1 register_write signal</li>
+</ul>
+
+<p>To implement, we need:</p>
+
+<ul>
+<li>32 x 32-bit registers</li>
+
+<li>2 x 32-1 multiplexers, to select which two of the 32 registers will be propagated to the output as specified by the read addresses.</li>
+
+<li>1 x write decoder, to select which register should be written to during a write, as specified by the write address</li>
+
+<li>Some extra logic to ensure the write only occurs when register_write is asserted.</li>
+</ul>
+
+<p><img src="https://i.gyazo.com/55a35c2e61238d0a26642a50eb750200.png" alt="" /></p>
+
+<p>Other clocked elements, like the program counter and instruc-tion register can be built similarly easily</p>
+
+<h3 id="statemachines">State Machines</h3>
+
+<p>All state machines consist of:</p>
+
+<ul>
+<li>Inputs</li>
+
+<li>Outputs</li>
+
+<li>A state register</li>
+
+<li>Combinational logic</li>
+</ul>
+
+<p>Two ways these can be combined.</p>
+
+<ol>
+<li><strong>Mealy state machine</strong>: outputs and the next state are a combinatorial function of both the state and the input</li>
+
+<li><strong>Moore state machine</strong>:  ouputs are a function of the state only, whilst the next state depends on the inputs and the current state</li>
+</ol>
+
+<p><img src="https://i.gyazo.com/2395c984f15d7c8e7ac576620eaeb4c9.png" alt="" /></p>
+
+<p>The output of the <strong>Moore-type</strong> state machine can only change on the clock edge.</p>
+
+<p>The output of a <strong>Mealy</strong> machine can change asynchronously when the inputs change. </p>
+
+<p>Which of these is desirable depends on the properties of the application.</p>
+
+<p>When designing a FSM, one must:</p>
+
+<ul>
+<li>Determine how many states are needed and how to enumerate them.</li>
+
+<li>Determine the sequence of state transitions.</li>
+
+<li>Write down the truth tables for the combinational logic.</li>
+
+<li>Implement the logic.</li>
+</ul>
+
+<p>Let's consider simple Moore example - the outputs only change synchronously, i.e. when the clock ticks.</p>
+
+<p>The machine has 1 input (stop) and 3 output (A, B, C).</p>
+
+<p>In our desired machine, only one of the out-puts is ever “on” and with each clock tick, the outputs are cycled in the order A→B→C→A→ · · · , unless stop=1, in which case the output remains constant.</p>
+
+<p>Since, in a Moore machine, the outputs are dependent only on the state, we can ascribe each distinct combination of outputs to a separate state of the state register. We will choose the following:</p>
+
+<p>ABC | State
+--- | ---
+100 | 00 
+010 | 01
+001 | 10
+000 | 11</p>
+
+<p>Since we have only three desired output states, but four possible register states, there is a spare state (11) to which we have ascribed a “safe” output (000).  In practice though, when we consider how the machine will transit between states, we will make sure that this state is never reachable, but connects to one of the other states, as shown in the state diagram below:</p>
+
+<p><img src="https://i.gyazo.com/429bf1fd6ea8c2ae3c04d5a953ae91c3.png" alt="" /></p>
+
+<p>Since we know the order, we can formulate this in terms of the states: 00→01→10→00→...</p>
+
+<p>To ensure 11 is never reached, we add transition 11→00.</p>
+
+<p><img src="https://i.gyazo.com/d6ff84ac6fa42915dae9b49f2c1b93fd.png" alt="" /></p>
+
+<p><img src="https://i.gyazo.com/bffce79f726f091493231e9fe198c595.png" alt="" /></p>
+
+<p><img src="https://i.gyazo.com/0a4dfffbf8b5c6e2a47e9200ad6b78bd.png" alt="" /></p>
+
+<h1 id="interruptsperipherals">Interrupts &amp; Peripherals</h1>
+
+<p>I/O devices are not an integrated part of the main processor.</p>
+
+<p>It is necessary to provide mechanisms that allow external devices to communicate with the processor, memory, and programmes that they execute.</p>
+
+<h3 id="iorequirements">I/O Requirements</h3>
+
+<p>We need:</p>
+
+<ol>
+<li><p>A communications channel between the processor and the IO device;</p></li>
+
+<li><p>A way of identifying which I/O device we are communicating with; and</p></li>
+
+<li><p>A mechanism by which we can determine whether the I/O device requires the processor's attention</p></li>
+</ol>
+
+<p>Events occur at a much lower frequency that the processor's clock rate; therefore they do not require constant attention.</p>
+
+<p>The communications channel is realised by the bus.</p>
+
+<p>The bus is a collection of wires that carry signals between devices.</p>
+
+<p>The signals down these wires must be multiplexed between various devices, and the bus must also include a set of rules and protocols that determine which devices can send and receive signals.</p>
+
+<p>The bus is time-shared between all the system's devices and the bus controller will arbitrate between the devices to determine which can have access at any given moment.</p>
+
+<p><img src="https://i.gyazo.com/ed5edbf26f624e808750a3de39b67bc9.png" alt="" /></p>
+
+<h3 id="memorymappedvsportmappedio">Memory-mapped vs port-mapped I/O</h3>
+
+<p>The bus allows CPU to communicate with peripherals in two ways</p>
+
+<h4 id="1memorymapped">1 Memory-mapped</h4>
+
+<p>Sends them commands, and send/receive data. This is similar to the way the CPU interacts with memory. Peripherals can be treated similar to memory in what is known as <strong>memory-mapped</strong>.</p>
+
+<p>Each IO device is allocated a region of the address space, i.e. a block of "memory addresses". Each address corresponds to some form of register of buffer on the device. </p>
+
+<p>It is employed in RISC designs as it allows IO to be implemented with the minimum of additional complexity - accessed by the same mechanisms as memory.</p>
+
+<h4 id="2portmapped">2 Port-mapped</h4>
+
+<p>Devices have their own address space instead of sharing the memory's address space. Done by adding a single control wire that indicates whether an address is for memory or IO. Thisis more complex.</p>
+
+<p>Adopted in x86 processors. This family
+of devices employ a logically separate I/O bus with its own address space, and dedicated instructions for controlling this bus. </p>
+
+<p>Physically, the address and I/O buses share the same wires, but are controlled by different instructions and are thus effectively separate buses.</p>
+
+<p>The x86 I/O bus is supported by dedicated I/O instructions.</p>
+
+<p>Recall that to control the memory bus, there is the mov instruction that can access both memory and registers, but mov cannot access the I/O bus. For this, there are the in and out instructions, with in used to read a peripheral’s registers and out used to write to them</p>
+
+<p>Typically a simple peripheral will have a command buffer and a data buffer. In a typical output operation, we will send some data to the data buffer, and then send a command to the command buffer that tells the peripheral what to do with it.</p>
+
+<h3 id="polling">Polling</h3>
+
+<p>It is not necessary to check frequently whether, for example, a key on the keyboard is pressed.</p>
+
+<p>Instead, we can test, or poll the device regularly, but less frequently, allowing the CPU to perform other tasks between polling events.</p>
+
+<p>Is is very simple to do with software but it can still waste a signiﬁcant amount of processor time even if the polling frequency is reduced.</p>
+
+<p>One can of course reduce the frequency even further, but in this case there is a risk that multiple events may occur between polling events, and thus the earlier ones will be missed by the CPU. </p>
+
+<p>There are wasted clock cycles in any polling based scheme, even if the frequency is correctly chosen there can still be idle period when no input is received.</p>
+
+<p>There may also be problems if a particular I/O device is very slow as the last I/O operation may not have ﬁnished before the next poll.</p>
+
+<p>This approach can be summarised in a diagram:</p>
+
+<p><img src="https://i.gyazo.com/ab162ebbdb2361b52361fbbbebfb8abb.png" alt="" /></p>
+
+<p>Polling gives us a simple software solution to I/O control, but sub-optimal. The main alternative requires some extra hardware complexity, but is much more ﬂexible and efﬁcient.</p>
+
+<h3 id="interrupts">Interrupts</h3>
+
+<p>Instead of repeatedly probing a device to see when it is ready as we do in the polling scheme, one can conceive an alternative system that includes a mechanism to allow peripheral devices to tell the CPU when they are ready, effectively allowing them to interrupt the current process.</p>
+
+<p>Each device is allocated a special hardware interrupt request channel (IRQ), which can be used to signal to the processor that it needs to pay some attention to the device.</p>
+
+<p>Here is the diagram:</p>
+
+<p><img src="https://i.gyazo.com/78615b315cae165511d8cf6267108f2d.png" alt="" /></p>
+
+<p>Interrupts require some specialist action by the programmer, who must include a handler (subroutine) to deal with interrupt requests (IRQs), and manually initiate I/O by sending appropriate commands to the relevant I/O controller. These routines are usually included in the device driver associated with a particular peripheral.</p>
+
+<p>Interrupt request channels are checked by the CPU each time a new instruction is fetched, to ensure that instructions are never left unﬁnished.</p>
+
+<p>If there is a pending request, the CPU then acknowledges the request via the interrupt channel and disables further interrupts.</p>
+
+<p>The CPU state is saved to the stack and the interrupt-handling subroutine is loaded, temporarily halting the execution of the program that was running. The state of the CPU is retrieved from the stack once the interrupt has been handled so that the main program’s execution can continue.</p>
+
+<p>By this scheme, the CPU does not waste cycles polling the peripherals so in this sense interrupts are a great improvement over polling.</p>
+
+<h3 id="dma">DMA</h3>
+
+<p>Direct Memory Access (DMA) is a method for removing the load of large, monotonous data transfers from the CPU by providing a separate controller for processing certain types of request without using the CPU resource.</p>
+
+<p><img src="https://i.gyazo.com/ea84b1172bda6d945d16bcb1be50928f.png" alt="" /></p>
+
+<p>The DMA module is a mini-processor that specialises in transferring data between (virtual) memory locations which can include memory-mapped or isolated peripherals.</p>
+
+<p>When the CPU needs to read or write a block of data, it issues commands to the DMA controller which consist of:</p>
+
+<ol>
+<li>the address of the I/O device</li>
+
+<li>the starting location of the data block</li>
+
+<li>the number of words of data to be transferred</li>
+
+<li>whether the transfer is read or write.</li>
+</ol>
+
+<p>The CPU then returns to the interrupted program, leaving the DMA module to do the memory transfer with the system bus.</p>
+
+<p>The DMA module can control the bus independently of the CPU so can use it when the processor doesn’t need it, or can steal cycles from from CPU by forcing it to suspend bus access. </p>
+
+<p>When the transfer is complete, the DMA module issues an IRQ to the CPU so that, if necessary, it can make use of any data that has been loaded into memory.</p>
+
+<p>If the system has a cache then some care is required with DMA. In particular, if the cache is write-back, then we need to ensure that the correct version of the data is being copied. In this case, the cache would normally be ﬂushed (any changed entries written back to memory) before the DMA transfer is allowed to start.</p>
+
+<h1 id="improvingperformance">Improving Performance</h1>
+
+<p>The basic processor we have designed in MIPS is functional but not optimal. There are techniques we can use to improve performance.</p>
+
+<h3 id="caches">Caches</h3>
+
+<p>The cache is a medium sized, moderately fast memory which acts as a buffer between the main memory and registers.</p>
+
+<p>Virtual memory is the generalisation of the main memory, that includes storage on secondary devices like hard disks.</p>
+
+<p>The advent of multi-chip packages and multi-core devices has led to increasingly large quantities of cache being included in modern designs.</p>
+
+<p>Used to store a copy of some part of the main memory. This can lead to performance improvements because of two basic properties of computer programs:</p>
+
+<h4 id="1theprincipleofspaciallocality">1 <strong>The principle of spacial locality</strong></h4>
+
+<p>If you have recently referenced an item, it is likely you will want to reference nearby items soon. True for instructions because their sequential execution sequence. True for data because program's data is stored in contiguous memory locations.</p>
+
+<h4 id="2theprincipleoftemporallocality">2 <strong>The principle of temporal locality</strong></h4>
+
+<p>If you have recently referenced an item, it is likely you will want to reference it again soon. The main constructs that leads to this are loops.</p>
+
+<p>When memory access is made, the cache is first searched.</p>
+
+<p>Over time, the contents of the cache stabilise and fewer requests to the main memory are made.</p>
+
+<p>It is often the case that separate caches for data and instructions are used as they are dealt with separately by the processor. </p>
+
+<p>It is not sufﬁcient for the cache to simply mirror the contents of the memory: the cache must also know whereabouts in the memory an item came from. </p>
+
+<p>The cache must therefore be able to store both the item that is being cached, and the address of that item in memory. A cache therefore consist of two blocks of memory, one that stores the item itself, and one storing the address of that item. In the cache, this is normally called the tag.</p>
+
+<p>When request is made to the cache, the memory address being accessed is compared to all of the addresses stored in the cache. If the address is in the cache, the corresponding item in the cache is read/written – a cache hit. Otherwise, main memory must be accessed – a cache miss. </p>
+
+<p>If the result of the access is a miss, then the access is passed on to main memory. It is not usual to access the cache and memory simultaneously due to the extra memory accesses this would need and the cost of doing so. The addition of a cache to the system is therefore not free: it actually increases the time taken to service a memory access in the case of a cache miss.</p>
+
+<h4 id="associativity">Associativity</h4>
+
+<p>Associativity is the number of different locations an item of data can occupy in the cache.</p>
+
+<p>Most common is direct-mapping which is one-way assoicative. Each address in main memory can only go in 1 spot in the cache.</p>
+
+<p>A subset of the address is hard-coded into the cache so that when an address 101x is presented, it is only necessary to look at one cache entry. The remaining address bits are checked against the tag for that entry.</p>
+
+<p>Main problem with this is trashing: contents continually swapped due to having similar memory addresses. </p>
+
+<p>The obvious solution to minimise thrashing is to allow each piece of data to be stored in multiple locations in the cache. In an n-way set associative cache, each address in main memory maps to n cache entries.</p>
+
+<p>A smaller portion of the address is hardcoded in to the cache, and the memory address has then to be compared with n entries in the tag. This can be slower and adds complexity due to the need to perform multiple comparisons simultaneously.</p>
+
+<p>The ultimate realisation of an n-way set associative cache is one in which n is the same as the number of locations in the cache, in which case it is said to be fully associative. </p>
+
+<p>There is no hardwired address mapping, and any item in main memory can go anywhere in the cache. This adds very considerably to the complexity as all of the tag entries have to be compared with the desired address, but in practice this is done using a special type of memory that is content-addressable. </p>
+
+<p>Its use can greatly reduce the potential for thrashing, at the cost of an increased access time due to the added complexity. </p>
+
+<p>Performance is gained by having fewer accesses to external memory, but is lost by either increasing the cycle time to accommodate the cache, or by having to allow multiple clock cycles for cache access. </p>
+
+<p>There are no concrete rules as to which is best and it will usually be necessary to per-form extensive analysis of typical code in simulation in order to determine which design is likely to be best.</p>
+
+<h4 id="refill">Refill</h4>
+
+<p>In a direct-mapped cache, new entries can only go to one location and so, when a new item stored into the cache, there is no requirement for any sort of algorithm to determine where in the cache it should be placed. In an n-way associative cache, there are n possible lo-cations that the item could be stored, and it is necessary to decide which one should be replaced.</p>
+
+<p>The simplest strategy is to use the principle of tempo-ral locality to replace the item that has been least-recently-used (LRU) on the grounds that it is less likely to be needed soon. </p>
+
+<p>How-ever, this can cause problems in loops, especially in cases where the cache is a little smaller than the size of the loop body.</p>
+
+<p>The alternative is random replacement, which does not use any of the principles by which the cache operates, but is far easier to implement.</p>
+
+<p>The designer will have to determine whether increased complexity (which affects the area required and potentially the cycle time) or the increased miss rate is most acceptable.</p>
+
+<h3 id="virtualmemory">Virtual Memory</h3>
+
+<h3 id="calculatingcachebenefits">Calculating cache benefits</h3>
+
+<p>We will make the following assumptions:</p>
+
+<ol>
+<li>All instructions can be fetched in a single cycle (removing the need for an instruction cache).</li>
+
+<li>All instruction execute in a single cycle (except for those that access memory).</li>
+
+<li>There are <em>N</em> instruction in a program.</li>
+
+<li>A proportion <em>m</em> of instructions access memory.</li>
+
+<li>The cycle time is given by <em>t_cyc</em>.</li>
+
+<li>The memory access time (additive to the cycle time) is given by <em>t_mem</em>.</li>
+
+<li>The cache access time is given by <em>t_cache</em>.</li>
+
+<li>The cache hit rate is <em>h</em>.</li>
+</ol>
+
+<h3 id="pipeliningmipspipelinehazards">Pipelining: MIPS pipeline, hazards</h3>
+
+<h3 id="branchpredictionstaticdynamicspeculativeexecutiondelayedbranching">Branch Prediction: static, dynamic, speculative execution, delayed branching</h3>
 <!-- Utils -->
 <button onclick="topFunction()" id="topBtn" title="Go to top">Top</button>
 <script>
