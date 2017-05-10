@@ -122,7 +122,7 @@ Jump instruction then multiplexed with the PC update value from the branch multi
 
 ### ALU Control (Not sure if assessed so incomplete)
 
-ALU opcode is walsy 000000, and precise instruction is specified by `func` code.
+ALU opcode is always 000000, and precise instruction is specified by `func` code.
 
 But R-Type ALU are not the only instruction that use ALU so no as simple as reading the `func` code.
 
@@ -731,11 +731,92 @@ If the system has a cache then some care is required with DMA. In particular, if
 
 # Improving Performance
 
+The basic processor we have designed in MIPS is functional but not optimal. There are techniques we can use to improve performance.
+
 ### Caches
+
+The cache is a medium sized, moderately fast memory which acts as a buffer between the main memory and registers.
+
+Virtual memory is the generalisation of the main memory, that includes storage on secondary devices like hard disks.
+
+The advent of multi-chip packages and multi-core devices has led to increasingly large quantities of cache being included in modern designs.
+
+Used to store a copy of some part of the main memory. This can lead to performance improvements because of two basic properties of computer programs:
+
+#### 1 **The principle of spacial locality**
+
+If you have recently referenced an item, it is likely you will want to reference nearby items soon. True for instructions because their sequential execution sequence. True for data because program's data is stored in contiguous memory locations.
+
+#### 2 **The principle of temporal locality**
+
+If you have recently referenced an item, it is likely you will want to reference it again soon. The main constructs that leads to this are loops.
+
+When memory access is made, the cache is first searched.
+
+Over time, the contents of the cache stabilise and fewer requests to the main memory are made.
+
+It is often the case that separate caches for data and instructions are used as they are dealt with separately by the processor. 
+
+It is not sufﬁcient for the cache to simply mirror the contents of the memory: the cache must also know whereabouts in the memory an item came from. 
+
+The cache must therefore be able to store both the item that is being cached, and the address of that item in memory. A cache therefore consist of two blocks of memory, one that stores the item itself, and one storing the address of that item. In the cache, this is normally called the tag.
+
+When request is made to the cache, the memory address being accessed is compared to all of the addresses stored in the cache. If the address is in the cache, the corresponding item in the cache is read/written – a cache hit. Otherwise, main memory must be accessed – a cache miss. 
+
+If the result of the access is a miss, then the access is passed on to main memory. It is not usual to access the cache and memory simultaneously due to the extra memory accesses this would need and the cost of doing so. The addition of a cache to the system is therefore not free: it actually increases the time taken to service a memory access in the case of a cache miss.
+
+#### Associativity
+
+Associativity is the number of different locations an item of data can occupy in the cache.
+
+Most common is direct-mapping which is one-way assoicative. Each address in main memory can only go in 1 spot in the cache.
+
+A subset of the address is hard-coded into the cache so that when an address 101x is presented, it is only necessary to look at one cache entry. The remaining address bits are checked against the tag for that entry.
+
+Main problem with this is trashing: contents continually swapped due to having similar memory addresses. 
+
+The obvious solution to minimise thrashing is to allow each piece of data to be stored in multiple locations in the cache. In an n-way set associative cache, each address in main memory maps to n cache entries.
+
+A smaller portion of the address is hardcoded in to the cache, and the memory address has then to be compared with n entries in the tag. This can be slower and adds complexity due to the need to perform multiple comparisons simultaneously.
+
+The ultimate realisation of an n-way set associative cache is one in which n is the same as the number of locations in the cache, in which case it is said to be fully associative. 
+
+There is no hardwired address mapping, and any item in main memory can go anywhere in the cache. This adds very considerably to the complexity as all of the tag entries have to be compared with the desired address, but in practice this is done using a special type of memory that is content-addressable. 
+
+Its use can greatly reduce the potential for thrashing, at the cost of an increased access time due to the added complexity. 
+
+Performance is gained by having fewer accesses to external memory, but is lost by either increasing the cycle time to accommodate the cache, or by having to allow multiple clock cycles for cache access. 
+
+There are no concrete rules as to which is best and it will usually be necessary to per-form extensive analysis of typical code in simulation in order to determine which design is likely to be best.
+
+#### Refill
+
+ In a direct-mapped cache, new entries can only go to one location and so, when a new item stored into the cache, there is no requirement for any sort of algorithm to determine where in the cache it should be placed. In an n-way associative cache, there are n possible lo-cations that the item could be stored, and it is necessary to decide which one should be replaced.
+
+The simplest strategy is to use the principle of tempo-ral locality to replace the item that has been least-recently-used (LRU) on the grounds that it is less likely to be needed soon. 
+
+How-ever, this can cause problems in loops, especially in cases where the cache is a little smaller than the size of the loop body.
+
+The alternative is random replacement, which does not use any of the principles by which the cache operates, but is far easier to implement.
+
+The designer will have to determine whether increased complexity (which affects the area required and potentially the cycle time) or the increased miss rate is most acceptable.
 
 ### Virtual Memory
 
+
 ### Calculating cache benefits
+
+We will make the following assumptions:
+
+1. All instructions can be fetched in a single cycle (removing the need for an instruction cache).
+2. All instruction execute in a single cycle (except for those that access memory).
+3. There are *N* instruction in a program.
+4. A proportion *m* of instructions access memory.
+5. The cycle time is given by *t_cyc*.
+6. The memory access time (additive to the cycle time) is given by *t_mem*.
+7. The cache access time is given by *t_cache*.
+8. The cache hit rate is *h*.
+
 
 ### Pipelining: MIPS pipeline, hazards
 
