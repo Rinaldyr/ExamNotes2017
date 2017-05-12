@@ -817,7 +817,194 @@ We will make the following assumptions:
 7. The cache access time is given by *t_cache*.
 8. The cache hit rate is *h*.
 
+In terms of these parameters, the time taken to execute the program consists of three parts.
 
-### Pipelining: MIPS pipeline, hazards
+* The time taken to load all instruction (and execute non-memory instructions, which is done simultaneously with the next fetch):
+*N x t_cyc*
 
-### Branch Prediction: static, dynamic, speculative execution, delayed branching
+* The time taken to access the cache for memory instructions:
+*N x m x t_cache*
+
+* The time taken to access main memory when the cache misses:
+*N x m x (1 - h) x t_mem*
+
+The total program execution time is then
+
+*T = N x t_cyc + N x m x t_cache + N x m x (1 - h) x t_mem*
+
+*T = N(t_cyc + m(t_cache + (t - h)t_mem))*
+
+*T = N< t >* (how? no clue)
+
+where < t > is the average time to execute an instruction.
+
+#### Writing Strategies
+
+Read access is straight forward, but what do we do when writing?
+
+Writing Strategy | Description | Advantage | Disadvantages
+ --- | --- | --- | --- 
+**write-back** | Only cache is updated during write hit | Reduced number of memory access | Still have to make sure main memory is updated when this cache entry is replaced. So we raise a "write" flag
+**write-through** | Both main memory and cache are updated. | Ensures memory and cache are consistent | Requires extra memory access - may have implications in low-power systems.
+
+
+### Pipelining
+
+The basic idea behind pipelining is that we don’t always have to wait for an instruction to ﬁnish executing before starting the next instruction.
+
+#### How to implement a pipeline
+
+Pipeline registers are added between piplestages to store intermediate results.
+
+Therefore during each clock cycle, the process only needs to push an instruction through one pipeline stage - allowing much higher clock speeds.
+
+Example (instruction execution cycle):
+
+![](https://i.gyazo.com/f20322d700c5cd606347502501f51419.png)
+
+1. **IF (Instruction Fetch):** Fetch instruction from memory
+2. **ID (Instruction Decode):** Decode instruction and read registers (can happen simultaneously in MIPS)
+3. **EX (EXecute):** Execute the operation or calculate memory address
+4. **MEM (MEMory):** Access memory if required
+5. **WB (WriteBack):** Write result into a register if required
+
+This is referred to as the **classic five-stage RISC pipeline** due to its use in several common 1990 RISC CPUs.
+
+It allows different instruction to be at different stages simultaneously.
+
+For example, a new instruction can be fetched whilst the current instruction is being decoded.
+
+**Not pipelined:**
+
+![](https://i.gyazo.com/2800a297a5aedc699ffbd315ec491798.png)
+
+**Pipelined:**
+
+![](https://i.gyazo.com/35390ebc726df05c3bfae7dab97ae493.png)
+
+####**MIPS Pipelined**
+
+![](https://i.gyazo.com/d6adb218077b86b7b44790dd3a9a944f.png)
+
+1. **IF:** Instruction fetched from memory and instruction and incremented program counter stored in IF/ID pipeline registers
+2. **ID:** Register contents are read the instruction is decoded. Any address offsets extended. Values fetched from registers, offsets, and control signals are stored in ID/EX registers
+3. **EX:** ALU operations are executes and some branch decisions are taken
+4. **MEM:** Values fetched from memory and final branch/jump calculations are performed
+5. **WB:** Values computed or fetched from memory are written back to registers
+
+#### Hazards
+
+Consider following code fragment:
+
+```
+addi $t0, $t0, 1;   // add 1 to t0
+add  $t0, $t0, $t0; // double t0
+```
+
+Here, the result of the first instruction must be known before the second can be done.
+
+We must wait until `addi` has written to registers before the ALU stage of the `add` instruction can complete.
+
+We need to delay the start of the `add` by adding a **bubble*:
+
+![](https://i.gyazo.com/c149ec421f841ca12e8bf9445d55888f.png)
+
+These situations can be identified at compile-time, or by the processor in a pre-processing step.
+
+Another way of dealing with this is to make the result of the ALU stage of the pipeline available immediately (before it is written to registers) by adding a physical short-circuit. This is known as **forwarding** or **bypassing**. In the pipelined MIPS this would be from the output of the EX/MEM register to the input of the EX pipeline stage.
+
+### Branch Prediction
+
+Similar problem as above is when we have branch instruction. We must know the result of the branch comparison before we know which instruction we should be executing next.
+
+The ability to accurately predict what should happen at a branch can give rise to very signification improvements (particularly with loops).
+
+At a branch we have a choice of 2 possible instructions to execute next.
+
+There are 2 simple choices we could make.
+
+1. Assume branches are not taken. In this case we allow the CPU to just execute the next instruction. If branch *is* taken, pipeline must be cleared (**flushed**) of the incorrect instructions.
+2. Assume branches are always taken. Not as simple as requires both a comparison and the computation of the branch address. Not possible to know the address of next instruction. If we add specific hardware for computing branch address, we can do this with only one cycle of delay.
+
+#### Static branch prediction
+
+Can be improved by looking at the context of which the branch is used:
+
+* Branch which breaks out of a loop is far more likely to not be taken.
+* Branches in a long chain of if-elseif statements are taken more often.
+* Accurate predications can be made on the opcode alone.
+
+#### Dynamic branch prediction
+
+One approach is for CPU to keep history for each brranch and use it to predict future behaviour. 
+
+Single "flag" bit for each instruction that indicates whether branch was taken or not the last time it was executed.
+
+90% accuracy, but introduce design complexity.
+
+Require look-up table in which addresses of the branch instruction are stored, and their history recorded.
+
+When that instruction is executed next, its history can be retrieved to make prediction.
+
+#### Delayed branching
+
+Where code is reordered so that branch comparison is done earlier (and therefore known ahead of times)
+
+Only works when branch does not depend on previous line(s).
+
+For example consider:
+
+```
+add $r4. $r5, $r6
+beq $r1, $r2, 40
+lw  $r3, 300($0)
+```
+
+`beq` does not depend on `add`.
+
+Therefore result of branch comparison is known in plenty of time.
+
+In typical code, branch can be shifted in this way 50% of the time.
+
+#### Branch predication (notice additional a)
+
+Removes them altogether. Example:
+
+```
+if($s<$t) {
+	$d = 1;
+}
+```
+
+can be converted into a single instruction:
+
+```
+slt $d, $s, $t
+```
+
+
+
+
+#### Superscalar Processors
+
+As transistor density has increased, designers can put more onto a chip.
+
+Superscalar machines have multiple pipelines which can execute multiple instructions in parallel: with *N* pipelines, performance increases up to a factor of *N*.
+
+**Issues:**
+
+* Control is very hard.
+* A particular problem is ensuring correct instruction ordering as you cannot execute instructions in parallel if they are co-dependent
+* Very hard to deal with hazards.
+
+Techniques exist for resolving some of these issues: out-of-order execution allows instructions to be re-ordered dynamically if one pipeline stalls, and speculative execution allows the CPU to con-tinue to execute code whilst waiting for a hazard to be resolve.
+
+Superscalar schematic:
+
+![](https://i.gyazo.com/3ef8ab355b8019578d0895920c79fa67.png)
+
+The ifetch/decode unit fetches and decodes instructions and allocates them to pipelines via reservation stations which hold a sequence of instruction and operands for each pipeline.
+
+The results from the pipelines are committed to registers or memory by the commit unit.
+
+Superscalar techniques differ from the modern multi-core methods (which also use superscalar techniques within the cores themselves) as they are design for instruction-level parallelism within a single executing process, whereas multi-core systems allow multiple processes to be simultaneously executed. The two techniques can happily co-exist though, and multi-core machines where the cores themselves are superscalar are now common.
